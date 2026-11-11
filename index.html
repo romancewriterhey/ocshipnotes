@@ -59,10 +59,11 @@ details.fold>.inner{padding-bottom:12px}
 .imgbox{border:1.5px dashed var(--line);border-radius:12px;padding:8px;text-align:center;background:var(--soft)}
 .imgbox img{max-width:100%;max-height:260px;border-radius:8px;display:block;margin:0 auto 6px}
 .imgbox.ava img{width:120px;height:120px;object-fit:cover;border-radius:50%}
-.gal{display:grid;grid-template-columns:repeat(auto-fill,minmax(96px,1fr));gap:6px;margin-top:6px}
-.gal div{position:relative}
-.gal img{width:100%;aspect-ratio:1;object-fit:cover;border-radius:8px;display:block;cursor:zoom-in}
-.gal button{position:absolute;top:2px;right:2px;padding:0 6px;font-size:.75rem;background:#fffd}
+.gal{columns:3 120px;column-gap:6px;margin-top:6px}
+.gal>div{position:relative;break-inside:avoid;margin-bottom:6px}
+.gal img{width:100%;height:auto;border-radius:8px;display:block;cursor:zoom-in}
+.gal .gb{position:absolute;top:3px;right:3px;display:flex;gap:3px}
+.gal .gb button{padding:0 6px;font-size:.75rem;background:#fffd;margin:0}
 .filebtn{display:inline-block;background:var(--main);border:1px solid #d3c3a6;border-radius:10px;padding:4px 12px;cursor:pointer;font-size:.88rem;color:#3d3226;margin:2px 0}
 .filebtn input{display:none}
 .actbar{position:sticky;bottom:8px;z-index:5;background:var(--card);border:1px solid var(--line);border-radius:14px;padding:8px 10px;margin:12px 0;box-shadow:0 2px 12px #0002}
@@ -96,6 +97,9 @@ ul.src{padding-left:1.2em;word-break:break-all}
 .tli::before{content:"";position:absolute;left:-31px;top:8px;width:14px;height:14px;border-radius:50%;background:#8a6a3f;border:3px solid var(--bg)}
 .tly{min-width:5.5em;font-weight:700;color:var(--deep)}
 .tlb{flex:1;min-width:200px;background:var(--card);border:1px solid var(--line);border-radius:12px;padding:8px 12px}
+.hint{color:#a8875a;font-size:.72rem;margin-left:6px}
+.dropz{border:1.5px dashed transparent;border-radius:12px;padding:4px}
+.dropz.drag{border-color:#8a6a3f;background:var(--soft)}
 .conf{display:flex;align-items:center;gap:8px}
 .conf b{min-width:2.5em}
 </style>
@@ -124,7 +128,8 @@ ul.src{padding-left:1.2em;word-break:break-all}
 <button class="portal" onclick="go('scene')"><b>🎬 人事時地物</b><span>依地區與場域，抽出人、事、時、地、物、氣氛和梗，幫練習題延伸成場景。</span></button>
 </div>
 <details class="fold"><summary>使用教學</summary><div class="inner">
-<p><b>① 先建立人物。</b>到「人物設定」按「＋ 新增人物」，填好的內容會自動存在瀏覽器裡。標有 <span class="sug">✦</span> 的欄位是額外建議填寫的欄位，不想用可以留白。</p>
+<p><b>① 先建立人物。</b>到「人物設定」按「＋ 新增人物」，填好的內容會自動存在瀏覽器裡。<b>不知道、還沒想法的欄位都可以留空</b>，之後想到再補就好。性傾向、性別、血型、MBTI、依附類型、身心狀態等欄位，除了從清單選，也可以自己輸入清單上沒有的選項（例如性傾向填「性單戀」「半性戀」）。</p>
+<p><b>圖片：</b>頭貼上傳時可以拖曳、縮放，決定圓形裡要露出哪一塊；立繪與圖庫會保留原圖形狀，每張圖都可以按「✂️」改比例或裁切（原圖比例、1:1、3:4、4:3、9:16、16:9）。圖庫可以一次選多張，電腦也可以直接把圖片拖進圖庫區塊。</p>
 <p><b>② 深化角色。</b>人物頁的「🧠 深化角色」會帶你到「人物深化」，題目可以鎖住或重骰，寫好的回答按「存入深化筆記」就會跟著這位人物。</p>
 <p><b>③ 組 CP。</b>在「CP設定」選擇已存好的人物（預設兩人，最多六人），單人頭貼會自動帶入，也可以另外上傳。</p>
 <p><b>④ 畫關係表。</b>「人物關係表」可以一鍵帶入人物或 CP，拖曳位置、換代表色、新增旁支人物，再下載成圖片。</p>
@@ -136,7 +141,7 @@ ul.src{padding-left:1.2em;word-break:break-all}
 
 <section id="chars">
 <h2>人物設定</h2>
-<p class="note">整理你既有的角色。內容會自動存在這個瀏覽器；標有 <span class="sug">✦</span> 的是額外建議欄位，可以留白。</p>
+<p class="note">整理你既有的角色。內容會自動存在這個瀏覽器。不知道、還沒想法的欄位都可以留空；有些欄位（如性傾向）除了從清單選，也可以自己輸入清單上沒有的選項。</p>
 <div class="card"><div class="row"><button class="big" onclick="newChar()">＋ 新增人物</button><span class="note" id="charCount"></span></div><div id="charList" class="plist" style="margin-top:8px"></div></div>
 <div id="charEdit"></div>
 </section>
@@ -154,7 +159,7 @@ ul.src{padding-left:1.2em;word-break:break-all}
 
 <section id="cp">
 <h2>CP設定／互動彙整</h2>
-<p class="note">可以直接帶入已存好的人物，預設兩人、最多六人。標有 <span class="sug">✦</span> 的是額外建議欄位。</p>
+<p class="note">可以直接帶入已存好的人物，預設兩人、最多六人。不知道、還沒想法的欄位都可以留空；配對類型與關係現況也可以自己輸入清單上沒有的選項。</p>
 <div class="card"><div class="row"><button class="big" onclick="newCP()">＋ 新增 CP</button><span class="note" id="cpCount"></span></div><div id="cpList" class="plist" style="margin-top:8px"></div></div>
 <div id="cpEdit"></div>
 </section>
@@ -435,9 +440,34 @@ function persist(){clearTimeout(saveT);saveT=setTimeout(async()=>{let ok=false;t
 
 /* ===== 圖片 ===== */
 function readImg(file,max){return new Promise((res,rej)=>{const fr=new FileReader();fr.onload=()=>{const im=new Image();im.onload=()=>{const s=Math.min(1,max/Math.max(im.width,im.height));const c=document.createElement('canvas');c.width=Math.max(1,Math.round(im.width*s));c.height=Math.max(1,Math.round(im.height*s));c.getContext('2d').drawImage(im,0,0,c.width,c.height);const keep=/png|webp|gif/.test(file.type);res(keep?c.toDataURL('image/png'):c.toDataURL('image/jpeg',.86))};im.onerror=()=>rej('圖片讀取失敗');im.src=fr.result};fr.onerror=()=>rej('檔案讀取失敗');fr.readAsDataURL(file)})}
-async function upImgs(input,max,cb){const fs=[...input.files];input.value='';for(const f of fs){if(!/^image\//.test(f.type)){toast('請選擇圖片檔');continue}try{cb(await readImg(f,max))}catch(e){toast(e)}}}
+async function upImgs(input,max,cb){const fs=[...input.files];try{input.value=''}catch(e){}for(const f of fs){if(!/^image\//.test(f.type)){toast('請選擇圖片檔');continue}try{cb(await readImg(f,max))}catch(e){toast(e)}}}
 function avHTML(src,name,cls){return src?`<img class="av ${cls||''}" src="${src}" alt="">`:`<span class="av ${cls||''}">${esc((name||'？').trim().slice(0,1)||'？')}</span>`}
 function zoom(src){$('#mTitle').textContent='圖片';$('#mBody').innerHTML=`<img src="${src}" alt="">`;$('#modal').classList.add('open')}
+
+
+/* ===== 裁切與縮放 ===== */
+const RAT=[['orig','原圖比例'],['1','1:1'],['0.75','3:4'],['1.3333','4:3'],['0.5625','9:16'],['1.7778','16:9']];
+async function openCrop(src,opt){const img=await loadImg(src);if(!img){toast('圖片讀取失敗');return}
+ let rk=opt.ratio?String(opt.ratio):'orig',W,H,sc,s0,ox,oy,zoom=1;
+ $('#mTitle').textContent=opt.title||'裁切與縮放';
+ $('#mBody').innerHTML=`${opt.ratio?'':`<p class="row" id="cRat">${RAT.map(([k,l])=>`<button class="sm" data-r="${k}">${l}</button>`).join('')}</p>`}<div style="display:flex;justify-content:center"><canvas id="cCv" style="touch-action:none;max-width:100%;border-radius:8px;background:#ddd;cursor:grab"></canvas></div><div class="conf" style="margin-top:8px"><span style="white-space:nowrap">縮放</span><input type="range" id="cZm" min="1" max="5" step="0.01" value="1"></div><p class="note">拖曳圖片調整位置，用滑桿放大縮小。${opt.ratio?'':'「原圖比例」不放大時就是整張原圖。'}</p><p><button class="big" id="cOk">✔️ 確定</button> <button id="cNo">取消</button></p>`;
+ $('#modal').classList.add('open');const cv=$('#cCv'),x=cv.getContext('2d'),dpr=window.devicePixelRatio||1;
+ const setup=()=>{const B=Math.min(480,($('#mBody').clientWidth||480)-4);const a=rk=='orig'?img.width/img.height:+rk;if(a>=1){W=B;H=B/a}else{H=B;W=B*a}cv.width=W*dpr;cv.height=H*dpr;cv.style.width=W+'px';cv.style.height=H+'px';s0=Math.max(W/img.width,H/img.height);zoom=1;$('#cZm').value=1;sc=s0;ox=(W-img.width*sc)/2;oy=(H-img.height*sc)/2;$$('#cRat button').forEach(b=>b.classList.toggle('on',b.dataset.r==rk));draw()};
+ const clamp=()=>{ox=Math.min(0,Math.max(W-img.width*sc,ox));oy=Math.min(0,Math.max(H-img.height*sc,oy))};
+ const draw=()=>{clamp();x.setTransform(dpr,0,0,dpr,0,0);x.clearRect(0,0,W,H);x.drawImage(img,ox,oy,img.width*sc,img.height*sc);if(opt.circle){x.fillStyle='#0007';const r=Math.min(W,H)/2;x.beginPath();x.rect(0,0,W,H);x.moveTo(W/2+r,H/2);x.arc(W/2,H/2,r,0,Math.PI*2);x.fill('evenodd');x.strokeStyle='#fff';x.lineWidth=2;x.beginPath();x.arc(W/2,H/2,r,0,Math.PI*2);x.stroke()}};
+ $('#cZm').oninput=e=>{const n=s0*+e.target.value,cx=(W/2-ox)/sc,cy=(H/2-oy)/sc;sc=n;ox=W/2-cx*sc;oy=H/2-cy*sc;draw()};
+ let dg=null;cv.onpointerdown=e=>{dg={x:e.clientX,y:e.clientY,ox,oy};cv.setPointerCapture(e.pointerId)};cv.onpointermove=e=>{if(!dg)return;ox=dg.ox+e.clientX-dg.x;oy=dg.oy+e.clientY-dg.y;draw()};cv.onpointerup=()=>dg=null;
+ if($('#cRat'))$('#cRat').onclick=e=>{const r=e.target.dataset&&e.target.dataset.r;if(r){rk=r;setup()}};
+ $('#cNo').onclick=closeModal;
+ $('#cOk').onclick=()=>{let w=W/sc,h=H/sc;const f=Math.min(1,(opt.max||1600)/Math.max(w,h));const o=document.createElement('canvas');o.width=Math.max(1,Math.round(w*f));o.height=Math.max(1,Math.round(h*f));o.getContext('2d').drawImage(img,-ox/sc,-oy/sc,w,h,0,0,o.width,o.height);const png=/^data:image\/png/.test(src);closeModal();opt.onDone(png?o.toDataURL('image/png'):o.toDataURL('image/jpeg',.88))};
+ setup()}
+async function upCrop(input,opt){const f=input.files[0];input.value='';if(!f)return;if(!/^image\//.test(f.type)){toast('請選擇圖片檔');return}try{const d=await readImg(f,opt.keep||1600);if(opt.onOrig)opt.onOrig(d);openCrop(d,opt)}catch(e){toast(e)}}
+function dropZone(el,cb){if(!el)return;el.addEventListener('dragover',e=>{e.preventDefault();el.classList.add('drag')});el.addEventListener('dragleave',()=>el.classList.remove('drag'));el.addEventListener('drop',e=>{e.preventDefault();el.classList.remove('drag');upImgs({files:e.dataTransfer.files,set value(v){}},1600,cb)})}
+const galHTML=(arr,path)=>`<div class="gal">${(arr||[]).map((g,i)=>`<div><img src="${g}" alt="" onclick="zoom(this.src)"><span class="gb"><button title="裁切／縮放" onclick="cropAt('${path}',${i})">✂️</button><button title="移除" onclick="galDel('${path}',${i})">✕</button></span></div>`).join('')}</div>`;
+function galArr(path){return path=='char'?curChar().gallery:curCP().gallery}
+function galRender(path){path=='char'?renderChars():renderCP()}
+function galDel(path,i){galArr(path).splice(i,1);persist();galRender(path)}
+function cropAt(path,i){const a=galArr(path);openCrop(a[i],{max:1600,onDone:d=>{a[i]=d;persist();galRender(path)}})}
 
 /* ===== 匯出：圖片（canvas）與文字 ===== */
 const FONT='"PingFang TC","Noto Sans TC","Microsoft JhengHei",sans-serif';
@@ -465,7 +495,7 @@ async function makeCard(spec){
    if(s.rows){for(const [k,v] of s.rows){if(v===''||v==null)continue;x.font=`bold 26px ${FONT}`;const kw=Math.min(260,Math.max(140,x.measureText(k).width+20));x.font=`28px ${FONT}`;const ls=wrap(x,v,W-2*P-kw);if(draw){x.fillStyle='#8a7a62';x.font=`bold 26px ${FONT}`;wrap(x,k,kw-16).forEach((l,i)=>x.fillText(l,P,y+30+i*34));x.fillStyle='#2e261c';x.font=`28px ${FONT}`;ls.forEach((l,i)=>x.fillText(l,P+kw,y+30+i*42))}y+=Math.max(ls.length*42,wrap(x,k,kw-16).length*34)+10}y+=14}
    if(s.text){x.font=`28px ${FONT}`;const ls=wrap(x,s.text,W-2*P);if(draw){x.fillStyle='#2e261c';ls.forEach((l,i)=>x.fillText(l,P,y+30+i*44))}y+=ls.length*44+24}
    if(s.art&&IM[s.art]){const im=IM[s.art],sc=Math.min((W-2*P)/im.width,900/im.height,1.6),w=im.width*sc,h=im.height*sc;if(draw)x.drawImage(im,(W-w)/2,y,w,h);y+=h+30}
-   if(s.imgs){const ok=s.imgs.filter(i=>IM[i]).slice(0,9),cw=(W-2*P-32)/3;ok.forEach((src,i)=>{const cx=P+(i%3)*(cw+16),cy=y+Math.floor(i/3)*(cw+16);if(draw){x.save();x.beginPath();x.roundRect?x.roundRect(cx,cy,cw,cw,14):x.rect(cx,cy,cw,cw);x.clip();coverDraw(x,IM[src],cx,cy,cw,cw);x.restore()}});y+=Math.ceil(ok.length/3)*(cw+16)+20}
+   if(s.imgs){const ok=s.imgs.filter(i=>IM[i]).slice(0,9),nc=ok.length==1?1:ok.length==2||ok.length==4?2:3,cw=(W-2*P-16*(nc-1))/nc,ch=Array(nc).fill(0);ok.forEach(src=>{const im=IM[src];let h=cw*im.height/im.width;if(h>cw*2.2)h=cw*2.2;const col=ch.indexOf(Math.min(...ch)),cx=P+col*(cw+16),cy=y+ch[col];if(draw){x.save();x.beginPath();x.roundRect?x.roundRect(cx,cy,cw,h,14):x.rect(cx,cy,cw,h);x.clip();coverDraw(x,im,cx,cy,cw,h);x.restore()}ch[col]+=h+16});y+=Math.max(0,...ch)+20}
    if(s.stages){for(const t of s.stages){x.font=`bold 28px ${FONT}`;if(draw){x.fillStyle='#8a6a3f';x.fillText(t.t,P,y+30)}y+=44;if(t.txt){x.font=`28px ${FONT}`;const ls=wrap(x,t.txt,W-2*P-20);if(draw){x.fillStyle='#2e261c';ls.forEach((l,i)=>x.fillText(l,P+20,y+28+i*42))}y+=ls.length*42+8}if(t.img&&IM[t.img]){const im=IM[t.img],sc=Math.min(520/im.width,520/im.height,1.5),w=im.width*sc,h=im.height*sc;if(draw)x.drawImage(im,P+20,y+6,w,h);y+=h+18}y+=16}}
    y+=16}
   y+=20;if(draw){x.fillStyle='#b3a385';x.font=`22px ${FONT}`;x.textAlign='right';x.fillText(TOOL,W-P,y);x.textAlign='left'}return y+40};
@@ -502,21 +532,21 @@ const CF=[
  {k:'name',l:'姓名',ph:'角色姓名'},{k:'nick',l:'暱稱／常被叫的稱呼',sug:1,ph:'例：阿哲、小晴'},
  {k:'gender',l:'性別／性別認同',sug:1,dl:'女、男、跨性別女性、跨性別男性、非二元、性別流動、不設定'},
  {k:'age',l:'年齡',ph:'例：27'},{k:'height',l:'身高',ph:'例：178 公分'},{k:'weight',l:'體重／體型',ph:'例：62 公斤、精實'},
- {k:'orient',l:'性傾向',dl:'異性戀、同性戀、雙性戀、泛性戀、無性戀、灰色性戀、無浪漫傾向、探索中、不設定'},
+ {k:'orient',l:'性傾向',dl:'異性戀、同性戀、雙性戀、泛性戀、無性戀、灰色性戀、半性戀、性單戀、無浪漫傾向、探索中、不設定',ph:'例：異性戀；沒列出的（如性單戀、半性戀）可以直接打'},
  {k:'bday',l:'生日',t:'bday'},{k:'zodiac',l:'星座（填生日會自動帶入）',t:'sel',o:ZOD},
  {k:'byear',l:'出生年（選填）',sug:1,ph:'例：1998，會自動帶入生肖'},{k:'czod',l:'生肖',t:'sel',o:CZ},
- {k:'blood',l:'血型',t:'sel',o:S('A、B、O、AB、其他／不確定')},{k:'mbti',l:'MBTI',t:'sel',o:MBTI},
+ {k:'blood',l:'血型',dl:S('A、B、O、AB、Rh 陰性、不確定')},{k:'mbti',l:'MBTI',dl:MBTI},
  {k:'nation',l:'國籍／居住地',sug:1,ph:'例：台灣／台北'},{k:'job',l:'職業／身分',sug:1,ph:'例：律師、大學生'},
  {k:'color',l:'代表色（關係表、存圖會用到）',sug:1,t:'color'}]],
 ['💭 個性與內在',[
  {k:'traits',l:'個性關鍵字',w:1,ph:'用頓號或逗號分隔，例：嘴硬心軟、慢熱、戀舊'},
  {k:'conf',l:'自信程度',t:'range'},
- {k:'attach',l:'依附類型',sug:1,t:'sel',o:S('安全型、焦慮型、逃避型、混亂型（恐懼逃避型）、不確定')},
+ {k:'attach',l:'依附類型',dl:S('安全型、焦慮型、逃避型、混亂型（恐懼逃避型）、不確定')},
  {k:'habit',l:'口頭禪／小習慣',sug:1},{k:'likes',l:'喜歡的事物',sug:1},{k:'dislikes',l:'討厭的事物',sug:1},
  {k:'goal',l:'目標與渴望',sug:1,t:'ta'},{k:'secret',l:'祕密／弱點',sug:1,t:'ta'}]],
 ['👀 外貌',[{k:'looks',l:'外貌特徵',sug:1,t:'ta',w:1,ph:'髮型、五官、慣穿的衣服、疤痕、刺青、香水……'}]],
 ['🏠 身心狀態與家庭',[
- {k:'health',l:'身心狀態',t:'sel',o:S('健全者、身心障礙、精神疾病、慢性病、其他疾病、多重狀態、不設定')},
+ {k:'health',l:'身心狀態',dl:S('健全者、身心障礙、精神疾病、慢性病、其他疾病、多重狀態、不設定')},
  {k:'healthNote',l:'狀態說明（選填）',t:'ta',ph:'例：聽障，會讀唇與手語；焦慮症，定期回診'},
  {k:'family',l:'家庭成員構成',t:'ta',ph:'例：父母健在、一個大三歲的姊姊'},{k:'pets',l:'寵物',ph:'例：一隻叫麻糬的橘貓'}]],
 ['💗 戀愛',[{k:'loveCount',l:'戀愛經驗（次數）',t:'num'},{k:'loveNote',l:'戀愛經驗補充',sug:1,t:'ta',ph:'例：初戀在大學，分手原因是……'}]],
@@ -526,26 +556,26 @@ const curChar=()=>ST.chars.find(c=>c.id==ST.curChar);
 const charById=id=>ST.chars.find(c=>c.id==id);
 function newChar(){const c={id:uid(),name:'',conf:3,color:pick(['#c9a37a','#9fb7c9','#c99fae','#a3b899','#b8a3c9','#d4b483','#8fa3a3']),gallery:[],deep:[],t:Date.now()};ST.chars.unshift(c);ST.curChar=c.id;persist();renderChars();setTimeout(()=>{const i=$('#charEdit [data-k=name]');i&&i.focus()},50)}
 function renderCharList(){$('#charCount').textContent=ST.chars.length?`共 ${ST.chars.length} 位人物`:'還沒有人物，先新增一位吧。';$('#charList').innerHTML=ST.chars.map(c=>`<span class="pchip ${c.id==ST.curChar?'on':''}" onclick="ST.curChar='${c.id}';persist();renderChars()">${avHTML(c.avatar,c.name)}${esc(c.name||'（未命名）')}</span>`).join('')}
-function fieldHTML(f,c){const v=c[f.k]==null?'':c[f.k];const lab=`<span class="lab">${esc(f.l)}${f.sug?'<span class="sug">✦</span>':''}</span>`;let inp;
+function fieldHTML(f,c){const v=c[f.k]==null?'':c[f.k];const dl=f.dl?(Array.isArray(f.dl)?f.dl:S(f.dl)):null;const lab=`<span class="lab">${esc(f.l)}${dl?'<span class="hint">可從清單選，也可以自己輸入</span>':''}</span>`;let inp;
  if(f.t=='sel')inp=`<select data-k="${f.k}"><option value="">—</option>${f.o.map(o=>`<option ${o==v?'selected':''}>${esc(o)}</option>`).join('')}</select>`;
  else if(f.t=='ta')inp=`<textarea data-k="${f.k}" rows="${f.rows||3}" placeholder="${esc(f.ph||'')}">${esc(v)}</textarea>`;
  else if(f.t=='num')inp=`<input type="number" min="0" data-k="${f.k}" value="${esc(v)}">`;
  else if(f.t=='color')inp=`<input type="color" data-k="${f.k}" value="${esc(v||'#c9a37a')}">`;
  else if(f.t=='range')inp=`<div class="conf"><input type="range" min="0" max="5" step="1" data-k="${f.k}" value="${v===''?3:v}"><b id="confv">${CONF_L[v===''?3:v]}</b></div>`;
  else if(f.t=='bday'){const [m,d]=String(v||'/').split('/');inp=`<div class="row"><select data-bd="m"><option value="">月</option>${[...Array(12)].map((_,i)=>`<option ${m==i+1?'selected':''}>${i+1}</option>`).join('')}</select><select data-bd="d"><option value="">日</option>${[...Array(31)].map((_,i)=>`<option ${d==i+1?'selected':''}>${i+1}</option>`).join('')}</select></div>`}
- else inp=`<input data-k="${f.k}" value="${esc(v)}" placeholder="${esc(f.ph||'')}" ${f.dl?`list="dl_${f.k}"`:''}>${f.dl?`<datalist id="dl_${f.k}">${S(f.dl).map(o=>`<option value="${esc(o)}">`).join('')}</datalist>`:''}`;
+ else inp=`<input data-k="${f.k}" value="${esc(v)}" placeholder="${esc(f.ph||(dl?'點一下看選項，或直接輸入':''))}" ${dl?`list="dl_${f.k}"`:''}>${dl?`<datalist id="dl_${f.k}">${dl.map(o=>`<option value="${esc(o)}">`).join('')}</datalist>`:''}`;
  const hid=f.k=='healthNote'&&(!c.health||c.health=='健全者'||c.health=='不設定')?' hide':'';
  return `<label class="${f.w||f.t=='ta'?'wide':''}${hid}" id="f_${f.k}">${lab}${inp}</label>`}
 function renderChars(){renderCharList();const c=curChar(),box=$('#charEdit');if(!c){box.innerHTML='';return}
  box.innerHTML=`<div class="card"><div class="row">${avHTML(c.avatar,c.name,'lg')}<div style="flex:1;min-width:180px"><h3 id="ceTitle" style="margin:0">${esc(c.name||'（未命名）')}</h3><span class="note">內容會自動儲存</span></div><button class="big" onclick="toDeep('${c.id}')">🧠 深化角色</button></div></div>
  <details class="fold" open><summary>🖼️ 頭貼、立繪與圖庫</summary><div class="inner"><div class="grid">
- <div class="imgbox ava"><span class="lab">人物頭貼</span>${c.avatar?`<img src="${c.avatar}" alt="" onclick="zoom(this.src)">`:''}<label class="filebtn">上傳頭貼<input type="file" accept="image/*" onchange="upImgs(this,512,d=>{curChar().avatar=d;persist();renderChars()})"></label> ${c.avatar?`<button class="sm" onclick="curChar().avatar=null;persist();renderChars()">移除</button>`:''}</div>
- <div class="imgbox"><span class="lab">人物立繪</span>${c.art?`<img src="${c.art}" alt="" onclick="zoom(this.src)">`:''}<label class="filebtn">上傳立繪<input type="file" accept="image/*" onchange="upImgs(this,1400,d=>{curChar().art=d;persist();renderChars()})"></label> ${c.art?`<button class="sm" onclick="curChar().art=null;persist();renderChars()">移除</button>`:''}</div></div>
- <p class="lab" style="margin-top:10px">人物圖庫（可一次選多張）</p><label class="filebtn">＋ 加入圖片<input type="file" accept="image/*" multiple onchange="upImgs(this,1200,d=>{curChar().gallery.push(d);persist();renderChars()})"></label>
- <div class="gal">${(c.gallery||[]).map((g,i)=>`<div><img src="${g}" alt="" onclick="zoom(this.src)"><button onclick="curChar().gallery.splice(${i},1);persist();renderChars()">✕</button></div>`).join('')}</div></div></details>
+ <div class="imgbox ava"><span class="lab">人物頭貼</span>${c.avatar?`<img src="${c.avatar}" alt="" onclick="zoom(this.src)">`:''}<label class="filebtn">上傳頭貼<input type="file" accept="image/*" onchange="upCrop(this,{ratio:1,circle:1,max:600,title:'調整頭貼',onOrig:d=>{curChar().avatarOrig=d},onDone:d=>{curChar().avatar=d;persist();renderChars()}})"></label> ${c.avatar?`<button class="sm" onclick="openCrop(curChar().avatarOrig||curChar().avatar,{ratio:1,circle:1,max:600,title:'調整頭貼',onDone:d=>{curChar().avatar=d;persist();renderChars()}})">✂️ 調整</button> <button class="sm" onclick="curChar().avatar=null;curChar().avatarOrig=null;persist();renderChars()">移除</button>`:''}</div>
+ <div class="imgbox"><span class="lab">人物立繪（保留原圖形狀）</span>${c.art?`<img src="${c.art}" alt="" onclick="zoom(this.src)">`:''}<label class="filebtn">上傳立繪<input type="file" accept="image/*" onchange="upImgs(this,1600,d=>{curChar().art=d;curChar().artOrig=d;persist();renderChars()})"></label> ${c.art?`<button class="sm" onclick="openCrop(curChar().artOrig||curChar().art,{max:1600,title:'裁切立繪',onDone:d=>{curChar().art=d;persist();renderChars()}})">✂️ 裁切／縮放</button> <button class="sm" onclick="curChar().art=null;curChar().artOrig=null;persist();renderChars()">移除</button>`:''}</div></div>
+ <p class="lab" style="margin-top:10px">人物圖庫（保留原圖形狀；可一次選多張，電腦也可以直接把圖片拖進這個區塊）</p><div class="dropz" id="charDrop"><label class="filebtn">＋ 加入圖片<input type="file" accept="image/png,image/jpeg,image/webp,image/gif" multiple onchange="upImgs(this,1600,d=>{curChar().gallery.push(d);persist();renderChars()})"></label><span class="note"> 手機若只能選一張，可以重複按幾次，或從「檔案」選取。每張圖都可以按 ✂️ 裁切。</span>
+ ${galHTML(c.gallery,'char')}</div></div></details>
  ${CF.map(([g,fs],gi)=>`<details class="fold" ${gi<2?'open':''}><summary>${g}</summary><div class="inner"><div class="grid">${fs.map(f=>fieldHTML(f,c)).join('')}</div>${g.includes('身心')?'<p class="note">身心狀態只是角色的一部分，不代表角色的全部。請避免把疾病或障礙當成噱頭、反派標籤，或「被愛治好」的情節；需要時建議查閱可靠資料，或請相關當事人、專業者協助審稿。</p>':''}</div></details>`).join('')}
  ${(c.deep||[]).length?`<details class="fold"><summary>🧠 深化筆記（${c.deep.length} 題）</summary><div class="inner">${c.deep.map(d=>`<p><b>${esc(d.q)}</b><br>${esc(d.a).replace(/\n/g,'<br>')}</p>`).join('')}<button onclick="toDeep('${c.id}')">到人物深化頁編輯</button></div></details>`:''}
- <div class="actbar"><button onclick="persist();toast('已儲存到瀏覽器')">💾 儲存</button> <button onclick="charImg()">🖼️ 存成圖片</button> <button onclick="showText(charText(curChar()),curChar().name)">📄 文字檔</button> <button onclick="copyText(charText(curChar()))">📋 複製文字</button> <button onclick="dupChar()">📑 複製一份</button> <button class="warn" onclick="armed(this,delChar)">🗑️ 刪除</button></div>`}
+ <div class="actbar"><button onclick="persist();toast('已儲存到瀏覽器')">💾 儲存</button> <button onclick="charImg()">🖼️ 存成圖片</button> <button onclick="showText(charText(curChar()),curChar().name)">📄 文字檔</button> <button onclick="copyText(charText(curChar()))">📋 複製文字</button> <button onclick="dupChar()">📑 複製一份</button> <button class="warn" onclick="armed(this,delChar)">🗑️ 刪除</button></div>`;dropZone($('#charDrop'),d=>{curChar().gallery.push(d);persist();renderChars()})}
 function onCharInput(e){const c=curChar();if(!c)return;const t=e.target;
  if(t.dataset.bd){const m=$('#charEdit [data-bd=m]').value,d=$('#charEdit [data-bd=d]').value;c.bday=m||d?`${m}/${d}`:'';if(m&&d){c.zodiac=zodiacOf(+m,+d);const z=$('#charEdit [data-k=zodiac]');if(z)z.value=c.zodiac}persist();return}
  const k=t.dataset.k;if(!k)return;c[k]=t.type=='range'||t.type=='number'?(t.value===''?'':+t.value):t.value;c.t=Date.now();
@@ -594,7 +624,7 @@ function renderCP(){renderCPList();const p=curCP(),box=$('#cpEdit');if(!p){box.i
  const co=`<option value="">（手動輸入名字）</option>`;
  box.innerHTML=`<details class="fold" open><summary>👥 成員（${p.members.length} 人）</summary><div class="inner">
  ${p.members.map((m,i)=>`<div class="lst"><div class="row">${avHTML(mAv(m),mName(m))}<select onchange="curCP().members[${i}].cid=this.value;persist();renderCP()">${co}${ST.chars.map(c=>`<option value="${c.id}" ${c.id==m.cid?'selected':''}>${esc(c.name||'（未命名）')}</option>`).join('')}</select>${m.cid?'':`<input placeholder="名字" value="${esc(m.name)}" oninput="curCP().members[${i}].name=this.value;persist();renderCPList()">`}
- <label class="filebtn">單人頭貼<input type="file" accept="image/*" onchange="upImgs(this,512,d=>{curCP().members[${i}].av=d;persist();renderCP()})"></label>${m.av?`<button class="sm" onclick="curCP().members[${i}].av=null;persist();renderCP()">改回人物頭貼</button>`:''}${p.members.length>2?`<button class="sm warn" onclick="curCP().members.splice(${i},1);persist();renderCP()">移除</button>`:''}</div></div>`).join('')}
+ <label class="filebtn">單人頭貼<input type="file" accept="image/*" onchange="upCrop(this,{ratio:1,circle:1,max:600,title:'調整頭貼',onDone:d=>{curCP().members[${i}].av=d;persist();renderCP()}})"></label>${m.av?`<button class="sm" onclick="curCP().members[${i}].av=null;persist();renderCP()">改回人物頭貼</button>`:''}${p.members.length>2?`<button class="sm warn" onclick="curCP().members.splice(${i},1);persist();renderCP()">移除</button>`:''}</div></div>`).join('')}
  ${p.members.length<6?`<p><button onclick="curCP().members.push({cid:'',name:''});persist();renderCP()">＋ 加入成員（最多六人）</button></p>`:''}
  <p class="note">選擇已存好的人物，會自動帶入名字和頭貼；也可以為這組 CP 另外上傳單人頭貼。</p></div></details>
  <details class="fold" open><summary>💞 基本資料</summary><div class="inner"><div class="grid">
@@ -602,15 +632,15 @@ function renderCP(){renderCPList();const p=curCP(),box=$('#cpEdit');if(!p){box.i
  <label><span class="lab">年齡差</span><div class="row"><input data-cp="ageGap" value="${esc(p.ageGap||'')}" placeholder="例：差 5 歲"><button class="sm" onclick="cpAgeGap()">依年齡計算</button></div></label>
  ${cpF('metYear','認識年份')}${cpF('dateYear','交往年份')}${cpF('marryYear','結婚年份（非必填）')}
  ${cpF('callEach','怎麼稱呼彼此',1)}${cpF('dateSpot','常去的約會地點',1)}${cpF('token','定情物／重要物品',1)}${cpF('song','代表歌曲',1)}</div></div></details>
- <details class="fold" open><summary>🙋 誰？</summary><div class="inner"><div class="grid">${WHO.map(([k,l,s])=>`<label><span class="lab">${l}${s?'<span class="sug">✦</span>':''}</span><select data-cp="${k}">${whoOpts(p,p[k])}</select></label>`).join('')}</div></div></details>
+ <details class="fold" open><summary>🙋 誰？</summary><div class="inner"><div class="grid">${WHO.map(([k,l,s])=>`<label><span class="lab">${l}</span><select data-cp="${k}">${whoOpts(p,p[k])}</select></label>`).join('')}</div></div></details>
  <details class="fold" open><summary>📶 認識程度與態度</summary><div class="inner"><p class="note">不同認識深淺階段的互動模式，可以寫文字，也可以上傳自己畫的互動圖。百分比可以修改，也能增減階段。</p>
- ${p.stages.map((s,i)=>`<div class="stage"><div class="row"><input type="number" min="0" max="100" value="${s.p}" style="max-width:90px;flex:0" oninput="curCP().stages[${i}].p=this.value;persist()"><b>%</b><span style="flex:1"></span><label class="filebtn">上傳互動圖<input type="file" accept="image/*" onchange="upImgs(this,1200,d=>{curCP().stages[${i}].img=d;persist();renderCP()})"></label>${s.img?`<button class="sm" onclick="curCP().stages[${i}].img=null;persist();renderCP()">移除圖</button>`:''}<button class="sm warn" onclick="curCP().stages.splice(${i},1);persist();renderCP()">刪除階段</button></div>
+ ${p.stages.map((s,i)=>`<div class="stage"><div class="row"><input type="number" min="0" max="100" value="${s.p}" style="max-width:90px;flex:0" oninput="curCP().stages[${i}].p=this.value;persist()"><b>%</b><span style="flex:1"></span><label class="filebtn">上傳互動圖<input type="file" accept="image/*" onchange="upImgs(this,1600,d=>{curCP().stages[${i}].img=d;persist();renderCP()})"></label>${s.img?`<button class="sm" onclick="openCrop(curCP().stages[${i}].img,{max:1600,onDone:d=>{curCP().stages[${i}].img=d;persist();renderCP()}})">✂️ 裁切</button><button class="sm" onclick="curCP().stages[${i}].img=null;persist();renderCP()">移除圖</button>`:''}<button class="sm warn" onclick="curCP().stages.splice(${i},1);persist();renderCP()">刪除階段</button></div>
  <textarea rows="2" placeholder="${esc(STAGE_PH[s.p]||'這個階段的互動模式……')}" oninput="curCP().stages[${i}].txt=this.value;persist()">${esc(s.txt)}</textarea>${s.img?`<img src="${s.img}" alt="" onclick="zoom(this.src)">`:''}</div>`).join('')}
  <button onclick="curCP().stages.push({p:'',txt:'',img:null});persist();renderCP()">＋ 新增階段</button></div></details>
  <details class="fold" open><summary>📝 自由補充</summary><div class="inner"><textarea data-cp="free" rows="7">${esc(p.free||'')}</textarea></div></details>
- <details class="fold" open><summary>🖼️ CP 圖庫</summary><div class="inner"><label class="filebtn">＋ 加入圖片<input type="file" accept="image/*" multiple onchange="upImgs(this,1200,d=>{curCP().gallery.push(d);persist();renderCP()})"></label><div class="gal">${p.gallery.map((g,i)=>`<div><img src="${g}" alt="" onclick="zoom(this.src)"><button onclick="curCP().gallery.splice(${i},1);persist();renderCP()">✕</button></div>`).join('')}</div></div></details>
- <div class="actbar"><button onclick="persist();toast('已儲存到瀏覽器')">💾 儲存</button> <button onclick="cpImg()">🖼️ 存成圖片</button> <button onclick="showText(cpText(curCP()),cpTitle(curCP()))">📄 文字檔</button> <button onclick="copyText(cpText(curCP()))">📋 複製文字</button> <button class="warn" onclick="armed(this,delCP)">🗑️ 刪除</button></div>`}
-function cpF(k,l,s,dl){const p=curCP();return `<label><span class="lab">${l}${s?'<span class="sug">✦</span>':''}</span><input data-cp="${k}" value="${esc(p[k]||'')}" ${dl?`list="dl_cp_${k}"`:''}>${dl?`<datalist id="dl_cp_${k}">${S(dl).map(o=>`<option value="${o}">`).join('')}</datalist>`:''}</label>`}
+ <details class="fold" open><summary>🖼️ CP 圖庫</summary><div class="inner"><div class="dropz" id="cpDrop"><label class="filebtn">＋ 加入圖片<input type="file" accept="image/png,image/jpeg,image/webp,image/gif" multiple onchange="upImgs(this,1600,d=>{curCP().gallery.push(d);persist();renderCP()})"></label><span class="note"> 可一次選多張，電腦也可以直接拖進來；每張圖都可以按 ✂️ 裁切。</span>${galHTML(p.gallery,'cp')}</div></div></details>
+ <div class="actbar"><button onclick="persist();toast('已儲存到瀏覽器')">💾 儲存</button> <button onclick="cpImg()">🖼️ 存成圖片</button> <button onclick="showText(cpText(curCP()),cpTitle(curCP()))">📄 文字檔</button> <button onclick="copyText(cpText(curCP()))">📋 複製文字</button> <button class="warn" onclick="armed(this,delCP)">🗑️ 刪除</button></div>`;dropZone($('#cpDrop'),d=>{curCP().gallery.push(d);persist();renderCP()})}
+function cpF(k,l,s,dl){const p=curCP();return `<label><span class="lab">${l}</span><input data-cp="${k}" value="${esc(p[k]||'')}" ${dl?`list="dl_cp_${k}"`:''}>${dl?`<datalist id="dl_cp_${k}">${S(dl).map(o=>`<option value="${o}">`).join('')}</datalist>`:''}</label>`}
 function onCPInput(e){const k=e.target.dataset.cp;if(!k)return;curCP()[k]=e.target.value;if(k=='name')renderCPList();persist()}
 function cpAgeGap(){const p=curCP();const ages=p.members.map(m=>{const c=m.cid&&charById(m.cid);return c?parseInt(c.age):NaN}).filter(a=>!isNaN(a));if(ages.length<2){toast('需要至少兩位已填年齡的人物');return}const g=Math.max(...ages)-Math.min(...ages);p.ageGap=g?`差 ${g} 歲`:'同齡';persist();renderCP()}
 function delCP(){ST.cps=ST.cps.filter(c=>c.id!=ST.curCP);ST.curCP=ST.cps[0]?.id||null;persist();renderCP()}
@@ -639,7 +669,7 @@ function renderMap(){const m=curMap();$('#mapSel').innerHTML=ST.maps.map(x=>`<op
  $('#mapImpPSel').innerHTML=ST.cps.length?ST.cps.map(p=>`<option value="${p.id}">${esc(cpTitle(p))}</option>`).join(''):'<option value="">還沒有 CP</option>';
  const opts=m.nodes.map(n=>`<option value="${n.id}">${esc(nName(n))}</option>`).join('');$('#eA').innerHTML=opts;$('#eB').innerHTML=opts;if(m.nodes[1])$('#eB').value=m.nodes[1].id;
  $('#relDL').innerHTML=REL.map(r=>`<option value="${r}">`).join('');
- $('#mapList').innerHTML=(m.nodes.length?'':'<p class="note">先帶入人物、CP 或新增旁支人物。</p>')+m.nodes.map(n=>`<div class="lst row">${avHTML(nImg(n),nName(n))}${n.cid?`<b style="flex:1">${esc(nName(n))}</b>`:`<input value="${esc(n.name)}" oninput="mapNode('${n.id}').name=this.value;persist();drawMap()">`}<input type="color" value="${n.color}" title="代表色" oninput="mapNode('${n.id}').color=this.value;persist();drawMap()">${n.cid?'':`<label class="filebtn">頭像<input type="file" accept="image/*" onchange="upImgs(this,400,d=>{mapNode('${n.id}').img=d;persist();renderMap()})"></label>`}<button class="sm warn" onclick="mapDelNode('${n.id}')">移除</button></div>`).join('')
+ $('#mapList').innerHTML=(m.nodes.length?'':'<p class="note">先帶入人物、CP 或新增旁支人物。</p>')+m.nodes.map(n=>`<div class="lst row">${avHTML(nImg(n),nName(n))}${n.cid?`<b style="flex:1">${esc(nName(n))}</b>`:`<input value="${esc(n.name)}" oninput="mapNode('${n.id}').name=this.value;persist();drawMap()">`}<input type="color" value="${n.color}" title="代表色" oninput="mapNode('${n.id}').color=this.value;persist();drawMap()">${n.cid?'':`<label class="filebtn">頭像<input type="file" accept="image/*" onchange="upCrop(this,{ratio:1,circle:1,max:400,title:'調整頭像',onDone:d=>{mapNode('${n.id}').img=d;persist();renderMap()}})"></label>`}<button class="sm warn" onclick="mapDelNode('${n.id}')">移除</button></div>`).join('')
  +(m.edges.length?'<p class="lab" style="margin-top:10px">關係</p>':'')+m.edges.map(e=>{const a=mapNode(e.a),b=mapNode(e.b);if(!a||!b)return'';return `<div class="lst row"><span style="min-width:8em">${esc(nName(a))} ${['—','→','↔'][e.dir]} ${esc(nName(b))}</span><input value="${esc(e.label)}" list="relDL" oninput="mapEdge('${e.id}').label=this.value;persist();drawMap()"><select onchange="mapEdge('${e.id}').dir=+this.value;persist();renderMap()"><option value="1" ${e.dir==1?'selected':''}>單向</option><option value="2" ${e.dir==2?'selected':''}>雙向</option><option value="0" ${e.dir==0?'selected':''}>無箭頭</option></select><button class="sm" onclick="const e=mapEdge('${e.id}');[e.a,e.b]=[e.b,e.a];persist();renderMap()" title="反轉方向">⇄</button><button class="sm warn" onclick="curMap().edges=curMap().edges.filter(x=>x.id!='${e.id}');persist();renderMap()">移除</button></div>`}).join('');
  drawMap()}
 const mapNode=id=>curMap().nodes.find(n=>n.id==id),mapEdge=id=>curMap().edges.find(e=>e.id==id);
