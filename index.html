@@ -1,0 +1,775 @@
+<!DOCTYPE html>
+<html lang="zh-Hant-TW">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>現代背景 OC／CP 設定手帳</title>
+<style>
+:root{--main:#E0D3BC;--bg:#FBF8F2;--card:#fff;--ink:#3d3226;--sub:#7a6a55;--line:#e3d6bf;--deep:#8a6a3f;--soft:#f3ece0;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root{color-scheme:dark;--bg:#211b14;--card:#2d251c;--ink:#f3ebde;--sub:#c9b89c;--line:#4d4031;--deep:#E0D3BC;--soft:#382e23}}
+*{box-sizing:border-box}
+html{scroll-padding-top:calc(env(safe-area-inset-top,0px) + 90px)}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.75 "PingFang TC","Noto Sans TC","Microsoft JhengHei",sans-serif}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);background:var(--main);z-index:10}
+header{position:sticky;top:env(safe-area-inset-top,0px);background:var(--main);z-index:9;padding:10px 12px;border-bottom:1px solid #cdbb9c}
+header h1{margin:0 0 6px;font-size:1.05rem;color:#3d3226}
+nav{display:flex;gap:4px;flex-wrap:wrap}
+nav a,nav .more>button{padding:4px 11px;border-radius:99px;background:#ffffffb0;color:#3d3226;text-decoration:none;font-size:.85rem;border:0;cursor:pointer;font-family:inherit}
+nav a.on,nav .more>button.on{background:#8a6a3f;color:#fff}
+nav .more{position:relative}
+#moremenu{display:none;position:absolute;right:0;top:115%;background:#fff;border-radius:12px;box-shadow:0 4px 16px #0003;padding:6px;z-index:50;min-width:150px}
+#moremenu.open{display:block}
+#moremenu a{display:block;background:none;border-radius:8px;padding:8px 12px;white-space:nowrap}
+main{max-width:820px;margin:0 auto;padding:18px 14px 80px}
+section{display:none}section.on{display:block}
+h2{color:var(--deep);margin:.2em 0 .3em}
+h3{color:var(--deep);margin:.2em 0 .5em;font-size:1.05rem}
+.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:12px 14px;margin:10px 0}
+.note,small{color:var(--sub);font-size:.86rem}
+.lab{display:block;font-size:.82rem;color:var(--sub);margin-bottom:2px}
+button,select,input,textarea{font:inherit;color:var(--ink)}
+button{background:var(--main);color:#3d3226;border:1px solid #d3c3a6;border-radius:10px;padding:5px 13px;cursor:pointer;margin:2px 0}
+button:hover{filter:brightness(.97)}
+button.big{background:#8a6a3f;color:#fff;border:0;padding:9px 20px}
+button.sm{padding:1px 9px;font-size:.8rem;border-radius:8px}
+button.on{background:#8a6a3f;color:#fff}
+button.warn{background:#f5ddd6;border-color:#e6b9ad;color:#7a2e1d}
+button:disabled{opacity:.45;cursor:default}
+input,select,textarea{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:6px 10px;width:100%}
+input[type=checkbox],input[type=radio]{width:auto}
+input[type=color]{padding:2px;height:36px;width:60px}
+input[type=range]{padding:0;accent-color:#8a6a3f}
+textarea{resize:vertical}
+a{color:var(--deep)}
+.grid{display:grid;gap:10px;grid-template-columns:repeat(auto-fill,minmax(220px,1fr))}
+.grid .wide{grid-column:1/-1}
+.row{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.row>input,.row>select{flex:1;min-width:120px;width:auto}
+details.fold{border:1px solid var(--line);border-radius:14px;background:var(--card);margin:10px 0;padding:0 14px}
+details.fold>summary{cursor:pointer;padding:10px 0;font-weight:600;color:var(--deep);list-style:none}
+details.fold>summary::-webkit-details-marker{display:none}
+details.fold>summary::before{content:"▸ "}details.fold[open]>summary::before{content:"▾ "}
+details.fold>.inner{padding-bottom:12px}
+.sug{color:#b07a2c;font-size:.75rem;margin-left:3px}
+.plist{display:flex;flex-wrap:wrap;gap:8px}
+.pchip{display:flex;align-items:center;gap:6px;border:1px solid var(--line);background:var(--soft);border-radius:99px;padding:3px 12px 3px 3px;cursor:pointer;font-size:.9rem}
+.pchip.on{background:#8a6a3f;color:#fff;border-color:#8a6a3f}
+.av{width:34px;height:34px;border-radius:50%;object-fit:cover;background:var(--main);display:inline-flex;align-items:center;justify-content:center;font-weight:700;color:#3d3226;flex-shrink:0;overflow:hidden;font-size:.9rem}
+.av.lg{width:96px;height:96px;font-size:1.6rem}
+.imgbox{border:1.5px dashed var(--line);border-radius:12px;padding:8px;text-align:center;background:var(--soft)}
+.imgbox img{max-width:100%;max-height:260px;border-radius:8px;display:block;margin:0 auto 6px}
+.imgbox.ava img{width:120px;height:120px;object-fit:cover;border-radius:50%}
+.gal{display:grid;grid-template-columns:repeat(auto-fill,minmax(96px,1fr));gap:6px;margin-top:6px}
+.gal div{position:relative}
+.gal img{width:100%;aspect-ratio:1;object-fit:cover;border-radius:8px;display:block;cursor:zoom-in}
+.gal button{position:absolute;top:2px;right:2px;padding:0 6px;font-size:.75rem;background:#fffd}
+.filebtn{display:inline-block;background:var(--main);border:1px solid #d3c3a6;border-radius:10px;padding:4px 12px;cursor:pointer;font-size:.88rem;color:#3d3226;margin:2px 0}
+.filebtn input{display:none}
+.actbar{position:sticky;bottom:8px;z-index:5;background:var(--card);border:1px solid var(--line);border-radius:14px;padding:8px 10px;margin:12px 0;box-shadow:0 2px 12px #0002}
+.slot{display:flex;gap:10px;align-items:flex-start;justify-content:space-between;border:1px solid var(--line);border-radius:12px;padding:8px 12px;margin:8px 0;background:var(--card)}
+.slot.locked{border-color:#8a6a3f;box-shadow:inset 4px 0 0 #8a6a3f}
+.slot .body{flex:1;min-width:0}
+.slot .k{font-size:.8rem;color:var(--sub)}
+.slot .v{font-weight:600;word-break:break-word}
+.slot .btns{display:flex;gap:4px;flex-shrink:0;flex-wrap:wrap;justify-content:flex-end}
+.chips label{display:inline-flex;align-items:center;gap:3px;margin:2px 8px 2px 0;font-size:.9rem;cursor:pointer}
+.stage{border:1px solid var(--line);border-radius:12px;padding:8px 10px;margin:8px 0;background:var(--soft)}
+.stage img{max-width:100%;max-height:220px;border-radius:8px;display:block;margin:6px 0}
+.portals{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:10px;margin:12px 0}
+.portal{display:block;text-align:left;background:var(--card);border:1px solid var(--line);border-radius:14px;padding:12px;cursor:pointer;color:var(--ink)}
+.portal b{display:block;margin-bottom:3px}.portal span{font-size:.86rem;color:var(--sub)}
+#toast{position:fixed;left:50%;bottom:24px;transform:translateX(-50%);background:#3d3226;color:#fff;padding:8px 16px;border-radius:99px;font-size:.9rem;opacity:0;pointer-events:none;transition:opacity .2s;z-index:100}
+#toast.show{opacity:1}
+#modal{display:none;position:fixed;inset:0;background:#0008;z-index:90;align-items:center;justify-content:center;padding:16px}
+#modal.open{display:flex}
+#modal .box{background:var(--card);border-radius:16px;max-width:760px;width:100%;max-height:90vh;overflow:auto;padding:14px}
+#modal img{max-width:100%;display:block;margin:8px auto;border-radius:8px;border:1px solid var(--line)}
+#mapsvg{width:100%;height:auto;touch-action:none;user-select:none;-webkit-user-select:none;background:#fff;border-radius:10px;display:block}
+.nodeg{cursor:grab}
+.lst{border-top:1px dashed var(--line);padding:6px 0}
+.lst:first-child{border-top:0}
+ul.src{padding-left:1.2em;word-break:break-all}
+.hide{display:none!important}
+.row>input[type=color]{flex:0 0 56px;min-width:56px}
+.tl{position:relative;margin:10px 0 10px 8px;padding-left:22px;border-left:3px solid var(--main)}
+.tli{position:relative;display:flex;gap:12px;margin:0 0 14px;flex-wrap:wrap}
+.tli::before{content:"";position:absolute;left:-31px;top:8px;width:14px;height:14px;border-radius:50%;background:#8a6a3f;border:3px solid var(--bg)}
+.tly{min-width:5.5em;font-weight:700;color:var(--deep)}
+.tlb{flex:1;min-width:200px;background:var(--card);border:1px solid var(--line);border-radius:12px;padding:8px 12px}
+.conf{display:flex;align-items:center;gap:8px}
+.conf b{min-width:2.5em}
+</style>
+</head>
+<body>
+<header>
+<h1>📒 現代背景 OC／CP 設定手帳</h1>
+<nav id="nav"><a href="#welcome">歡迎使用</a><a href="#chars">人物設定</a><a href="#deep">人物深化</a><a href="#cp">CP設定</a><a href="#map">人物關係表</a><a href="#timeline">時間軸</a><a href="#drill">短文練習題</a><a href="#scene">人事時地物</a><span class="more"><button type="button" id="morebtn">更多 ▾</button><span id="moremenu"><a href="#backup">資料備份</a><a href="#src">出處資訊</a></span></span></nav>
+</header>
+<main>
+
+<section id="welcome">
+<h2>歡迎使用</h2>
+<div class="card">
+<p>這是由一位小說創作者個人製作的免費工具，無任何營利。</p>
+<p>如果你已經有自己的角色，想把設定整理清楚、慢慢深化人物、整理 CP 的互動與彼此的關係，再用練習題與情境產生器動手寫寫看，這本手帳就是為你準備的。內容聚焦在現代背景，日常向和暗黑向都能用。</p>
+<p class="note">你填寫的人物、CP、關係表和上傳的圖片，都只存在你自己的瀏覽器，本工具不會蒐集或上傳任何資料。換裝置或清除瀏覽器資料就會消失，建議定期到「更多 → 資料備份」下載備份檔。</p>
+</div>
+<div class="portals">
+<button class="portal" onclick="go('chars')"><b>👤 人物設定</b><span>整理既有角色的基本資料、個性與身心狀態，上傳頭貼、立繪與圖庫。</span></button>
+<button class="portal" onclick="go('deep')"><b>🧠 人物深化</b><span>一次五題分析題，可鎖定或重骰，回答會存進人物的深化筆記。</span></button>
+<button class="portal" onclick="go('cp')"><b>💞 CP設定</b><span>二到六人的 CP 彙整：誰追誰、誰先告白，以及不同認識程度的互動模式。</span></button>
+<button class="portal" onclick="go('map')"><b>🕸️ 人物關係表</b><span>帶入人物與 CP，拖曳排版、換代表色，下載成圖片。</span></button>
+<button class="portal" onclick="go('timeline')"><b>📅 時間軸</b><span>把人物和 CP 的重要事件按年份排好，可一鍵帶入出生年與認識、交往、結婚年份。</span></button>
+<button class="portal" onclick="go('drill')"><b>✍️ 短文練習題</b><span>從三十題／五十題題庫隨機抽五題，自由挑選來寫。</span></button>
+<button class="portal" onclick="go('scene')"><b>🎬 人事時地物</b><span>依地區與場域，抽出人、事、時、地、物、氣氛和梗，幫練習題延伸成場景。</span></button>
+</div>
+<details class="fold"><summary>使用教學</summary><div class="inner">
+<p><b>① 先建立人物。</b>到「人物設定」按「＋ 新增人物」，填好的內容會自動存在瀏覽器裡。標有 <span class="sug">✦</span> 的欄位是額外建議填寫的欄位，不想用可以留白。</p>
+<p><b>② 深化角色。</b>人物頁的「🧠 深化角色」會帶你到「人物深化」，題目可以鎖住或重骰，寫好的回答按「存入深化筆記」就會跟著這位人物。</p>
+<p><b>③ 組 CP。</b>在「CP設定」選擇已存好的人物（預設兩人，最多六人），單人頭貼會自動帶入，也可以另外上傳。</p>
+<p><b>④ 畫關係表。</b>「人物關係表」可以一鍵帶入人物或 CP，拖曳位置、換代表色、新增旁支人物，再下載成圖片。</p>
+<p><b>⑤ 排時間軸。</b>「時間軸」可以從人物的出生年、CP 的認識／交往／結婚年份一鍵帶入，也能自己加事件；有填出生年的人物，會自動算出當時幾歲。</p>
+<p><b>⑥ 動手寫。</b>「短文練習題」抽題目；按題目旁的「🎬」可以把題目帶到「人事時地物」，搭配已存好的人物抽出完整場景；如果人物有深化筆記，「人物提示」會隨機帶出一則，讓角色的個性直接進到場景裡。</p>
+<p><b>存圖與存文字：</b>每一頁都有「存成圖片」「文字檔」「複製文字」。存成圖片時可以選版面：長版（完整內容）、直式手機桌布（9:16）或方形社群貼文（1:1），後兩種會自動精簡內容。若按下載沒有反應（例如在某些預覽環境中），請在跳出的視窗裡長按或右鍵另存圖片，或使用「複製文字」。</p>
+</div></details>
+</section>
+
+<section id="chars">
+<h2>人物設定</h2>
+<p class="note">整理你既有的角色。內容會自動存在這個瀏覽器；標有 <span class="sug">✦</span> 的是額外建議欄位，可以留白。</p>
+<div class="card"><div class="row"><button class="big" onclick="newChar()">＋ 新增人物</button><span class="note" id="charCount"></span></div><div id="charList" class="plist" style="margin-top:8px"></div></div>
+<div id="charEdit"></div>
+</section>
+
+<section id="deep">
+<h2>人物深化</h2>
+<p class="note">每次隨機五題，可以鎖住想留下的題目、重骰其他題。回答想寫幾題都可以，寫好按「存入深化筆記」就會存進這位人物。題庫為本工具作者的原創角色分析單。</p>
+<div class="card"><div class="grid"><label><span class="lab">選擇人物（從人物設定帶入）</span><select id="deepWho" onchange="DEEP.cid=this.value;saveDeep();renderDeepNotes()"></select></label></div>
+<p class="lab" style="margin:10px 0 2px">題目類別（可複選；全不選＝全部混抽）</p><div id="deepCats" class="chips"></div></div>
+<div id="deepSlots"></div>
+<div class="actbar"><button class="big" onclick="rollDeep()">🎲 重骰（鎖住的保留）</button> <button onclick="saveDeepNotes()">💾 存入深化筆記</button> <button onclick="deepImg()">🖼️ 存成圖片</button> <button onclick="deepTxt()">📄 文字檔</button></div>
+<div class="card"><h3>深化筆記</h3><div id="deepNotes"></div></div>
+<details class="fold"><summary>加入我自己的題目</summary><div class="inner"><span class="lab">每行一題，格式：類別｜題目（沒寫類別會歸到「我的題目」）</span><textarea id="myQin" rows="3"></textarea><p><button onclick="addMyQ()">加入題庫</button> <button onclick="ST.myQ=[];persist();renderDeepCats();toast('已清空自訂題目')">清空自訂題目</button> <span class="note" id="myQn"></span></p></div></details>
+</section>
+
+<section id="cp">
+<h2>CP設定／互動彙整</h2>
+<p class="note">可以直接帶入已存好的人物，預設兩人、最多六人。標有 <span class="sug">✦</span> 的是額外建議欄位。</p>
+<div class="card"><div class="row"><button class="big" onclick="newCP()">＋ 新增 CP</button><span class="note" id="cpCount"></span></div><div id="cpList" class="plist" style="margin-top:8px"></div></div>
+<div id="cpEdit"></div>
+</section>
+
+<section id="map">
+<h2>人物關係表</h2>
+<p class="note">帶入人物或 CP，拖曳人物調整位置，點下方清單可改名、換代表色、加關係說明。內容存在這個瀏覽器。</p>
+<div class="card"><div class="row"><label style="flex:1;min-width:160px"><span class="lab">目前的關係表</span><select id="mapSel" onchange="ST.curMap=this.value;persist();renderMap()"></select></label><button onclick="newMap()">＋ 新的關係表</button><button onclick="renameMap()">重新命名</button><button class="warn" onclick="armed(this,delMap)">刪除這張表</button></div><input id="mapName" class="hide" placeholder="輸入新名稱後按 Enter" onkeydown="if(event.key=='Enter'){curMap().name=this.value||curMap().name;this.classList.add('hide');persist();renderMap()}"></div>
+<div class="card">
+<div class="row"><button onclick="toggle('#mapImpC')">👤 帶入人物</button><button onclick="toggle('#mapImpP')">💞 帶入 CP</button><button onclick="toggle('#mapSide')">＋ 旁支人物</button></div>
+<div id="mapImpC" class="hide" style="margin-top:8px"><div id="mapImpCList" class="chips"></div><button onclick="mapImportChars()">加入勾選的人物</button></div>
+<div id="mapImpP" class="hide" style="margin-top:8px"><div class="row"><select id="mapImpPSel"></select><button onclick="mapImportCP()">帶入這組 CP</button></div></div>
+<div id="mapSide" class="hide" style="margin-top:8px"><div class="row"><input id="sideName" placeholder="旁支人物名字（例：店長、前任）"><input type="color" id="sideColor" value="#9aa5b1"><button onclick="mapAddSide()">新增</button></div></div>
+<div class="row" style="margin-top:8px"><label><span class="lab">人名字級</span><select id="mapNs" onchange="curMap().ns=+this.value;persist();drawMap()"><option value="14">小</option><option value="18">中</option><option value="22">大</option><option value="28">特大</option></select></label><label><span class="lab">關係文字字級</span><select id="mapFs" onchange="curMap().fs=+this.value;persist();drawMap()"><option value="12">小</option><option value="15">中</option><option value="18">大</option><option value="22">特大</option></select></label><label><span class="lab">頭像大小</span><select id="mapR" onchange="curMap().r=+this.value;persist();drawMap()"><option value="26">小</option><option value="36">中</option><option value="48">大</option></select></label></div>
+</div>
+<div class="card" style="padding:6px"><svg id="mapsvg" viewBox="0 0 900 600"></svg></div>
+<div class="actbar"><button onclick="mapImg()">🖼️ 存成圖片</button> <button onclick="mapTxt()">📄 文字檔</button> <button onclick="autoLayout()">🔄 自動排成圓形</button> <button class="warn" onclick="armed(this,mapClear)">清空這張表</button></div>
+<div class="card"><h3>新增關係</h3>
+<div class="grid"><label><span class="lab">從</span><select id="eA"></select></label><label><span class="lab">到</span><select id="eB"></select></label><label><span class="lab">方向</span><select id="eDir"><option value="1">單向（從 → 到）</option><option value="2">雙向</option><option value="0">無箭頭</option></select></label><label class="wide"><span class="lab">關係的簡短說明</span><input id="eLabel" list="relDL" placeholder="例：青梅竹馬、單方面暗戀、互相看不順眼"></label></div>
+<datalist id="relDL"></datalist>
+<p><button onclick="mapAddEdge()">加入關係</button></p></div>
+<div class="card"><h3>人物與關係清單</h3><div id="mapList"></div></div>
+</section>
+
+<section id="timeline">
+<h2>時間軸</h2>
+<p class="note">把人物和 CP 的重要事件按年份排好。可以從人物設定（出生年）和 CP 設定（認識、交往、結婚年份）一鍵帶入；有填出生年的人物，會自動算出事件發生時幾歲。年份也可以寫成「2019 夏」「高二那年」這類文字，有數字的會照年份排序。</p>
+<div class="card"><p style="margin-top:0"><button onclick="tlImport()">⤵️ 從人物與 CP 帶入年份</button> <span class="note">再按一次會同步更新年份</span></p>
+<div class="grid"><label><span class="lab">年份</span><input id="tlY" placeholder="例：2019、2019 夏"></label><label><span class="lab">月份（選填）</span><select id="tlM"><option value="">—</option><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option><option>6</option><option>7</option><option>8</option><option>9</option><option>10</option><option>11</option><option>12</option></select></label><label class="wide"><span class="lab">事件</span><input id="tlT" placeholder="例：在咖啡店第一次見面"></label><label class="wide"><span class="lab">補充說明（選填）</span><textarea id="tlD" rows="2"></textarea></label></div>
+<p class="lab" style="margin:8px 0 2px">相關人物（可複選）</p><div id="tlWho" class="chips"></div>
+<p><button class="big" id="tlAdd" onclick="tlAdd()">＋ 加入時間軸</button> <button id="tlCancel" class="hide" onclick="tlCancel()">取消編輯</button></p></div>
+<div class="card"><label><span class="lab">顯示</span><select id="tlF" onchange="renderTL()"></select></label></div>
+<div id="tlList"></div>
+<div class="actbar"><button onclick="tlImg()">🖼️ 存成圖片</button> <button onclick="tlTxt()">📄 文字檔</button></div>
+</section>
+
+<section id="drill">
+<h2>短文／段子練習題</h2>
+<p class="note">從三十題、五十題題庫中隨機抽五題，想寫哪一題、寫幾題都由你決定；喜歡的題目可以鎖住，其他重骰。</p>
+<p class="note">題庫為噗浪旅人／匿名偷偷說上各方彙整的資料，大多原始來源已不可考或未曾附上，詳見「出處資訊」。</p>
+<div class="card"><p style="margin:0"><label><input type="checkbox" id="dAdult" onchange="renderDrillCats()"> 我已年滿 18 歲，加入成人題目（R18、情趣、色氣）</label><br><label><input type="checkbox" id="dDark" onchange="renderDrillCats()"> 加入虐心／暗黑題目（生離死別、BE、犯罪、黑幫警匪、精神與心理、較血腥的疼痛等）</label></p>
+<details class="fold" style="margin-bottom:0"><summary>篩選題庫主題</summary><div class="inner"><p class="note">可複選；全不選＝全部混抽。</p><div id="drillCats" class="chips"></div></div></details></div>
+<div id="drillSlots"></div>
+<div class="actbar"><button class="big" onclick="rollDrill()">🎲 重骰（鎖住的保留）</button> <button onclick="drillCopy()">📋 複製題目</button> <button onclick="drillTxt()">📄 文字檔</button> <button onclick="drillImg()">🖼️ 存成圖片</button></div>
+<details class="fold"><summary>加入我自己的練習題</summary><div class="inner"><span class="lab">每行一題，格式：主題｜題目</span><textarea id="myPin" rows="3"></textarea><p><button onclick="addMyP()">加入題庫</button> <button onclick="ST.myP=[];persist();renderDrillCats();toast('已清空自訂練習題')">清空自訂練習題</button> <span class="note" id="myPn"></span></p></div></details>
+</section>
+
+<section id="scene">
+<h2>人事時地物產生器</h2>
+<p class="note">限定現代、非架空背景。選好地區、調性和場域，一次抽出人、事、時、地、物，加上氣氛詞、感官細節、轉折和梗。可以搭配「短文練習題」，把題目延伸成一個完整場景。</p>
+<div class="card">
+<div class="grid"><label><span class="lab">地區</span><select id="scRegion"><option value="">不限</option><option value="tw">台灣</option><option value="we">歐美</option><option value="ot">其他（日韓、港新、東南亞等）</option></select></label><label><span class="lab">調性</span><select id="scTone" onchange="renderSceneSets()"><option value="">不限</option><option value="d">日常向</option><option value="k">暗黑向</option></select></label></div>
+<p class="lab" style="margin:10px 0 2px">場域（可複選；全不選＝依調性混抽）</p><div id="scSets" class="chips"></div>
+<p class="lab" style="margin:10px 0 2px">代入已存好的人物（可複選；全不選時，會從已存人物中隨機抽一到兩位）</p><div id="scChars" class="chips"></div>
+<p class="lab" style="margin:10px 0 2px">梗的來源（可複選；全不選＝依調性混抽）</p><div id="scTropes" class="chips"></div>
+<label style="display:block;margin-top:10px"><span class="lab">寫作主題（選填；可從短文練習題帶入）</span><input id="scTheme" placeholder="例：同居｜一方臥病在床" oninput="SC.theme=this.value;saveScene()"></label>
+</div>
+<div id="sceneSlots"></div>
+<div class="actbar"><button class="big" onclick="rollScene()">🎲 重骰（鎖住的保留）</button> <button onclick="saveSceneCard()">💾 存成情境卡</button> <button onclick="sceneCopy()">📋 複製</button> <button onclick="sceneTxt()">📄 文字檔</button> <button onclick="sceneImg()">🖼️ 存成圖片</button></div>
+<div class="card"><label><span class="lab">寫作筆記（會和情境卡一起存）</span><textarea id="scNote" rows="4" oninput="SC.note=this.value;saveScene()" placeholder="想到的開場、對白或畫面……"></textarea></label></div>
+<div class="card"><h3>我的情境卡</h3><div id="sceneCards"></div></div>
+</section>
+
+<section id="backup">
+<h2>資料備份</h2>
+<div class="card"><p>人物、CP、關係表、情境卡和圖片都存在你這個瀏覽器裡。換裝置、換瀏覽器或清除瀏覽器資料就會消失，建議定期下載備份檔。</p>
+<p id="usage" class="note"></p>
+<p><button class="big" onclick="backupDL()">⬇️ 下載完整備份檔（含圖片）</button></p>
+<p class="note">若在某些預覽環境中無法下載，請把工具放到自己的網站（例如 GitHub Pages）後再使用備份功能。</p></div>
+<div class="card"><h3>從備份檔還原</h3><label class="filebtn">選擇備份檔（.json）<input type="file" accept=".json,application/json" onchange="backupLoad(this)"></label>
+<p><label><input type="radio" name="bkm" value="merge" checked> 合併到現有資料</label> <label><input type="radio" name="bkm" value="replace"> 取代現有資料</label></p><p id="bkmsg" class="note"></p></div>
+<div class="card"><h3>清除全部資料</h3><p class="note">會刪除這個瀏覽器裡的所有人物、CP、關係表與情境卡，無法復原。</p><button class="warn" onclick="armed(this,wipeAll)">清除全部資料</button></div>
+</section>
+
+<section id="src">
+<h2>出處資訊</h2>
+<p class="note">以下為本工具製作期間，製作者閱讀過的參考資料。工具中的內容皆經過整理與改寫，並非直接複製貼上他人的文字。感謝所有分享過創作經驗、整理過資料的作者們。</p>
+<div class="card"><b>人物深化題庫</b><p class="note">「人物深化」的題目皆為本工具作者本人所發想的原創角色分析單內容。為維持一定程度的匿名性，不在此附上原始文件連結。</p></div>
+<div class="card"><b>短文／段子練習題庫</b><p class="note">為噗浪旅人／匿名偷偷說上各方彙整的三十題、五十題等題庫，大多原始來源已不可考或未曾附上；以下為製作時參考的彙整頁面。</p><ul class="src" id="srcP"></ul></div>
+<div class="card"><b>人事時地物產生器的梗與套路</b><p class="note">多為感情線創作中大眾熟知的人物設定與劇情元素，既有作品的劇情梗（例如九〇年代台灣連續劇「花系列」）已另外查證；場景、物品、氣氛詞等為本工具重新整理撰寫。</p><ul class="src" id="srcT"></ul></div>
+<div class="card"><b>聯絡製作者</b><p class="note">本工具整理的是網路上公開資料中的短詞彙、題目標題與概念關鍵字，不轉載引用原文內容。部分作者無法考證；若您是原作者或權利人，希望調整來源標註方式或移除相關內容，請至 <a href="https://www.plurk.com/romancewritertool" target="_blank" rel="noopener">https://www.plurk.com/romancewritertool</a> 聯絡，我會盡快處理。</p></div>
+</section>
+</main>
+
+<div id="modal" onclick="if(event.target==this)closeModal()"><div class="box"><div class="row" style="justify-content:space-between"><b id="mTitle"></b><button onclick="closeModal()">關閉</button></div><div id="mBody"></div></div></div>
+<div id="toast"></div>
+<script>
+const S=s=>s.split('、');
+/* ===== 人物深化：作者原創角色分析單題庫 ===== */
+const Q=["姓名|姓名的特殊意義或選字原因", "姓名|姓名與人物外貌的關聯", "姓名|姓名與人物性格的關聯", "姓名|名字是否由特別的角色（如長輩、師父等）所取", "性別、性別認同與性向|人物是否偏向所屬性別的刻板印象", "性別、性別認同與性向|人物周遭環境（家庭、社會地位）會否對人物的性別表現有特定要求", "性別、性別認同與性向|人物的性向是否對日常造成什麼困境或是壓力", "性別、性別認同與性向|人物周遭環境會否對人物的性向有負面的看法", "性別、性別認同與性向|人物的性別認同是否對日常造成什麼困境或是壓力", "性別、性別認同與性向|人物周遭環境會否對人物的性別認同有負面的看法", "年齡|人物的行為和思想是否與同齡他人相當（還是更成熟或幼稚）", "年齡|人物有沒有什麼因為年齡導致的煩惱（比方被催婚或是要考重大考試等）", "年齡|人物與各年齡層（同齡、前輩、後輩等）的相處態度為何", "外型|外型有否繼承雙親什麼對人物或劇情有所影響的特徵", "外型|人物有沒有什麼獨特的胎記或痣（若有，對人物或劇情的影響為何）", "外型|人物是否曾單只因為外表而被喜歡或取笑（若有，對人物或劇情的影響為何）", "外型|人物是否有因為遭遇災難或意外而留下的傷痕（若有，對人物或劇情的影響為何）", "外型|人物對自己的外形是否有自信（無自信原因、是否到自戀）", "外型|人物喜歡自己外型的哪個部分（以及原因、是否對劇情有影響）", "個性・基礎以及自身|外顯個性簡述", "個性・基礎以及自身|內在個性簡述", "個性・基礎以及自身|核心價值觀（或不可動搖的信念）", "個性・基礎以及自身|黑暗面", "個性・基礎以及自身|對於人性的看法（偏向性善性惡或者中立何者，也可思考原因）", "個性・基礎以及自身|人物偏向利他或利己主義（也可思考原因）", "個性・基礎以及自身|最深的喜悅", "個性・基礎以及自身|最深的擔憂", "個性・基礎以及自身|最深的悲傷", "個性・基礎以及自身|最深的恐懼", "個性・基礎以及自身|最脆弱的時刻", "個性・基礎以及自身|無法接受的性格或價值觀", "個性・基礎以及自身|獨特的堅持", "個性・基礎以及自身|金錢理財觀", "個性・基礎以及自身|最想守護的人事物或理念", "個性・基礎以及自身|最常作的噩夢與其原因", "個性・基礎以及自身|面對生命危險時的反應（冷靜型、焦躁型等）", "個性・基礎以及自身|發洩壓力與不安的方式", "個性・基礎以及自身|人物是有神論者（有哪種宗教信仰嗎）懷疑論者或是無神論者", "個性・待人處世|對待意見或價值觀相左的人（給予尊重、論戰到底、說服對方等）", "個性・待人處世|人物的網路性格和三次元有否差距（是否表裡如一）", "個性・待人處世|對待一般陌生人的態度", "個性・待人處世|對待同學或同事的態度", "個性・待人處世|對待討厭的人的態度", "個性・待人處世|對待感情競爭者的態度", "個性・待人處世|遇到語言無法溝通的人會如何與之相處", "個性・待人處世|如何處理討厭的食物（請別人幫忙吃、放旁邊、衛生紙包起來眼不見為淨、盡快丟掉等）", "個性・待人處世|面對每天不得不相處的人不斷踩雷會有何反應（可循序漸進描寫）", "個性・待人處世|面對路邊向自己推銷手工餅乾的身心障礙團體（會不忍心而購買還是會忽視）", "個性・待人處世|面對路邊向自己推銷玉蘭花或小零食的長輩（會不忍心而購買還是會忽視）", "個性・待人處世|面對烈日下辛苦發送傳單的人（會不會搖下車窗領一份還是會假裝沒看到）", "個性・待人處世|目睹公共交通工具之狼（會幫忙制止還是不敢協助、也可思考人物自己遇到時的反應）", "個性・待人處世|遇到買東西時插隊的人的反應", "個性・待人處世|遇到表演的街頭藝人的反應（只是停下來欣賞不打賞、會打賞、不會駐足直接路過）", "個性・待人處世|遇到處理事情敷衍不積極的超商店員、公家機關等的反應（爆氣、自認倒楣、與人抱怨等）", "個性・待人處世|人物的酒品（如果滴酒不沾或是酗酒，其背後有否特殊原因、對人物或劇情是否有影響）", "感情|對於戀愛對象好感上升的原因（行為話語氣質等）", "感情|人物在感情上是主動還是被動的那方", "感情|曖昧階段的態度", "感情|確認關係（交往）後的態度", "感情|熱戀期的態度", "感情|穩定期的態度（可與前者相互比較分析）", "感情|佔有慾的表現", "感情|吃醋的表現", "感情|撒嬌的表現", "感情|面對愛人的負面情緒時", "感情|面對愛人的情緒勒索時", "感情|與愛人吵架時會否冷戰", "感情|對於同居的看法", "感情|對於步入婚姻的看法", "感情|如果愛人因故殘疾或患上絕症", "感情|如果愛人患上精神或心理疾病", "感情|如果愛人精神出軌", "感情|如果愛人肉體出軌", "感情|感情的空窗期通常多長（是能夠忍受孤獨的人嗎）", "感情|對於 blind date 的看法", "感情|人物會否介意使用交友軟體認識伴侶", "感情|認為外表為首要條件還是相處感覺或內在為重", "感情|人物是否認為親密行為和愛情是能夠分開的", "親情|人物是否與家庭成員親近或是喜愛回老家", "親情|人物是依賴家中長輩或者偏向獨立的類型（也可以是逐步成長為獨立）", "親情|與雙親或單親或監護人的關係", "親情|與同輩親戚的關係（可個別拉出每個兄弟姊妹、繼兄弟姊妹或表堂兄弟姊妹等的相處分析）", "親情|與其他長輩的關係（可自行拉出祖父母、叔叔阿姨等細項）", "親情|面對親人的負面情緒時", "親情|面對親人的情緒勒索時", "親情|與親人吵架時會否冷戰", "親情|如果親人因故殘疾或患上絕症", "親情|如果親人患上精神或心理疾病", "親情|若人物有小孩會採取偏向何種教育方式（嚴格管教、西式教育、自在相處等）", "親情|人物的家庭成長環境（經濟能力、社會地位等）帶來的性格（或劇情）影響", "友情|對於朋友好感上升的原因（行為話語氣質等）", "友情|與朋友吵架時會否冷戰", "友情|面對朋友的負面情緒時", "友情|面對朋友的情緒勒索時", "友情|被朋友放鴿子的反應", "友情|被朋友背叛的反應", "友情|聽到了有關朋友的閒言閒語或八卦或流言", "友情|人物會否為了自身利益犧牲（出賣）朋友", "友情|交友模式（朋友越多越好或傾向兩三個人的小圈子）", "友情|在一個小群體中的其他人冷戰或大吵時人物的反應（和事佬、不知所措、他們自己解決）", "友情|面對酒品差的朋友", "友情|面對朋友說共同好友的壞話的反應", "友情|和朋友喜歡上同個人", "校園|人物是就讀男女合校、男女分班、女（男）校或其他（雙語、國際學校、音樂美術班等）", "校園|人物在校內是否擔任特別職務（學生會長、班級幹部等，可細部說明理由與職位）", "校園|人物在校內擔任的職務（若有）是否對於校內的人際或是人物自身發展、個性本身造成影響", "校園|作業（或報告）是都準時交件還是會壓線繳交或遲交的類型", "校園|人物與其他同儕的分組作業情況（積極參與、普通參與或是消極甚至敷衍）", "校園|若陷入霸凌事件，會扮演其中的何種角色（霸凌者、旁觀者、默默幫助者、被欺負者）", "校園|在班級裡隸屬於什麼圈子（核心團體、不良集團、認真向學等）", "校園|人物與師長的關係是否要好（與師長的關係是否有幫助或阻礙到與同儕的人際相處）", "校園|與學長姊的關係（以及是否對劇情有特定影響）", "校園|與學弟妹的關係（以及是否對劇情特定影響）", "校園|人物有否參加社團（若有，是哪個社團、加入的原因是自願還是半推半就還是候補等）", "校園|人物擅長的科目", "校園|人物討厭的科目", "校園|人物是否曾代表學校參加過什麼活動或比賽", "校園|人物聆聽演講的態度（覺得可以不用上正課很開心、能學習到東西很受用、帶著筆記本等）", "校園|人物是否曾經轉學或轉班（原因以及其帶給人物或劇情的影響）", "校園|人物是否有跳級", "校園|人物是否就讀資優班（什麼樣的領域、加入的原因、是否對人物性格造成影響）", "校園|人物是否就讀資源班（也可深入分析原因，是否有某些特質或障礙等）", "校園|被同學栽贓偷竊的反應", "校園|被同學慫恿孤立特定人", "校園|和校內工友或志工的相處（很處得來、看到會禮貌打招呼、不會互動等）", "校園|人物與校內身心障礙同儕的相處（包容理解、事不關己、嘲笑欺侮等）", "職場|人物任職的公司（大型企業、中型企業、小型企業）", "職場|人物的職位（以及選擇該職位的原因）", "職場|遇到雷包同事永遠遲交或敷衍的反應", "職場|遇到不合理要求的上司（唯唯諾諾忍氣吞聲、在匿名社群上大肆抱怨、整天臭臉等）", "職場|遇到奧客的反應", "職場|遇到奧客但主管要求人物向對方道歉時", "職場|對於團隊專案有疑惑的時候（扭捏不敢提、大膽提出甚至要求照自己想法修改等）", "職場|對於團隊專案有新想法的時候（扭捏不敢提、大膽提出甚至主導專案等）", "職場|若想詢問主管加薪（會掙扎或者覺得是自己應得、詢問方式等）", "職場|人物會否為了自身利益陷害同事", "職場|人物會否為了自身利益巴結上司（或者人物對於往上爬沒有太大興趣，只做好份內的事）", "職場|人物對於上台報告專案是否擅長", "職場|是否能夠輕鬆應對客訴", "職場|人物對於接公事相關電話是否恐懼或容易緊張支吾", "職場|工作場域上遇到身心障礙同事（主動幫忙、對方來尋求幫助會耐心幫、不耐煩、不幫忙等）", "職場|人物偏向團隊合作或者完成自己的部分就事不關己", "職場|如果人物自己帶領的團隊有組員出包的反應（自己扛下來、咒罵組員、想辦法讓別人背鍋）", "職場|如果人物被同事背後捅刀的反應"];
+
+/* ===== 短文／段子練習題庫（主題|題目） ===== */
+const G2=o=>Object.entries(o).flatMap(([t,a])=>a.map(x=>t+'|'+x));
+const P=G2({
+'心理學':S('心流、淨化與宣洩、失憶症、既視感與記憶錯誤、防禦機制、刺蝟理論（太靠近而互相傷害）、小池定律（越沉迷的東西越抓著不放）、皮格馬利翁效應（深情賦予愛生命）、獨特性錯覺、愛的三要素：熱情，親密，承諾'),
+'親吻':S('簡單粗暴的嘴唇碰撞、親吻對方睫毛上未落的淚珠、溫柔繾綣的親吻、一遍又一遍的細碎親吻、淺嘗即止的安撫之吻、親吻熟睡中的對方、親吻鼻尖、青澀徘徊的初吻、猶如羽毛拂過般不經意的輕吻、焦急而慌亂的親吻、不確定的試探之吻、堅定的誓約之吻、悲傷的別離之吻、間接親吻、隔著玻璃或書本接吻、咬同一根 Pocky 然後吻在一起、突如其來的親吻、親吻照片上的對方'),
+'咖啡館':S('奇怪的顧客、新來的工讀生、手握著手教手沖咖啡、虹吸壺的下壺爆炸了、在拿鐵上拉出愛心拉花、「我只喜歡藍山」、上錯餐點、研發新飲料、特別的調酒給特別的你、餅乾烤焦了、惡作劇的芥末蛋糕、屬於你的拼配豆、不停換同伴的客人、包場的派對、總是要求隱藏菜單的熟客、兼賣深夜食堂的咖啡館、打烊時的悄悄話、沒有外帶盒的蛋糕、我不在咖啡館，就在去咖啡館見你的路上'),
+'大熱天':S('停電了、誰去買冰淇淋、冰淇淋融化了、「好熱，別抱著我」、幫對方擦汗、再熱也得工作、去游泳吧、在冷氣房裡裹著棉被、走在我的影子下面、夏夜星空、汗珠滴下來、用冷飲冰對方的臉、連續高溫後的雨、冷氣開太強感冒了、冷氣溫度要調高還是調低、自製涼菜、試圖修理冷氣或電風扇、中暑、躲進小店吹冷氣、哪裡涼快就往哪裡躲'),
+'吃貨':S('手作便當、午夜的冰箱、回家時桌上的熱飯、週末大採購、一起做飯、下午茶時間、街角的老店、路邊攤、野餐、火鍋大會、每人帶一道菜的聚會、誰是大胃王、失敗的料理、你喜歡我不喜歡的調味、意外的食物組合、嘗試全新菜系、分你一半、挑食有什麼錯、病號餐、媽媽的味道、只有你我才知道的美味、訂外送'),
+'學院風':S('春季入學式、第一次打招呼、成為並排鄰座、社團活動、走錯教室、票選模範生、在校園某處告白、體育課、家政課、午休時間、一起處理班級事務、一起放學、一起寫作業、一起打掃、請病假、上課打瞌睡、傳紙條、幫老師搬考卷、翹課、指導功課、被導師約談、幫忙買早餐、受傷被送到保健室、粉筆畫的小雨傘、圖書館、偽造家長簽名、福利社的餐點賣完了、重要的考試考砸了、雨天其中一方忘了帶傘、生日、臨考前的讀書營、運動會、園遊會、校外教學、畢業舞會、情人節、聖誕節、文化表演、畢業典禮'),
+'同居':S('相擁入眠、一同外出購物、半夜一起看恐怖片、一方的起床氣、大掃除、瀏覽過去的照片、吐槽對方的生活習慣、相隔兩地的電話、早安吻、替對方挑衣服、討論養寵物、一方臥病在床、午睡、幫對方吹頭髮、接對方回家、離家出走、一個驚喜、屋頂上看星星、因天氣惡劣被困在家裡、喝醉、枕頭大戰、穿錯衣服、一方受輕傷、意外的求婚、叫對方起床、輪流做早餐、指責對方挑食、餵食、嫌亮叫對方關燈、替對方蓋被子、窩在同一張沙發上、吃了對方的點心、一起修房子、夢遊、浴室大戰、不小心洗了全部衣服、朋友來探望、被對方枕著膝蓋壓麻動彈不得、一方耍酒瘋、廁所沒衛生紙'),
+'同居（二）':S('穿錯外套、襯衫口袋裡的領帶夾、款式不同尺碼不同的拖鞋、壞掉的紗窗、一隻牙刷不見、冰箱深處的酒瓶、門口的便條、陌生的香水味、切菜切到手、宿醉、數量超常的菸頭、枕頭戰、一方的毛絨娃娃癖、兩台手機兩台電腦臥室插座不夠用、洗衣服與洗碗的排班表、共用的存摺、停電、一人加班、半夜被凍醒心照不宣為對方蓋被子碰到彼此的手、半夜出門、周年紀念的燭光晚餐、看到對方日記中的自己、夏日書房下午茶、道歉信、家庭劇院、照片牆'),
+'甜蜜蜜':S('牽手、玩遊戲或看電影、約會、換穿對方的衣服、逛街、跳舞、做飯或烘焙、爭吵、和好、凝視彼此的眼睛、結婚、其中一人的生日、做些滑稽的事、做些甜蜜的事、顫動的指尖正微微發燙、後知後覺的撒嬌、突如其來的熱視線、你的體溫、第一次的晚安吻、既丟臉又害羞的約會、安靜的幸福進行式、心跳聲無限放大、笨拙的我們、伴隨花束一起送出的心意、請再說一次吧、為你寫詩、紅茶與提拉米蘇、無法拒絕的可愛請求、收集不完的溫柔、圖書館裡的戀愛習題、雨天製造的親密距離、耳邊的呢喃、表情犯規、桌子下的小動作、交換日記、睡顏誘惑、被窩裡的情歌'),
+'地點':S('陽台沙發、天台、摩天輪、放課後的籃球場、夜晚的公園、野營帳篷、包場的電影院、假期裡的學校、午後的圖書館、醫院的單人病房、午夜的公車站、網球場、暴風雨來臨的遊艇、大學宿舍、海邊'),
+'時間地點':S('夕陽從窗外照入的醫院家屬等候室、凌晨三點空無一人的捷運站月台、午夜的便利商店、午後熙熙攘攘的公園、清晨五點的海邊灘塗、曙光劃破雲層時悶著熱粥的廚房、深夜在派出所外頭遇見、冰淇淋店快打烊的時候、下班車潮中卡在路上的計程車、清晨路邊排隊的早餐車、圖書館關閉前、一早飄著麵包香的烘焙坊、清晨的郵筒、凌晨一點的暗房'),
+'文藝':S('前後桌、走廊轉角、夏天與蟬與風鈴、車站月台、雨中的繡球花、圖書館窗邊書架後、素描簿、情書、信箱的底層、對準你的鏡頭、雙向單戀、指尖飄雪、櫻花鋪滿的坡道、逆光、樹蔭下的細碎光點、你髮間的落花、你的背影、詩'),
+'文藝場景':S('森林、大海、湖邊漫步、戰地書信、咖啡館、音樂會、芳草幽徑、原野、墓園、星空、沙龍、慢悠悠的火車、詩人、黑白照片、燈火、暴風雪、舊日信箋、記憶閃回、老圖書館、蠟燭、冬夜、黃昏橋樑、雨後草地、漫遊、畫廊、舞、緞帶、日記本'),
+'戀愛練習':S('初次拜訪、冰箱上的留言、成對的咖啡杯、穿用對方的東西、誤會、故地重遊、拿手菜、搬家、合影、紀念日、被拒絕的要求、手機裡的錄音、用同一副餐具吃東西、心電感應、遷就、燭光晚餐、裝飾品、壞習慣、第一次心動、約定'),
+'男友力':S('傾向一邊的雨傘、「我一直在這裡。」、讀心術、「只要你要。」、過馬路時輕扣手腕的那隻手、留有餘溫的外套、恰到好處的距離感、永遠只談論你感興趣的話題、分享圍巾、毫不吝嗇的誇獎和鼓勵、默契、最拿手的那一道你愛吃的、桌上每天神祕出現的蘋果、因為你而留下的細小傷痕、比你還要了解你、平淡卻令人驚喜的禮物'),
+'相愛相殺':S('追逐與奔走的理由、物極必反、獵人與獅子、夢遊症、怪獸的花園、第九十九次初戀、與愛情無關、五十年後的故事、唱給你的歌、最好的 BAD END、暫時性失語、模擬戀愛、你從來不知道的事、時光膠囊、催眠、二周目遊戲、爭鋒相對的示愛、無聲電話、罪人、交換日記、疤痕、一年一度的浪漫、鞭子和糖、背對背入眠、溝通障礙、刺蝟的擁抱、燈謎、至死方休'),
+'分手向':S('人人都說你愛他或她、總是找話題的一方突然不說話了、從頭到尾告白都沒有被回應、牽住的手被一方放開、接吻的時候不願意閉上眼睛、說話的時候總是看著別人、突然有一天就不喜歡你了、「我覺得我們還是做朋友比較好吧」、您撥的電話未開機、悄無聲息地離開、最好的時候成了最後的溫柔、如果自己無緣無故消失對方也不會尋找、總是被推掉的約會、你真的有像我喜歡你一樣喜歡我嗎、厭倦了單方面的付出、不能在別人面前說喜歡、比起自己對方有更多更重要的人、太過熟悉對方的尷尬、追不上你只能望著你遠去、知道該怎麼對待對方時已經太晚、天意不成全、即使擁抱卻還是提防著對方、輸給了時間、用情過深而無法接受、一步錯步步錯、恭祝你兒孫滿堂、你離開後我就變成了你、只能給你這些沒辦法再給更多、「分手吧」'),
+'疼痛（日常）':S('牙疼不是病、關門夾到手、吃飯時咬到舌尖、一腳踩在圖釘上、走著走著撞到桌角、一頭撞在電線杆上、醫生說沒有麻醉藥了、踩了自己一腳還摔倒、被從天而降的花盆砸到、吃完冰淇淋想起生理期將至、左胸口的烙印、這是失去你的第 103 個夜晚'),
+'如果':S('如果他們相互厭惡、如果他們沒有相遇、如果他們共同撫養一個孩子、如果他們在某地一見鍾情、如果他們是黑幫成員、如果他們吵架、如果他們冷戰、如果他們聽到對方結婚的消息、如果他們看到以他們為主角的小說、如果他們是戀人'),
+'巧合':S('夫妻相、狗屎運、三人行、烏鴉嘴、冤家路窄、雙方逃婚、鞋碼一致、街頭相遇、穿錯衣服、同生共死、看見流星、雙向暗戀、過敏體質、共同仇敵、把柄在手、經歷相似、理想身高差、轉角遇到愛、臨時成為共犯、在國外偶遇同鄉、落入自己挖的陷阱、寵物相戀後主人相愛、打架後被關在同一病房、同時伸向一件商品的手、兩個路癡都以為對方在帶路'),
+'三十題':S('帶有攻擊性的吻、日常崩壞、記憶缺失、窗臺、鐵欄杆、再也不會出現的笑容、乾裂的嘴唇、飲酒過度、荒唐的事情、意亂情迷、溫柔的給予疼痛、暗香、時光旅行、瑣碎的事、霓虹燈的陰影處、自我厭惡、請和我交往、手心冰冷、再見光陰、時速 250 公里、愛麗絲、請你留下來、滾燙的咖啡、48 小時旅程、幻影城、鋪滿鮮花的街道、白日夢、地平線、陌生人'),
+'英文百題':S("Introduction、Love、Light、Dark、Seeking Solace、Break Away、Heaven、Innocence、Drive、Breathe Again、Memory、Insanity、Misfortune、Smile、Silence、Questioning、Blood、Rainbow、Gray、Fortitude、Vacation、Mother Nature、Cat、No Time、Trouble Lurking、Tears、Foreign、Sorrow、Happiness、Under the Rain、Flowers、Night、Expectations、Stars、Hold My Hand、Precious Treasure、Eyes、Abandoned、Dreams、Teamwork、Standing Still、Two Roads、Illusion、Family、Creation、Childhood、Stripes、Breaking the Rules、Sport、Deep in Thought、Keeping a Secret、Tower、Waiting、Danger Ahead、Sacrifice、Kick in the Head、No Way Out、Rejection、Fairy Tale、Magic、Do Not Disturb、Multitasking、Horror、Traps、Playing the Melody、Hero、Annoyance、67%、Obsession、Mischief Managed、I Can't、Are You Challenging Me?、Mirror、Broken Pieces、Test、Drink、Starvation、Words、Pen and Paper、Can You Hear Me?、Heal、Out Cold、Spiral、Seeing Red、Food、Pain、Through the Fire、Triangle、Drowning、All That I Have、Give Up、Last Hope、Advertisement、In the Storm、Safety First、Puzzle、Solitude、Relaxation"),
+'萌點之人':S('雨傘、拿下兜帽時露出的後頸、九分褲或捲起的長褲露出的腳踝、同款不同色的物品、單邊的耳環、寬大得足以圈住口鼻的圍巾、被抓住的手腕、顴骨上的痣、眼裡只有一個人的笑容、在奇特的地方假寐、不小心沾上的墨水或顏料、休閒的襯衫、咬手套、跳躍離地瞬間的姿態、沒有聲音的悲傷、與一般人不同的反應、閉上雙眼、本人沒察覺到的小動作、偶爾會戴上的眼鏡'),
+'How to Deal With Your Lover':S('誰會是你愛情的戰友（郵差／教授／助理／童話角色／對方的家人／歌手／小孩／動物）、什麼時候該說我愛你（夢幻時刻／小紙條／歌詞／請對方幫忙／短暫分離之後）、在哪裡會有愛人的身影（惡作劇的地方／對方的祕密角落／家裡／一張正式的合照／鏡子／一幅畫）、為什麼必須阻止你的愛人（吃太多垃圾食物／天馬行空的點子／穿太少／看恐怖片／熬夜／泡澡太久／一個又一個的親吻）、如何喚醒你的愛人（親吻／跳上床／鼻尖相碰／咬耳朵／搔癢／早安歌）'),
+'畢業':S('第二顆鈕釦、送不出去的情書、好人卡、教室裡夕陽下你的背影、畢業照、謝師宴、同學錄上的留言、筆記、畢業典禮、從此你我天涯海角、那些年、滿是留言的黑板、留級、重考、最後一次叫你的外號、校園一角、空了的上鋪、珍重、梔子花開、同桌的你'),
+'相戀十年':S('習慣性吻別、壓力爆發的時候、Can\'t Take My Eyes off You、學會了你擅長的事、發現信件盒子、睡前故事、酩酊大醉、冷水澡、初見回憶、你的手還是那麼冷、驚喜、沒有言語的夜、舊疾復發、工作探班、第四次晚歸、一時興起的陌生人遊戲、享受你的親吻、說不出口的情話、公路旅行、人群裡你的氣味、被忘記的紀念日、逃家、我們的貓跑丟了、瞞著你抽菸、祕密抽屜、我們還沒做過的事、討厭卻愛著你的一切、遲來十年的告白'),
+'特殊':S('間接性接吻、戀人的收集癖、永遠都不會分開哦、垃圾堆中的熱戀、我該如何命名、追逐與獵殺的遊戲、恐懼的是你的離開、果然你的身體最溫暖了、分別去愛每一部分、尋找藏在我身上的愛、飢餓、完美戀人、至少讓我親手、無條件接受與無條件拒絕、看著我、永遠不說愛你、你的味道是、我生君未生君已老、明明我是如此愛你、你的愛人、藏起來的愛的證據、你是誰'),
+'初戀':S('捉迷藏、過度保護、雨天、放水、一無是處、挑食、喜歡的顏色、信仰、信、排演、沒默契、掌廚者、彩虹、角色設定、最重要的事物、購物、失眠'),
+'溫暖':S('一杯可樂兩支吸管、睡著的貓和他、遲到五分鐘、撩起瀏海後落在額上的親吻、床單要綠色還是藍色、領帶歪了、「我忘了拿浴巾」、早安吻、永不忘的手機號碼、不得已的大掃除、「猜猜我是誰」、路燈下親吻的影子、十指交扣、二重奏、哭泣時覆上眼的手、小地震時的緊緊相擁、親手剪髮、「我回來了」、偶爾蹦出的粗口、只有一間單人房、在原地等待、視訊通話中熟悉的笑容、握著手機時轉身看見、翻閱過去的相冊、雨後日光下的河、帶你遠行、相隔兩地的長途電話、百年後用時間見證'),
+'雙生':S('兩個人的祕密、鏡子遊戲、角色互換、不約而同買來的相同物品、不言而喻的默契、雷雨天蒙著被子相擁入眠、誰是哥哥、「猜猜我是誰」、十八年來的初次相認、心有靈犀、喜歡上同一個人、屬性相背（傲嬌與忠犬）、「我會保護你」、另一個我、意料之中的生日禮物、替代品、換髮型、為什麼受寵的只有你'),
+'幼馴染':S('同樣的衣著與玩具、那個是我的才對、捉迷藏、擠在一起的遊戲或聊天、要上學了、人肉鬧鐘、一起回家、最後離開學校的我與你的等待、吵架、危險遊戲、你的功課我來幫忙補、抄作業、住院或事故、生日禮物、有人給你寫了情書、莫名其妙的隔閡、家庭變故、兩個人的祕密、成長中細微的變化、離家出走、最近你有點煩人、你的事情我都知道、淚與笑、好久不見、我們的關係有點奇怪了、不敢告訴父母、多年之後被翻開的相冊'),
+'忠犬':S('早早準備好的營養早餐、抱在懷裡幫你套上襪子、被吻乾的淚痕、需要的時候迅速抵達身邊、僅僅是十指相扣都興奮得像中了樂透、塞得滿滿的都是他的硬碟、特殊的訊息提示音、眼巴巴盯著單獨分組期待頭像亮起來、為了你的電話一秒退出遊戲、現充也要陪你談戀愛、脫口而出的敬語、「停電了超級無聊」「把我當電視吧你可以換台」、突如其來的大雨立刻脫下蓋在你頭上的風衣、下意識在你點菸時伸手擋風、一同長跑後遞給你一瓶汽水、如果人類有尾巴我肯定止不住地搖、質樸的腳踏車與摟緊的後背、為了你我可以爽快跪下、帶你去吃泡芙看著你舔去手指上的奶油、「拒絕」這個字早已從我的字典裡根除、家裡出現蟑螂時下意識擋在你前面、跑去你常聽的電臺點你喜歡的歌、怎樣否認我都好但請不要懷疑我的心意、小心翼翼地用梳子順過戀人的髮、輕輕護著枕在自己心口的腦袋'),
+'季節':S('雪水融化而成的溪流、春櫻的枝頭、花香與體香、候鳥的遷徙、雪層下潛伏的生命、去踏青、風鈴和西瓜、鋪滿蟬鳴的林蔭道延伸至遠方、在屋頂上仰望星空、仲夏夜的夢、夏日祭與煙火、怪談、不安定的海、突如其來的雷雨、暴風雨之前的原野、成熟的氣味、曬被子、朝露、撒播希望、落在湖面的楓葉、冰層之下的魚、暖爐、冬季有太陽的清晨、雪上的印記、新年與聖誕、深夜的冰海、穿越樹葉與髮絲的光、繁茂的植物、假期合宿'),
+'老年':S('五十歲的冬天、像年輕時那樣鬥嘴、老掉牙的情歌、習慣、沒寄出去的信、壓箱底的嫁妝、祕密、過去的故事、沒能圓滿的遺憾、老死不相往來的昔日好友、無聲的默契、時間也無法改變的東西、同學聚會、健忘症、只有愛情絕對不服老、時隔多年的吻、生日的驚喜、希望活得更久、屬於他們的浪漫、一張舊照片、兩個人的暗號、青春期的日記本、時間沉澱下的溫和、如此一生'),
+'私奔':S('突發奇想、其實是逃命、說好的私奔呢、說笑的、有過規劃、遇到的陌生人、被猜測、一起放空大腦、純粹跑、被小朋友們圍觀、受到驚嚇、雞飛狗跳、手牽手走過鬧市、相視而笑、裝作不認識、大成功、約定要去的地方、主動、遇到熟人、像身後有追兵一樣躲藏、最討厭的人、追憶、懷念私奔是如何開始的、在逃命時接吻、因為時間緊急撞到牙、最後一次意外、終點'),
+'回憶':S('睡覺時突然聽到你的聲音、餐桌的對面、翻出來的照片、只有我們懂的笑話、被忘記的願望、熟悉的電話號碼或地址、遙遠到無法觸及的你、最怕你孤單、少有的沉默、因為你喜歡所以喜歡、想你到哭泣、變了的習慣、相視一笑、空了一半的長椅、快看我有一點像你、永遠選你、留下來沒法穿的衣服、不認識你的朋友、請不要漠視我、十年後依然如此、只要微笑就好、再讓我陪你一會兒、可以不要說再見嗎、我愛你'),
+'公寓生活':S('破舊的租屋處、催房租的房東、住在對門的古怪鄰居、又停電停水了、吵得半死的深夜、悶熱的盛夏正午、來自鄰居的投訴、醉倒在樓梯口、黃昏的屋頂、屋子遭小偷、狂風暴雨、朋友來借宿、廢棄的地下室'),
+'單戀':S('埋下種子的時候、路的那邊對方迎面走來、得到對方的關心、我們是好朋友對吧、想要給你的東西、製造肢體接觸、獲知對方的新戀情、如何安慰失戀的你、被當做玩笑的告白、夢見對方和你在一起、幫對方遞情書、一不小心想太多、獨自苦悶的時候、為你做這些不讓你知道、我和別人在一起而你並不在意、不小心說漏嘴、不想給你造成困擾、真心話大冒險、突然出現的渺茫希望、他配不上你、參加你的婚禮、自作主張為你犧牲、懷念從前了無牽掛的自己、這一生都做你的摯友、不如不見江湖相忘、假想沒有遇見過你的人生、愛你讓我變成更好的人'),
+'關係裂痕':S('不再落在我身上的你的視線、你經常提到的那個人是誰、明明已經很努力了、永遠都是三人行、第二順位、好想了解你你卻避而不談、即使擁抱也無法取暖、不能再與你同行、再多的話語都無法傳達到你心裡、我的在乎你無所謂、相隔一人的關係、不要無視我的話好嗎、我的熱情與你的冷漠、放我鴿子去和別人約會、你的謊言只是我不願拆穿、我只是你的消遣之一吧、不再跟我說晚安的你、等不到那句生日快樂、中斷的對話、你的諾言終歸成為謊言、已經不再牽手了呢、那明明不是我的名字、下意識推開我的你、對於我只剩下埋怨、被放置、例行公事的約會、病了一週你卻沒發現、只有遇到麻煩才會想起我、你總是很忙、我放棄'),
+'混亂':S('吻手禮、誤入、視線相交、緊緊摟住、傷痕、理想與夢想、在音樂中、古堡幽靈、在膝上入眠、探求對方不為人知之處、身分交換、燃燒與淹沒、虛幻與假象、單方面認為的浪漫、在星空下的告白、文化差異、不同的生活習慣、曖昧的夢、突如其來的純情、盲目的感情、隔著玻璃接吻、竹馬系和天降系的對決、我將是勝者、肢體接觸、改變髮型、對方變成三頭身的日子')
+});
+const PA=G2({
+'R18':S('只穿領帶、拉開拉鍊的牛仔褲、T 恤裡的手、兜頭淋下的啤酒、赤腳踩在地毯上、敞開的浴袍、繩印、乳環、順腿流下、叼在嘴裡的保險套、互相刮鬍子、啃咬喉嚨、吮吸手指、親吻腳背、反綁手臂的襯衫、戴對方的眼鏡、抓痕密布的寬闊後背、大腿上的瘀青、抽走皮帶、坐在椅子上和跪在地上、狹小空間、渡進嘴裡的一口菸、攝影機裡的臉、我的手在你的口袋裡'),
+'情趣':S('手銬、鞭子、口枷、車震、丁字褲、護士服、女僕裝、吊帶襪、高筒靴、龜甲縛、裸體圍裙、警察制服、兔女郎裝、透明雨衣、互相點菸、親吻足尖、獸耳與獸尾、和服的開口、不燙的蠟油、高開衩的旗袍、一套睡衣兩人穿、禁忌與悖德的快感、只穿一件大號襯衫、用奶油巧克力或紅酒塗滿全身、帶著情趣用品上班或開會、說「我愛你」'),
+'色氣':S('眼角的淚痣、丹鳳眼與眼線、仰頭喝水時上下滾動的喉結、微揚起頭時的頸線、白皙的後頸、微含著櫻桃或草莓的嘴唇、曲線美好的後背、濕漉漉的頭髮、下雨天貼在身上的襯衫、露出鎖骨的領口、脫衣服時掀到一半、伸懶腰時露出的側腰線、低腰褲和人魚線、含住冰棒、幫對方舔去衣服上的冰淇淋或蛋糕、微抿盛著紅酒的高腳杯、吮吸對方的手指、酒醉之後潮紅的臉頰、夾起瀏海的髮夾、慵懶地陷進沙發、夾菸的手指、用牙齒替對方拉開拉鍊、沐浴後還沒擦乾的水珠、處理傷口時壓抑的呻吟、在耳邊低語的聲音、貼在曖昧位置的 OK 繃、肩上的咬痕與背上的抓痕、刮得乾淨或略帶鬍渣的下巴、大腿內側的刺青')
+});
+const PD=G2({
+'生死相隔':S('車禍醒來的第一反應是「他呢」、「你要節哀」「你在胡說什麼」、坐在病床上對著窗外發呆、撞擊的那一瞬間撲過來的是你、笑著安慰所有人說自己沒事、出院後一個人走在街道上、過馬路時手向身邊拉了個空、回到兩人合住的房子站在原地發呆、買東西習慣性買了兩人份、「你看這個怎麼樣……哦又忘了」、餐桌對面空蕩蕩的座位和逐漸冷卻的飯菜、在夜裡睜著眼睛睡不著懷裡抱著枕頭、哪裡都是你的痕跡、終於承認我好想你、空氣裡仿佛還有你的氣息、「他似乎回來了」「你要不要再去看看醫生」、你在的對嗎'),
+'一方死亡':S('遺物、未寄出的信或訊息、猛然間感到不安、漸漸冰冷的溫度、固定時間一月一次的看望、曾經丟失現在又找回的共同物品、葬禮、突如其來的眼淚、從別人那裡得到你的死訊、空曠的房間、如果我忘記了你、親吻你的照片、相似的面孔、假裝你從未離開、永遠不會原諒你、如果可以重來一次、刻著對方姓名的戒指、改不掉的習慣、模仿對方生活、最後的通話、代替你完成未完成的事、為了你活下去、夢中呼喚你的名字、治不好的失眠、你離開後的十年、直到死亡將我們分開'),
+'你已離去':S('來不及告別、離開的時間、遙不可及的距離、改不掉的習慣、特別的日子、手心裡剩下的溫度、望著你的方向、空房間與空座位、褪色的照片、與你有關的收集品、差點說出口的話、碰到共同的朋友、聽聞你的近況、想到你的時候會微笑或流淚、走過熟悉的街頭、換了電話號碼、回到開始的地方、偶然的夢、人群中隱約有熟悉的聲音、講給別人聽、同在一座城市、幻想重建、無人回覆的訊息、似曾相識的場景、嘗試你喜歡的東西、學你的樣子、十年、意外的發現、假如你從未離去'),
+'BE向':S('我永遠得不到的你、反目成仇、終其一生的單戀、分手、與愛無關、報復、七年之癢、錯過一世、一直都是騙局、抱歉我不認識你、無愛亦無恨、永遠觸碰不到的戀人、從未相遇、無知傷害、我們都老了、如果當初、「相較於你他更重要」、癡人說夢、玩笑而已、夢裡的圓滿結局、厭倦、粉碎性自尊、多餘的人、相思相忘、生離死別、到死都沒說出口的話、「請回頭看看我」、撕碎夢想、無愛者'),
+'暗黑':S('本能、精神失常、一方或雙方的背叛、雙重人格、還未曝露的詭計、帶著侵略破壞性的佔有慾、不透光的密室、毒藥、淪陷沼澤、間諜、潛規則與暗箱操作、不斷重複的夢魘、牢籠、凌晨三點的死胡同、自閉與自我毀滅、就快用完的時間、幻覺殘留、被害妄想、道德淪喪、弱肉強食、無終點無法停止的旅途、世界末日前的最後一天、無法逃脫的輪迴、永生與永恆、你中有我我中有你、愛你愛到變成你、忌妒心、戀物癖、標本、偏執狂、人格分裂、木偶戲、監控、記憶混亂、禮物、妄想、精神入侵、綁架、你是我的眼、幻覺、香水、照片'),
+'暗黑崩壞':S('衝動、用心詠唱的童謠、無可預料的漸進性毀滅、歌劇院的凌晨演出、黃昏將近、少年的海、迷上癮、你擁抱的是死去的鐘、我將隨你去黑暗、在路上、不可忽視的痛楚、多重人格、背德者的道德底線、馬拉松、失焦、迷宮、必然會到來的結局、溺斃、目的地未知的銀河列車、用銀線描繪天空、虛實之間'),
+'精神汙染':S('藥物依賴、光亮恐懼、窒息、言語暴力、夢魔、行屍走肉、信任喪失、死玫瑰、無疾而終、枷鎖、昔日已死、永冬、末途、太陽照常升起、面具與武器、老歌、消失的影子、單程票、無名碑、留聲機、沉溺至死、流言、割裂的畫幅、帷幕積塵而落、無人生還'),
+'精神與心理':S('強迫症、偏執與猜疑、自戀人格、多重人格、表演人格、創傷後壓力、依賴症、恐懼症、臉盲症、記憶障礙、選擇障礙、狂信者、催眠與移情、幻肢症、慢性失眠'),
+'犯罪':S('綁架、入室行竊、街頭搶劫、誘導犯罪、跟蹤狂、嫁禍殺人、殺人未遂、金融詐騙、逃亡、不偷竊就不舒服的強迫症、職業殺手、越獄、追殺、一切都是騙局、過失殺人、劫持交通工具、斯德哥爾摩症候群、軍火走私、臥底、狙擊手、出獄後的生活、法庭上的偽證、錯誤的審判、非法進入住宅的不速之客、被隱藏一生的罪惡'),
+'黑幫警匪':S('地盤劃分的爭端、新的繼承人（有血緣的收養的流落在外的）、二把手篡位、臥底線人暴露被殺、警界高層裡的叛徒、殺手與狙擊手、出身孤兒院、立場不同而被阻隔的戀情（不同幫派或警與匪）、鴻門宴、親人被扣的人質事件、毒品與軍火交易、魯莽的報仇者、偽裝成兄弟情的愛戀、忠心耿耿的手下、被放棄的臥底、刊載黑幫內容的八卦雜誌、監獄的面談室、為罪惡辯護的律師、黑幫轉型、洗手不幹後被殺、在花店買花的某人、墓碑前抽菸喝酒、臨死前的託付或告白、替死去的人承擔撫養責任'),
+'疼痛（暗黑）':S('針刺、輾壓、傷口感染、十指斷裂、全身大面積燒傷、被撕裂的傷疤、體內藥物反應、嵌入皮膚的項鍊、子彈穿過了肩膀、把手伸進自己的傷口、匕首留下的紅色痕跡、在後背刻滿你的名字、光著腳走過荊棘、沿著滿是石沙的山路滾下')
+});
+const PSRC='心理學三十題|show/9Nbe7lTVutk9IjSaE2Rc、親吻三十題|show/1655736、咖啡館三十題|show/1655748、大熱天三十題|show/1655761、吃貨三十題|show/1655779、學院風六十題|show/EkEctJFRMeCcgcT1ZjqV、地點三十題|show/1655843、時間地點三十題|show/1655829、同居二十題|show/1655847、同居三十題|show/1655851、R18 30題|show/1655897、情趣Play三十題|show/1655905、情趣Play三十題之二|show/1655909、色氣三十題|show/1655931、文藝三十題|show/1655933、文藝場景三十題|show/1655935、戀愛練習三十題|show/1655954、男友力三十題|show/1655941、相戀十年三十題|show/1655943、甜蜜蜜三十題|show/1655937、甜蜜蜜三十題之二|show/1655957、特殊三十題|show/1655960、暗黑三十題|show/1655961、黑暗系三十題|show/1655962、初戀二十題|show/1655974、溫暖三十題|show/1655976、精神汙染三十題|show/1655984、關係裂痕三十題|show/1655985、精神病三十題|show/1655999、你已離去三十題|show/1656005、BE向三十題|show/1656010、暗黑崩壞三十題|show/1656019、混亂三十題|show/1656021、犯罪三十題|show/1656024、黑幫警匪三十題|show/1656028、雙生三十題|show/1656095、幼馴染三十題|show/1656097、忠犬三十題|show/1656098、季節三十題|show/1656106、季節三十題之二|show/1656108、老年三十題|show/1656109、私奔三十題|show/1656112、回憶三十題|show/1656113、同居三十題（二）|show/1656114、公寓生活十五題|show/1656115、單戀三十題|show/1656116、相愛相殺三十題|show/1656118、分手向三十題|show/1656121、生死相隔三十題|show/1656122、疼痛三十題|show/1656124、如果十五題|show/1656125、巧合三十題|show/1656126、三十題|show/1656130、英文百題挑戰|show/1656132、萌點之人相關二十題|show/1662701、一方死亡三十題|show/1668721、How to Deal With Your Lover|show/zb0UI9vMNeNBUn8IXxFr、畢業二十題|show/oSTLf3971Eo3lOpwkRRp'.split('、').map(x=>{const[n,p]=x.split('|');return[n,'https://paste.plurk.com/'+p]});
+
+/* ===== 梗／套路（tone: d=日常、k=暗黑、b=皆可） ===== */
+const TROPE=[
+['英美羅曼史','b',S('敵對變戀人（enemies to lovers）、朋友變戀人（friends to lovers）、假裝交往（fake dating）、被迫同處一室（forced proximity）、只有一張床（only one bed）、臭臉 × 陽光（grumpy x sunshine）、破鏡重圓（second chance）、慢熱（slow burn）、小鎮戀愛（small town）、契約婚姻（marriage of convenience）、老闆與員工、哥哥姊姊的摯友、室友變戀人、年齡差、單親爸媽、明星 × 普通人、競爭對手變戀人、假訂婚、他先動心（he falls first）、互相暗戀（mutual pining）、暴風雪困住（snowed in）、公路旅行、婚禮假伴侶（wedding date）、異性相吸、保鏢、傳錯訊息（wrong number text）、祕密寶寶、隱藏身分的富豪、拉斯維加斯醉酒結婚、逃婚新娘、全世界都看得出來只有他們不知道、一夜情變交往、有期限的假期豔遇、找到的家人（found family）、照顧生病的一方、節日戀愛、一見鍾情、禁忌之戀（家族世仇或職場規定）、地下戀情、現代版經典改編')],
+['台式言情','d',S('契約婚姻、閃婚、假扮情侶、總裁與灰姑娘、豪門聯姻、辦公室戀情、青梅竹馬、先婚後愛、帶球跑、誤會分手後重逢、前任變上司、替身、雙重身分、暗戀多年、冤家鬥嘴、被逼婚、相親對象竟是死對頭、家族企業繼承權、一夜之後才發現是新上司、長輩阻撓、大學學長多年後重逢、養成系、日久生情、假戲真做、悔悟後拚命追回、你追我逃、浪子回頭、女追男、能力相當的冤家對手、被保護得很好的女主角遇上冷酷男主角、雙方都精明算計的鬥智戀愛、女主角死纏爛打男主角逃跑、第三者出現後才醒悟、不受家人重視的女孩遇上懂得欣賞她的人、舊情人或兄弟來攪局')],
+['花系列／八點檔老梗','b',S('壞女人搶丈夫、私生子身世之謎、車禍失憶、富家千金與窮小子、婆媳大戰、豪門恩怨、抱錯孩子、遺產爭奪、姊妹愛上同一人、失散的雙胞胎、癡情等待多年、商戰與愛情、因債務被迫離開、一場意外讓命運交錯、代理孕母奪夫、假懷孕奪愛、一人分飾兩角、人妻復仇、上一代恩怨情仇、惡女登場、苦情女主角、戀人失蹤後奇蹟出現、為了孩子委屈求全、父母反對的戀情、婚禮上衝進來的人、遺囑公布那天、DNA 鑑定報告')],
+['日劇／日常療癒','d',S('慢慢療癒的人、因為一頓飯而相遇、共同照顧一隻貓、同居中相互治療、職場新人與前輩、一起經營小店、回到地方小鎮重新開始、平凡上班族的辦公室相處、情傷後入住民宿被療癒、價值觀差異而非第三者的波折、作家與編輯的搭檔日常')],
+['暗黑向','k',S('黑幫繼承人與局外人、臥底愛上調查對象、警與匪的禁忌之戀、被迫捲入家族生意、以保護之名的控制、互相利用的契約關係、復仇者接近仇人之子、救命恩人其實是加害者、同為共犯的兩個人、立場對立的律師與檢察官、組織叛徒與追殺者、被收養的殺手、為了救人而加入組織、教團裡唯一清醒的人、帶著祕密入會的新人、洗手不幹卻被拉回去、交易籌碼變成心上人、雙面間諜、一起逃亡、偽裝成兄弟情的愛戀')]
+];
+
+/* ===== 人事時地物：場域資料 ===== */
+const SET={
+school:{n:'公立校園',t:'d',
+ loc:{tw:S('頂樓天台、福利社、司令台、操場跑道、籃球場、走廊盡頭的飲水機、圖書館自習室、保健室、腳踏車棚、校門口的早餐店、補習街、社團教室、禮堂後台'),we:S('置物櫃走廊、學生餐廳、美式足球場看台、校車、體育館更衣室、畢業舞會會場、停車場、校刊社辦公室、樂隊練習室、放學後的空教室'),ot:S('東京的高中屋頂、首爾的晚自習教室、香港的屋邨學校、新加坡的組屋區學校、櫻花樹下的校門、社團合宿的旅館')},
+ ev:S('分組報告被分到同一組、模擬考成績公布、校慶園遊會、班際比賽、社團招生、被誤會作弊、轉學生報到、畢業紀念冊拍攝、校外教學走散、颱風假前的最後一節課、運動會大隊接力、被叫去辦公室'),
+ obj:S('借來的筆記本、手寫的小紙條、畢業紀念冊、制服外套、社團徽章、MP3 或耳機、考卷、合作社的布丁、雨傘、置物櫃鑰匙'),
+ ppl:S('班導、學生會長、轉學生、風紀股長、社團學長姊、合作社阿姨、補習班老師、隔壁班的風雲人物'),
+ tm:S('期末考週、畢業典禮前一天、校慶當天、放學後、早自習、午休時間、暑期輔導、模擬考前一晚')},
+elite:{n:'貴族學校／私校',t:'d',
+ loc:{tw:S('雙語私校的玻璃中庭、私校的溫室花房、董事會議室、校車接送區的黑頭車、校內的西式餐廳、國際部的走廊、音樂廳後台、馬術社練習場'),we:S('寄宿學校宿舍、學院禮拜堂、划船隊碼頭、馬術場、古老的圖書館、校友捐贈的鐘樓、私人網球場、學期末的正式晚宴'),ot:S('瑞士寄宿學校、東京的私立名校、首爾江南的國際學校、香港的英式書院、新加坡的國際學校')},
+ ev:S('獎學金生入學、家長會長的施壓、學生會選舉、獎學金被取消的傳聞、校內慈善拍賣會、名額有限的海外交換、校友返校日、被迫參加社交舞會、私下的排名表外流、資助人身分曝光'),
+ obj:S('家徽戒指、獎學金通知信、校徽領帶、限量鋼筆、邀請函、匿名信、豪華便當盒、遺失的學生證'),
+ ppl:S('董事長的孩子、獎學金生、舍監、校董、私人司機、學生會成員、校友會長、家族安排的未婚對象'),
+ tm:S('開學典禮、期中舞會、校友返校日、學期末晚宴、海外交換前一週、學生會選舉日')},
+campus:{n:'大學校園',t:'d',
+ loc:{tw:S('宿舍交誼廳、系館頂樓、通識課大教室、學生餐廳、社辦、圖書館地下室、校門口的機車停車場、大學城的租屋處、夜市旁的宵夜攤'),we:S('兄弟會派對、校園咖啡館、宿舍走廊、校園草坪、研究室、大學城酒吧、期末考週的通宵圖書館'),ot:S('東京大學城的居酒屋、首爾新村的租屋套房、香港大學的山坡宿舍、交換學生宿舍')},
+ ev:S('期末報告分組、迎新宿營、系學會選舉、助教與學生、宿舍抽籤、社團成發、交換學生計畫、論文口試、畢業典禮前的告白'),
+ obj:S('課堂筆記、宿舍鑰匙、學生證、社團 T 恤、論文初稿、機車安全帽、宵夜'),
+ ppl:S('助教、系學會長、室友、指導教授、社團學長姊、交換學生、宿舍管理員'),
+ tm:S('開學週、期中考週、迎新宿營、寒假前一晚、畢業典禮')},
+office:{n:'職場',t:'d',
+ loc:{tw:S('信義區辦公大樓的茶水間、內湖科技園區、竹科的無塵室、加班後的便利商店、公司頂樓吸菸區、會議室、員工旅遊的遊覽車、尾牙會場、捷運通勤車廂、開放式辦公室的角落座位'),we:S('曼哈頓玻璃帷幕辦公室、倫敦金融城的酒吧、矽谷新創的車庫辦公室、律師事務所的檔案室、電梯裡、公司聖誕派對、共同工作空間、機場商務貴賓室'),ot:S('東京丸之內的辦公大樓、首爾汝矣島的金融大樓、香港中環的辦公室、新加坡的濱海灣商辦、出差的商務旅館')},
+ ev:S('空降主管上任、專案被搶功、年度考核、出差只剩一間房、公司併購傳聞、提案大失敗、客戶點名要換人、辦公室戀情被發現、被迫一起加班、內部匿名信、裁員名單外流、跨部門合作'),
+ obj:S('識別證、隨身碟、名片、加班餐、領帶、會議紀錄、離職信、公司群組的訊息、咖啡杯、合約'),
+ ppl:S('新上任的主管、搶功的同事、實習生、祕書、客戶、人資、老闆的兒子、清潔阿姨'),
+ tm:S('季末結算前、尾牙、年終考核、週一早會、深夜加班、連假前最後一天、出差的第三天')},
+family:{n:'家庭',t:'d',
+ loc:{tw:S('透天厝客廳、老公寓頂樓加蓋、三合院、過年圍爐的餐桌、外婆家的廚房、騎樓下、家族群組、醫院病房外的走廊、鄉下的稻田邊、搬家前的空房間'),we:S('郊區獨棟住宅的廚房、感恩節晚餐桌、地下室、車庫、後院烤肉、湖邊小屋、老房子的閣樓、聖誕樹下'),ot:S('東京的老舊公寓、首爾的半地下室、香港的劏房、新加坡的組屋、日本鄉下的祖屋')},
+ ev:S('長輩過世後的分家、父母要離婚、多年不見的手足回家、被催婚、帶對象回家、家裡的店要收掉、照顧生病的長輩、發現家人的祕密、搬回老家、遺物整理、家族旅行'),
+ obj:S('舊相簿、全家福、長輩的手錶、房契、紅包、家傳食譜、老舊錄音帶、搬家紙箱、一封沒寄出的信'),
+ ppl:S('嚴厲的父親、操心的母親、叛逆的弟妹、好管閒事的親戚、阿公阿嬤、繼父或繼母、離家多年的手足'),
+ tm:S('除夕、清明節、中元普渡、中秋節、父親節、喪禮之後、搬家前一週、某人的生日')},
+rich:{n:'上流社會／豪門',t:'d',
+ loc:{tw:S('陽明山的別墅、信義區豪宅頂樓、五星飯店宴會廳、高爾夫球場、遊艇碼頭、私人藝術收藏室、家族企業總部頂樓、慈善晚宴、私人招待所'),we:S('漢普頓夏季別墅、上東城頂層公寓、慈善晚會（gala）、歐洲古堡婚禮、蒙地卡羅賭場、私人飛機、遊艇派對、拍賣會現場'),ot:S('東京的高級料亭、首爾清潭洞的豪宅、香港山頂的大宅、新加坡的私人俱樂部、杜拜的飯店')},
+ ev:S('遺囑公布、家族企業繼承權之爭、政商聯姻、訂婚宴上的意外、私生子出現、股東會翻盤、醜聞被爆料、破產危機、家族晚宴上的攤牌'),
+ obj:S('訂婚戒指、遺囑、股權轉讓書、家族信託文件、名畫、豪車鑰匙、私人保險箱、晚宴邀請卡'),
+ ppl:S('家族長輩、繼承人、管家、私人律師、司機、聯姻對象、私生子、媒體記者'),
+ tm:S('家族晚宴、股東會前夕、訂婚宴、慈善晚宴、葬禮、新品發表會')},
+city:{n:'都市日常（街坊、租屋、小店）',t:'d',
+ loc:{tw:S('巷口的早餐店、夜市、老公寓的樓梯間、自助洗衣店、24 小時便利商店、捷運末班車、河濱自行車道、手搖飲料店、獨立書店、菜市場'),we:S('街角咖啡店、地鐵站、自助洗衣店、公寓的消防梯、跳蚤市場、深夜餐車、公園長椅、二手唱片行'),ot:S('東京的錢湯、首爾的路邊攤、香港的茶餐廳、曼谷的夜市、新加坡的小販中心')},
+ ev:S('新鄰居搬來、樓上漏水、店要收掉、颱風停電、撿到錢包、寵物走失、拿錯外送、租約到期、巷口發生小車禍'),
+ obj:S('備用鑰匙、外送單、集點卡、寵物項圈、舊收音機、雨傘、便條紙'),
+ ppl:S('房東、鄰居、店老闆、外送員、管理員、街頭藝人、常客'),
+ tm:S('颱風夜、跨年夜、下雨的週末、凌晨兩點、早市時間、連假最後一天')},
+gang:{n:'黑幫',t:'k',
+ loc:{tw:S('宮廟陣頭、地下賭場、港口貨櫃場、KTV 包廂、檳榔攤、舊碼頭、海產熱炒店、砂石場、廢棄工廠、夜店 VIP 室、私人招待所'),we:S('小義大利餐館後廳、拳擊場、碼頭倉庫、洗車場、夜店 VIP 室、地下停車場、汽車旅館、廢棄鐵道'),ot:S('東京歌舞伎町、香港旺角的唐樓、澳門的賭場、曼谷的地下拳場、首爾的地下錢莊')},
+ ev:S('老大的壽宴、地盤談判破裂、交易被埋伏、內鬼身分曝光、繼承人回國、手下被抓、選舉前的站台、討債上門、一場火拚後的善後'),
+ obj:S('槍、帳本、刺青、金牌、檳榔、拋棄式手機、裝錢的運動包、車鑰匙、一張舊照片'),
+ ppl:S('老大、二把手、軍師、小弟、臥底、警察、律師、敵對幫派的繼承人'),
+ tm:S('交易當晚、老大壽宴、選舉前夕、颱風夜、廟會、葬禮')},
+secret:{n:'秘密集會／地下社團',t:'k',
+ loc:{tw:S('廢棄醫院、私人會所、頂樓加蓋的讀書會、深夜的大學地下室、山上的別墅、舊戲院'),we:S('大學祕密社團的地下室、私人會員制俱樂部、莊園地下室、舊教堂、面具舞會、地下酒吧'),ot:S('東京的會員制酒吧、首爾的地下俱樂部、香港的私人會所、歐洲古堡')},
+ ev:S('入會儀式、成員失蹤、規則被打破、新成員是臥底、祕密名單外流、投票驅逐、有人想退出'),
+ obj:S('面具、徽章、會員卡、密碼信、蠟封、名單、古董鑰匙'),
+ ppl:S('創始人、新成員、執行者、叛徒、守門人、局外的調查者'),
+ tm:S('入會儀式之夜、月圓集會、年度聚會、某成員的葬禮')},
+cult:{n:'邪教／封閉團體',t:'k',
+ loc:{tw:S('山上的修行道場、靈修中心、心靈成長課程教室、鄉間的封閉農場、海邊的度假村'),we:S('沙漠中的公社、封閉農場、退修中心、湖邊營地、教會附屬學校'),ot:S('日本鄉間的修行所、東南亞的海島營地')},
+ ev:S('新信徒入教、有人想離開、捐獻被要求加倍、教主的預言、家人上門要人、記者臥底、閉關期間出事'),
+ obj:S('護身符、手環、經文、捐款收據、白色制服、日記、藥瓶'),
+ ppl:S('教主、核心幹部、新信徒、脫離者、記者、家屬'),
+ tm:S('閉關期、教主生日、祈福大典、新信徒入教日')},
+crime:{n:'犯罪與追查',t:'k',
+ loc:{tw:S('派出所、地檢署、法院走廊、偵訊室、殯儀館、看守所會客室、深夜的高速公路、汽車旅館'),we:S('警局偵訊室、法庭、證人保護屋、停屍間、州際公路休息站、監獄會客室'),ot:S('東京的警視廳、香港的法院、首爾的檢察廳')},
+ ev:S('懸案重啟、證人反悔、錯誤的審判、出獄後的第一天、跟蹤狂出現、新證據浮現、嫌疑人是熟人'),
+ obj:S('證物袋、監視器畫面、錄音檔、舊報紙、手銬、判決書、匿名信'),
+ ppl:S('刑警、檢察官、辯護律師、記者、法醫、證人、嫌疑人'),
+ tm:S('開庭前一晚、出獄當天、案發週年、颱風夜')}
+};
+const TIME_GEN=S('清晨五點、上班尖峰時間、午後雷陣雨前、黃昏、末班車之後、凌晨三點、深夜、停電的晚上、下著小雨的早晨、梅雨季、盛夏午後、颱風夜、寒流來襲的晚上、初雪那天、櫻花季、秋天的傍晚');
+const HOLI={tw:S('過年、元宵節、清明連假、端午節、七夕、中元普渡、中秋烤肉、雙十連假、跨年夜、颱風假、畢業季、白色情人節'),we:S('感恩節、聖誕夜、萬聖節、新年倒數、國慶煙火、春假、畢業舞會、情人節、復活節、超級盃週日'),ot:S('花火大會、夏日祭典、春節、潑水節、秋夕、白色情人節、聖誕夜、跨年')};
+const MOOD={d:S('溫吞、微甜、酸澀、懷舊、慵懶、輕快、悸動、笨拙、安靜、明亮、侷促、熱鬧、曖昧、釋懷、遺憾、溫柔、暖洋洋、哭笑不得、尷尬、小確幸、不甘心、心照不宣、捨不得、倔強、清爽、寂寞、雀躍、彆扭、溫暖、忐忑'),k:S('窒息、壓抑、陰冷、危險、病態、腐朽、沉默、偏執、扭曲、恐懼、絕望、迷惘、背德、緊繃、潮濕、黏膩、冷血、瘋狂、空洞、宿命、罪惡感、不安、窺視、逼近、腥甜、焦灼、猜忌、孤立無援、荒涼、令人發寒')};
+const SENSE=S('雨打在鐵皮屋頂的聲音、冷氣運轉的嗡嗡聲、遠處的救護車鳴笛、手機震動聲、蟬鳴、鍵盤敲擊聲、廟口的鞭炮聲、空蕩走廊的腳步聲、咖啡豆的焦香、消毒水的味道、雨後柏油路的氣味、香菸與香水混在一起、檀香、潮濕的霉味、鐵鏽味、剛洗好的衣服香、日光燈閃爍、霓虹燈的紅光、黃昏橘色的光、手機螢幕的冷光、停電後的燭光、雨後的反光、冰涼的玻璃窗、黏在背上的汗、粗糙的毛衣、指尖的溫度');
+const TWIST=S('突然停電、有人說了謊被拆穿、收到一則匿名訊息、門被從外面鎖上、手機沒電、有第三個人走進來、聽見了不該聽的對話、一張照片被發現、對方叫錯名字、原定的人沒來、下起大雨、有人受了傷、舊識突然出現、一個祕密被說出口、計畫提前、有人哭了、被拍到、錢包或證件不見了、接到醫院的電話、對方說「我們談談」');
+const REGION={tw:'台灣',we:'歐美',ot:'其他（日韓、港新、東南亞等）'};
+
+/* ===== 出處 ===== */
+const SRC=[
+['套路與梗參考','150 Romance novel tropes（Evie Alexander）','https://eviealexanderauthor.com/150-romance-novel-tropes/'],
+['套路與梗參考','The Romance Tropes Master List（We Read Smut）','https://wereadsmut.com/f/the-romance-tropes-master-list-over-70-patterns-we-love'],
+['套路與梗參考','[閒聊] 那大家喜歡的套路又是什麼呢？（PTT Romances）','https://www.pttweb.cc/bbs/Romances/M.1634375375.A.A64'],
+['套路與梗參考','[請益] 求推薦平凡的現代言情（PTT Romances）','https://www.pttweb.cc/bbs/Romances/M.1583965170.A.B7A'],
+['套路與梗參考','盤點 BG 言情小說情節的八大經典套路（文學城）','https://zh.wenxuecity.com/blog/200909/45966/21397.html'],
+['套路與梗參考','「花系列」是台灣 1980～1990 年代的經典都會電視劇（Threads）','https://www.threads.com/@beautifuleveryday2038/post/DfGQIcXE0Cq'],
+['套路與梗參考','「花系列」台灣壞女人製造機（LiTV 痞客邦）','https://litv.pixnet.net/blog/posts/15076315743'],
+['套路與梗參考','那些年一起走過的「花系列」（聯合新聞網）','https://udn.com/news/story/7482/1013509'],
+['套路與梗參考','看瓊瑤、談瓊瑤（台灣光華雜誌）','https://www.taiwan-panorama.com/Articles/Details?Guid=e75554eb-66d0-49b9-af88-475af56ff0f4&CatId=8']
+];
+
+</script>
+<script>
+/* ===== 基本工具 ===== */
+const $=s=>document.querySelector(s),$$=s=>[...document.querySelectorAll(s)];
+const esc=s=>String(s==null?'':s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const uid=()=>Date.now().toString(36)+Math.random().toString(36).slice(2,7);
+const pick=a=>a[Math.random()*a.length|0];
+const pickN=(a,n)=>{a=a.slice();const r=[];while(n--&&a.length)r.push(a.splice(Math.random()*a.length|0,1)[0]);return r};
+const TOOL='現代背景 OC／CP 設定手帳';
+function toast(t){const e=$('#toast');e.textContent=t;e.classList.add('show');clearTimeout(e._t);e._t=setTimeout(()=>e.classList.remove('show'),1800)}
+function go(h){location.hash=h}
+function toggle(s){$(s).classList.toggle('hide')}
+function armed(btn,fn){if(btn.dataset.arm){delete btn.dataset.arm;btn.textContent=btn.dataset.txt;fn();return}btn.dataset.txt=btn.textContent;btn.dataset.arm=1;btn.textContent='再按一次確認';setTimeout(()=>{if(btn.dataset.arm){delete btn.dataset.arm;btn.textContent=btn.dataset.txt}},3500)}
+async function copyText(t){try{await navigator.clipboard.writeText(t);toast('已複製')}catch(e){showText(t,'內容.txt','無法自動複製，請手動選取下方文字')}}
+function fileName(s){return String(s||'未命名').replace(/[\\/:*?"<>|]/g,'_').slice(0,40)}
+
+/* ===== 儲存（IndexedDB，失敗時改用 localStorage） ===== */
+let ST={chars:[],cps:[],maps:[],scenes:[],events:[],myQ:[],myP:[],curChar:null,curCP:null,curMap:null,deep:null,drill:null,scene:null};
+const STORE={db:null,
+ async init(){try{this.db=await new Promise((res,rej)=>{const r=indexedDB.open('oc-cp-notebook',1);r.onupgradeneeded=()=>r.result.createObjectStore('kv');r.onsuccess=()=>res(r.result);r.onerror=()=>rej(r.error)})}catch(e){this.db=null}},
+ async get(){if(this.db){try{return await new Promise(res=>{const q=this.db.transaction('kv').objectStore('kv').get('state');q.onsuccess=()=>res(q.result||null);q.onerror=()=>res(null)})}catch(e){}}try{return JSON.parse(localStorage.getItem('oc-cp-notebook')||'null')}catch(e){return null}},
+ async put(v){if(this.db){try{return await new Promise(res=>{const tx=this.db.transaction('kv','readwrite');tx.objectStore('kv').put(v,'state');tx.oncomplete=()=>res(true);tx.onerror=()=>res(false);tx.onabort=()=>res(false)})}catch(e){}}try{localStorage.setItem('oc-cp-notebook',JSON.stringify(v));return true}catch(e){return false}}};
+let saveT;
+function persist(){clearTimeout(saveT);saveT=setTimeout(async()=>{let ok=false;try{ok=await STORE.put(JSON.parse(JSON.stringify(ST)))}catch(e){}if(!ok)toast('儲存失敗：瀏覽器空間可能不足，請先下載備份')},350)}
+
+/* ===== 圖片 ===== */
+function readImg(file,max){return new Promise((res,rej)=>{const fr=new FileReader();fr.onload=()=>{const im=new Image();im.onload=()=>{const s=Math.min(1,max/Math.max(im.width,im.height));const c=document.createElement('canvas');c.width=Math.max(1,Math.round(im.width*s));c.height=Math.max(1,Math.round(im.height*s));c.getContext('2d').drawImage(im,0,0,c.width,c.height);const keep=/png|webp|gif/.test(file.type);res(keep?c.toDataURL('image/png'):c.toDataURL('image/jpeg',.86))};im.onerror=()=>rej('圖片讀取失敗');im.src=fr.result};fr.onerror=()=>rej('檔案讀取失敗');fr.readAsDataURL(file)})}
+async function upImgs(input,max,cb){const fs=[...input.files];input.value='';for(const f of fs){if(!/^image\//.test(f.type)){toast('請選擇圖片檔');continue}try{cb(await readImg(f,max))}catch(e){toast(e)}}}
+function avHTML(src,name,cls){return src?`<img class="av ${cls||''}" src="${src}" alt="">`:`<span class="av ${cls||''}">${esc((name||'？').trim().slice(0,1)||'？')}</span>`}
+function zoom(src){$('#mTitle').textContent='圖片';$('#mBody').innerHTML=`<img src="${src}" alt="">`;$('#modal').classList.add('open')}
+
+/* ===== 匯出：圖片（canvas）與文字 ===== */
+const FONT='"PingFang TC","Noto Sans TC","Microsoft JhengHei",sans-serif';
+function loadImg(src){return new Promise(r=>{if(!src)return r(null);const i=new Image();i.onload=()=>r(i);i.onerror=()=>r(null);i.src=src})}
+function tokens(s){return s.match(/[A-Za-z0-9'’\-\.,!?%]+|\s+|[\s\S]/g)||[]}
+function wrap(x,text,w){const out=[];String(text==null?'':text).split('\n').forEach(p=>{if(!p){out.push('');return}let line='';for(const t of tokens(p)){const n=line+t;if(x.measureText(n).width>w&&line){out.push(line.trimEnd());line=t.trimStart();while(x.measureText(line).width>w&&line.length>1){let k=line.length;while(k>1&&x.measureText(line.slice(0,k)).width>w)k--;out.push(line.slice(0,k));line=line.slice(k)}}else line=n}out.push(line)});return out}
+function lum(hex){const m=/^#?([0-9a-f]{6})$/i.exec(hex||'');if(!m)return 1;const n=parseInt(m[1],16);return(0.299*(n>>16)+0.587*(n>>8&255)+0.114*(n&255))/255}
+const inkOn=h=>lum(h)>0.6?'#3d3226':'#ffffff';
+function coverDraw(x,img,dx,dy,dw,dh){const s=Math.max(dw/img.width,dh/img.height),sw=dw/s,sh=dh/s;x.drawImage(img,(img.width-sw)/2,(img.height-sh)/2,sw,sh,dx,dy,dw,dh)}
+async function makeCard(spec){
+ const W=1080,P=56,accent=spec.accent&&/^#[0-9a-f]{6}$/i.test(spec.accent)?spec.accent:'#E0D3BC';
+ const srcs=new Set([...(spec.avatars||[]).map(a=>a.src),...(spec.sections||[]).flatMap(s=>[s.art,...(s.imgs||[]),...((s.stages||[]).map(t=>t.img))])].filter(Boolean));
+ const IM={};await Promise.all([...srcs].map(async s=>{IM[s]=await loadImg(s)}));
+ const c=document.createElement('canvas'),x=c.getContext('2d');c.width=W;c.height=100;
+ const run=draw=>{let y=0;const avs=(spec.avatars||[]).slice(0,6),n=avs.length,sz=n>2?110:(n?150:0);
+  const titleX=n&&n<=2?P+n*sz+(n-1)*14+32:P;x.font=`bold 50px ${FONT}`;const tl=wrap(x,spec.title||'未命名',W-titleX-P);x.font=`28px ${FONT}`;const sl=spec.sub?wrap(x,spec.sub,W-titleX-P):[];
+  let HH;if(n>2)HH=44+sz+28+tl.length*62+sl.length*40+36;else HH=Math.max(sz+88,48+tl.length*62+sl.length*40+40);
+  if(draw){x.fillStyle='#E0D3BC';x.fillRect(0,0,W,HH);x.fillStyle=accent;x.fillRect(0,HH-10,W,10);
+   avs.forEach((a,i)=>{const ax=P+i*(sz+14),ay=n>2?44:(HH-sz)/2;x.save();x.beginPath();x.arc(ax+sz/2,ay+sz/2,sz/2,0,7);x.closePath();x.fillStyle='#fff';x.fill();x.clip();const im=IM[a.src];if(im)coverDraw(x,im,ax,ay,sz,sz);else{x.fillStyle=a.color||'#cdbb9c';x.fillRect(ax,ay,sz,sz);x.fillStyle=inkOn(a.color||'#cdbb9c');x.font=`bold ${sz*.42}px ${FONT}`;x.textAlign='center';x.textBaseline='middle';x.fillText((a.name||'？').slice(0,1),ax+sz/2,ay+sz/2+2);x.textAlign='left';x.textBaseline='alphabetic'}x.restore();x.lineWidth=6;x.strokeStyle=a.color||'#fff';x.beginPath();x.arc(ax+sz/2,ay+sz/2,sz/2,0,7);x.stroke()});
+   let ty=n>2?44+sz+28+48:(HH-(tl.length*62+sl.length*40))/2+46;x.fillStyle='#3d3226';x.font=`bold 50px ${FONT}`;tl.forEach(l=>{x.fillText(l,titleX,ty);ty+=62});x.font=`28px ${FONT}`;x.fillStyle='#6b5a43';sl.forEach(l=>{x.fillText(l,titleX,ty-14);ty+=40})}
+  y=HH+40;
+  for(const s of spec.sections||[]){
+   const has=(s.rows&&s.rows.some(r=>r[1]!==''&&r[1]!=null))||s.text||s.art&&IM[s.art]||(s.imgs&&s.imgs.some(i=>IM[i]))||(s.stages&&s.stages.length);if(!has)continue;
+   if(s.h){if(draw){x.fillStyle=accent;x.fillRect(P,y,10,36);x.fillStyle='#8a6a3f';x.font=`bold 32px ${FONT}`;x.fillText(s.h,P+24,y+30)}y+=58}
+   if(s.rows){for(const [k,v] of s.rows){if(v===''||v==null)continue;x.font=`bold 26px ${FONT}`;const kw=Math.min(260,Math.max(140,x.measureText(k).width+20));x.font=`28px ${FONT}`;const ls=wrap(x,v,W-2*P-kw);if(draw){x.fillStyle='#8a7a62';x.font=`bold 26px ${FONT}`;wrap(x,k,kw-16).forEach((l,i)=>x.fillText(l,P,y+30+i*34));x.fillStyle='#2e261c';x.font=`28px ${FONT}`;ls.forEach((l,i)=>x.fillText(l,P+kw,y+30+i*42))}y+=Math.max(ls.length*42,wrap(x,k,kw-16).length*34)+10}y+=14}
+   if(s.text){x.font=`28px ${FONT}`;const ls=wrap(x,s.text,W-2*P);if(draw){x.fillStyle='#2e261c';ls.forEach((l,i)=>x.fillText(l,P,y+30+i*44))}y+=ls.length*44+24}
+   if(s.art&&IM[s.art]){const im=IM[s.art],sc=Math.min((W-2*P)/im.width,900/im.height,1.6),w=im.width*sc,h=im.height*sc;if(draw)x.drawImage(im,(W-w)/2,y,w,h);y+=h+30}
+   if(s.imgs){const ok=s.imgs.filter(i=>IM[i]).slice(0,9),cw=(W-2*P-32)/3;ok.forEach((src,i)=>{const cx=P+(i%3)*(cw+16),cy=y+Math.floor(i/3)*(cw+16);if(draw){x.save();x.beginPath();x.roundRect?x.roundRect(cx,cy,cw,cw,14):x.rect(cx,cy,cw,cw);x.clip();coverDraw(x,IM[src],cx,cy,cw,cw);x.restore()}});y+=Math.ceil(ok.length/3)*(cw+16)+20}
+   if(s.stages){for(const t of s.stages){x.font=`bold 28px ${FONT}`;if(draw){x.fillStyle='#8a6a3f';x.fillText(t.t,P,y+30)}y+=44;if(t.txt){x.font=`28px ${FONT}`;const ls=wrap(x,t.txt,W-2*P-20);if(draw){x.fillStyle='#2e261c';ls.forEach((l,i)=>x.fillText(l,P+20,y+28+i*42))}y+=ls.length*42+8}if(t.img&&IM[t.img]){const im=IM[t.img],sc=Math.min(520/im.width,520/im.height,1.5),w=im.width*sc,h=im.height*sc;if(draw)x.drawImage(im,P+20,y+6,w,h);y+=h+18}y+=16}}
+   y+=16}
+  y+=20;if(draw){x.fillStyle='#b3a385';x.font=`22px ${FONT}`;x.textAlign='right';x.fillText(TOOL,W-P,y);x.textAlign='left'}return y+40};
+ const H=Math.min(30000,run(false));c.height=H;x.fillStyle='#fffdf9';x.fillRect(0,0,W,H);run(true);return c}
+const TPL=[['long','長版（完整內容）'],['phone','直式手機桌布 9:16'],['square','方形社群 1:1']];let tplMode='long';
+const trunc=(t,n)=>{t=String(t||'');return t.length>n?t.slice(0,n)+'……':t};
+function shrink(spec,mode){const ph=mode=='phone',maxR=ph?14:9,maxT=ph?220:110;const sec=[];let rows=0;
+ const src=(spec.sections||[]).slice();if(ph){const a=src.findIndex(s=>s.art);if(a>0)src.unshift(src.splice(a,1)[0])}
+ for(const s of src){if(s.art){if(ph)sec.push(s);continue}if(s.imgs){if(ph)sec.push({h:s.h,imgs:s.imgs.slice(0,3)});continue}
+  if(s.rows){const left=maxR-rows;if(left<=0)continue;const r=s.rows.filter(x=>x[1]!==''&&x[1]!=null).slice(0,left).map(([k,v])=>[k,trunc(v,ph?70:40)]);rows+=r.length;if(r.length)sec.push({h:s.h,rows:r});continue}
+  if(s.text){sec.push({h:s.h,text:trunc(s.text,maxT)});continue}
+  if(s.stages){sec.push({h:s.h,stages:s.stages.slice(0,ph?4:3).map(t=>({t:t.t,txt:trunc(t.txt,ph?60:36),img:ph?t.img:null}))})}}
+ return Object.assign({},spec,{sections:sec})}
+function frameFit(src,mode){const TW=1080,TH=mode=='phone'?1920:1080,M=44,F=70;const c=document.createElement('canvas');c.width=TW;c.height=TH;const x=c.getContext('2d');
+ x.fillStyle='#E0D3BC';x.fillRect(0,0,TW,TH);x.fillStyle='#d3c3a6';for(let i=0;i<TW;i+=36)for(let j=0;j<TH;j+=36)if((i+j)%72==0){x.beginPath();x.arc(i,j,3,0,7);x.fill()}
+ const pw=TW-2*M,phh=TH-2*M-F;x.fillStyle='#fffdf9';x.beginPath();x.roundRect?x.roundRect(M,M,pw,phh,28):x.rect(M,M,pw,phh);x.fill();
+ const s=Math.min((pw-24)/src.width,(phh-24)/src.height,1),w=src.width*s,h=src.height*s;x.save();x.beginPath();x.roundRect?x.roundRect(M,M,pw,phh,28):x.rect(M,M,pw,phh);x.clip();x.drawImage(src,M+(pw-w)/2,M+(h<phh-24?(phh-h)/2:12),w,h);x.restore();
+ x.fillStyle='#6b5a43';x.font=`26px ${FONT}`;x.textAlign='center';x.fillText(TOOL,TW/2,TH-M+4);x.textAlign='left';return c}
+async function showCard(spec,name){const get=async mode=>{if(typeof spec=='function'){const c=await spec();return mode=='long'?c:frameFit(c,mode)}return mode=='long'?makeCard(spec):frameFit(await makeCard(shrink(spec,mode)),mode)};
+ $('#mTitle').textContent='存成圖片';$('#mBody').innerHTML=`<p class="row" id="mTpl">${TPL.map(([k,l])=>`<button class="sm ${k==tplMode?'on':''}" data-t="${k}">${l}</button>`).join('')}</p><p class="note">${typeof spec=='function'?'':'手機桌布與方形版會自動精簡內容，完整內容請選長版。'}按「下載圖片」儲存；若沒有反應，請長按或右鍵圖片另存。</p><p><button class="big" id="mDl">⬇️ 下載圖片</button></p><div id="mImg"><p class="note">圖片產生中…</p></div>`;$('#modal').classList.add('open');
+ let url='';const draw=async()=>{$('#mImg').innerHTML='<p class="note">圖片產生中…</p>';$$('#mTpl button').forEach(b=>b.classList.toggle('on',b.dataset.t==tplMode));try{const c=await get(tplMode);url=c.toDataURL('image/png');$('#mImg').innerHTML=`<img src="${url}" alt="" style="${tplMode=='phone'?'max-height:70vh;width:auto':''}">`}catch(e){$('#mImg').innerHTML='<p class="note">圖片產生失敗，請再試一次。</p>'}};
+ $('#mTpl').onclick=e=>{const t=e.target.dataset&&e.target.dataset.t;if(t){tplMode=t;draw()}};
+ $('#mDl').onclick=()=>{if(!url)return;const a=document.createElement('a');a.href=url;a.download=fileName(name)+(tplMode=='long'?'':'_'+tplMode)+'.png';document.body.appendChild(a);a.click();a.remove()};draw()}
+function showText(t,name,msg){$('#mTitle').textContent='文字檔';$('#mBody').innerHTML=`<p class="note">${esc(msg||'可以下載成 .txt，或複製下方文字。')}</p><p><button class="big" id="mDl">⬇️ 下載文字檔</button> <button id="mCp">📋 複製</button></p><textarea rows="16" id="mTa"></textarea>`;$('#mTa').value=t;$('#mDl').onclick=()=>{const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([t],{type:'text/plain;charset=utf-8'}));a.download=fileName(name)+'.txt';document.body.appendChild(a);a.click();a.remove()};$('#mCp').onclick=()=>copyText(t);$('#modal').classList.add('open')}
+function closeModal(){$('#modal').classList.remove('open')}
+
+/* ===== 人物設定 ===== */
+const ZOD=S('牡羊座、金牛座、雙子座、巨蟹座、獅子座、處女座、天秤座、天蠍座、射手座、摩羯座、水瓶座、雙魚座');
+const CZ=S('鼠、牛、虎、兔、龍、蛇、馬、羊、猴、雞、狗、豬');
+const MBTI=S('INTJ、INTP、ENTJ、ENTP、INFJ、INFP、ENFJ、ENFP、ISTJ、ISFJ、ESTJ、ESFJ、ISTP、ISFP、ESTP、ESFP、不確定');
+function zodiacOf(m,d){const cut=[19,18,20,19,20,21,22,22,22,23,22,21],b=S('摩羯座、水瓶座、雙魚座、牡羊座、金牛座、雙子座、巨蟹座、獅子座、處女座、天秤座、天蠍座、射手座'),a=S('水瓶座、雙魚座、牡羊座、金牛座、雙子座、巨蟹座、獅子座、處女座、天秤座、天蠍座、射手座、摩羯座');return d<=cut[m-1]?b[m-1]:a[m-1]}
+const CF=[
+['🪪 基本資料',[
+ {k:'name',l:'姓名',ph:'角色姓名'},{k:'nick',l:'暱稱／常被叫的稱呼',sug:1,ph:'例：阿哲、小晴'},
+ {k:'gender',l:'性別／性別認同',sug:1,dl:'女、男、跨性別女性、跨性別男性、非二元、性別流動、不設定'},
+ {k:'age',l:'年齡',ph:'例：27'},{k:'height',l:'身高',ph:'例：178 公分'},{k:'weight',l:'體重／體型',ph:'例：62 公斤、精實'},
+ {k:'orient',l:'性傾向',dl:'異性戀、同性戀、雙性戀、泛性戀、無性戀、灰色性戀、無浪漫傾向、探索中、不設定'},
+ {k:'bday',l:'生日',t:'bday'},{k:'zodiac',l:'星座（填生日會自動帶入）',t:'sel',o:ZOD},
+ {k:'byear',l:'出生年（選填）',sug:1,ph:'例：1998，會自動帶入生肖'},{k:'czod',l:'生肖',t:'sel',o:CZ},
+ {k:'blood',l:'血型',t:'sel',o:S('A、B、O、AB、其他／不確定')},{k:'mbti',l:'MBTI',t:'sel',o:MBTI},
+ {k:'nation',l:'國籍／居住地',sug:1,ph:'例：台灣／台北'},{k:'job',l:'職業／身分',sug:1,ph:'例：律師、大學生'},
+ {k:'color',l:'代表色（關係表、存圖會用到）',sug:1,t:'color'}]],
+['💭 個性與內在',[
+ {k:'traits',l:'個性關鍵字',w:1,ph:'用頓號或逗號分隔，例：嘴硬心軟、慢熱、戀舊'},
+ {k:'conf',l:'自信程度',t:'range'},
+ {k:'attach',l:'依附類型',sug:1,t:'sel',o:S('安全型、焦慮型、逃避型、混亂型（恐懼逃避型）、不確定')},
+ {k:'habit',l:'口頭禪／小習慣',sug:1},{k:'likes',l:'喜歡的事物',sug:1},{k:'dislikes',l:'討厭的事物',sug:1},
+ {k:'goal',l:'目標與渴望',sug:1,t:'ta'},{k:'secret',l:'祕密／弱點',sug:1,t:'ta'}]],
+['👀 外貌',[{k:'looks',l:'外貌特徵',sug:1,t:'ta',w:1,ph:'髮型、五官、慣穿的衣服、疤痕、刺青、香水……'}]],
+['🏠 身心狀態與家庭',[
+ {k:'health',l:'身心狀態',t:'sel',o:S('健全者、身心障礙、精神疾病、慢性病、其他疾病、多重狀態、不設定')},
+ {k:'healthNote',l:'狀態說明（選填）',t:'ta',ph:'例：聽障，會讀唇與手語；焦慮症，定期回診'},
+ {k:'family',l:'家庭成員構成',t:'ta',ph:'例：父母健在、一個大三歲的姊姊'},{k:'pets',l:'寵物',ph:'例：一隻叫麻糬的橘貓'}]],
+['💗 戀愛',[{k:'loveCount',l:'戀愛經驗（次數）',t:'num'},{k:'loveNote',l:'戀愛經驗補充',sug:1,t:'ta',ph:'例：初戀在大學，分手原因是……'}]],
+['📝 自由補充',[{k:'free',l:'自由補充',t:'ta',w:1,rows:8}]]];
+const CONF_L=['0 完全沒自信','1 很沒自信','2 有點沒自信','3 普通','4 蠻有自信','5 非常有自信'];
+const curChar=()=>ST.chars.find(c=>c.id==ST.curChar);
+const charById=id=>ST.chars.find(c=>c.id==id);
+function newChar(){const c={id:uid(),name:'',conf:3,color:pick(['#c9a37a','#9fb7c9','#c99fae','#a3b899','#b8a3c9','#d4b483','#8fa3a3']),gallery:[],deep:[],t:Date.now()};ST.chars.unshift(c);ST.curChar=c.id;persist();renderChars();setTimeout(()=>{const i=$('#charEdit [data-k=name]');i&&i.focus()},50)}
+function renderCharList(){$('#charCount').textContent=ST.chars.length?`共 ${ST.chars.length} 位人物`:'還沒有人物，先新增一位吧。';$('#charList').innerHTML=ST.chars.map(c=>`<span class="pchip ${c.id==ST.curChar?'on':''}" onclick="ST.curChar='${c.id}';persist();renderChars()">${avHTML(c.avatar,c.name)}${esc(c.name||'（未命名）')}</span>`).join('')}
+function fieldHTML(f,c){const v=c[f.k]==null?'':c[f.k];const lab=`<span class="lab">${esc(f.l)}${f.sug?'<span class="sug">✦</span>':''}</span>`;let inp;
+ if(f.t=='sel')inp=`<select data-k="${f.k}"><option value="">—</option>${f.o.map(o=>`<option ${o==v?'selected':''}>${esc(o)}</option>`).join('')}</select>`;
+ else if(f.t=='ta')inp=`<textarea data-k="${f.k}" rows="${f.rows||3}" placeholder="${esc(f.ph||'')}">${esc(v)}</textarea>`;
+ else if(f.t=='num')inp=`<input type="number" min="0" data-k="${f.k}" value="${esc(v)}">`;
+ else if(f.t=='color')inp=`<input type="color" data-k="${f.k}" value="${esc(v||'#c9a37a')}">`;
+ else if(f.t=='range')inp=`<div class="conf"><input type="range" min="0" max="5" step="1" data-k="${f.k}" value="${v===''?3:v}"><b id="confv">${CONF_L[v===''?3:v]}</b></div>`;
+ else if(f.t=='bday'){const [m,d]=String(v||'/').split('/');inp=`<div class="row"><select data-bd="m"><option value="">月</option>${[...Array(12)].map((_,i)=>`<option ${m==i+1?'selected':''}>${i+1}</option>`).join('')}</select><select data-bd="d"><option value="">日</option>${[...Array(31)].map((_,i)=>`<option ${d==i+1?'selected':''}>${i+1}</option>`).join('')}</select></div>`}
+ else inp=`<input data-k="${f.k}" value="${esc(v)}" placeholder="${esc(f.ph||'')}" ${f.dl?`list="dl_${f.k}"`:''}>${f.dl?`<datalist id="dl_${f.k}">${S(f.dl).map(o=>`<option value="${esc(o)}">`).join('')}</datalist>`:''}`;
+ const hid=f.k=='healthNote'&&(!c.health||c.health=='健全者'||c.health=='不設定')?' hide':'';
+ return `<label class="${f.w||f.t=='ta'?'wide':''}${hid}" id="f_${f.k}">${lab}${inp}</label>`}
+function renderChars(){renderCharList();const c=curChar(),box=$('#charEdit');if(!c){box.innerHTML='';return}
+ box.innerHTML=`<div class="card"><div class="row">${avHTML(c.avatar,c.name,'lg')}<div style="flex:1;min-width:180px"><h3 id="ceTitle" style="margin:0">${esc(c.name||'（未命名）')}</h3><span class="note">內容會自動儲存</span></div><button class="big" onclick="toDeep('${c.id}')">🧠 深化角色</button></div></div>
+ <details class="fold" open><summary>🖼️ 頭貼、立繪與圖庫</summary><div class="inner"><div class="grid">
+ <div class="imgbox ava"><span class="lab">人物頭貼</span>${c.avatar?`<img src="${c.avatar}" alt="" onclick="zoom(this.src)">`:''}<label class="filebtn">上傳頭貼<input type="file" accept="image/*" onchange="upImgs(this,512,d=>{curChar().avatar=d;persist();renderChars()})"></label> ${c.avatar?`<button class="sm" onclick="curChar().avatar=null;persist();renderChars()">移除</button>`:''}</div>
+ <div class="imgbox"><span class="lab">人物立繪</span>${c.art?`<img src="${c.art}" alt="" onclick="zoom(this.src)">`:''}<label class="filebtn">上傳立繪<input type="file" accept="image/*" onchange="upImgs(this,1400,d=>{curChar().art=d;persist();renderChars()})"></label> ${c.art?`<button class="sm" onclick="curChar().art=null;persist();renderChars()">移除</button>`:''}</div></div>
+ <p class="lab" style="margin-top:10px">人物圖庫（可一次選多張）</p><label class="filebtn">＋ 加入圖片<input type="file" accept="image/*" multiple onchange="upImgs(this,1200,d=>{curChar().gallery.push(d);persist();renderChars()})"></label>
+ <div class="gal">${(c.gallery||[]).map((g,i)=>`<div><img src="${g}" alt="" onclick="zoom(this.src)"><button onclick="curChar().gallery.splice(${i},1);persist();renderChars()">✕</button></div>`).join('')}</div></div></details>
+ ${CF.map(([g,fs],gi)=>`<details class="fold" ${gi<2?'open':''}><summary>${g}</summary><div class="inner"><div class="grid">${fs.map(f=>fieldHTML(f,c)).join('')}</div>${g.includes('身心')?'<p class="note">身心狀態只是角色的一部分，不代表角色的全部。請避免把疾病或障礙當成噱頭、反派標籤，或「被愛治好」的情節；需要時建議查閱可靠資料，或請相關當事人、專業者協助審稿。</p>':''}</div></details>`).join('')}
+ ${(c.deep||[]).length?`<details class="fold"><summary>🧠 深化筆記（${c.deep.length} 題）</summary><div class="inner">${c.deep.map(d=>`<p><b>${esc(d.q)}</b><br>${esc(d.a).replace(/\n/g,'<br>')}</p>`).join('')}<button onclick="toDeep('${c.id}')">到人物深化頁編輯</button></div></details>`:''}
+ <div class="actbar"><button onclick="persist();toast('已儲存到瀏覽器')">💾 儲存</button> <button onclick="charImg()">🖼️ 存成圖片</button> <button onclick="showText(charText(curChar()),curChar().name)">📄 文字檔</button> <button onclick="copyText(charText(curChar()))">📋 複製文字</button> <button onclick="dupChar()">📑 複製一份</button> <button class="warn" onclick="armed(this,delChar)">🗑️ 刪除</button></div>`}
+function onCharInput(e){const c=curChar();if(!c)return;const t=e.target;
+ if(t.dataset.bd){const m=$('#charEdit [data-bd=m]').value,d=$('#charEdit [data-bd=d]').value;c.bday=m||d?`${m}/${d}`:'';if(m&&d){c.zodiac=zodiacOf(+m,+d);const z=$('#charEdit [data-k=zodiac]');if(z)z.value=c.zodiac}persist();return}
+ const k=t.dataset.k;if(!k)return;c[k]=t.type=='range'||t.type=='number'?(t.value===''?'':+t.value):t.value;c.t=Date.now();
+ if(k=='conf')$('#confv').textContent=CONF_L[c.conf];
+ if(k=='byear'&&/^\d{4}$/.test(t.value)){c.czod=CZ[((+t.value-4)%12+12)%12];const z=$('#charEdit [data-k=czod]');if(z)z.value=c.czod}
+ if(k=='health')$('#f_healthNote').classList.toggle('hide',!c.health||c.health=='健全者'||c.health=='不設定');
+ if(k=='name'){$('#ceTitle').textContent=c.name||'（未命名）';renderCharList()}
+ persist()}
+function dupChar(){const c=JSON.parse(JSON.stringify(curChar()));c.id=uid();c.name=(c.name||'')+'（複本）';ST.chars.unshift(c);ST.curChar=c.id;persist();renderChars();toast('已複製一份')}
+function delChar(){const id=ST.curChar;ST.chars=ST.chars.filter(c=>c.id!=id);ST.curChar=ST.chars[0]?.id||null;persist();renderChars();toast('已刪除')}
+function toDeep(id){DEEP.cid=id;saveDeep();go('deep')}
+function charRows(c){const r=[];CF.forEach(([g,fs])=>fs.forEach(f=>{if(f.k=='name'||f.k=='free'||f.k=='color')return;let v=c[f.k];if(f.k=='conf')v=v===''||v==null?'':`${'●'.repeat(v)}${'○'.repeat(5-v)}（${CONF_L[v].slice(2)}）`;if(f.k=='bday')v=v&&v!='/'?v.replace('/','月')+'日':'';if(f.k=='healthNote'&&(c.health=='健全者'||!c.health))v='';if(v!==''&&v!=null)r.push([f.l.replace(/（.*?）/g,''),String(v)])}));return r}
+function charText(c){let t=`【${c.name||'未命名'}】\n`;charRows(c).forEach(([k,v])=>t+=`${k}：${v}\n`);if(c.free)t+=`\n自由補充：\n${c.free}\n`;if((c.deep||[]).length){t+='\n— 深化筆記 —\n';c.deep.forEach(d=>t+=`Q：${d.q}\nA：${d.a}\n\n`)}return t+`\n（${TOOL}）`}
+async function charImg(){const c=curChar();showCard({title:c.name||'未命名',sub:[c.age&&c.age+' 歲',c.gender,c.job].filter(Boolean).join('・'),accent:c.color,avatars:[{src:c.avatar,name:c.name,color:c.color}],sections:[{h:'人物設定',rows:charRows(c)},{h:'自由補充',text:c.free},{h:'立繪',art:c.art},{h:'深化筆記',rows:(c.deep||[]).map(d=>[d.q,d.a])},{h:'圖庫',imgs:c.gallery}]},c.name)}
+
+/* ===== 人物深化 ===== */
+let DEEP={cid:'',slots:[],cats:[]};
+function saveDeep(){ST.deep=DEEP;persist()}
+function qPool(){const all=Q.concat(ST.myQ||[]);return DEEP.cats.length?all.filter(q=>DEEP.cats.includes(q.split('|')[0])):all}
+function qCats(){return[...new Set(Q.concat(ST.myQ||[]).map(q=>q.split('|')[0]))]}
+function renderDeepCats(){$('#deepCats').innerHTML=qCats().map(c=>`<label><input type="checkbox" value="${esc(c)}" ${DEEP.cats.includes(c)?'checked':''} onchange="DEEP.cats=$$('#deepCats input:checked').map(i=>i.value);saveDeep()">${esc(c)}</label>`).join('');$('#myQn').textContent=(ST.myQ||[]).length?`已加入 ${ST.myQ.length} 題自訂題目`:''}
+function rollDeepOne(i){const used=DEEP.slots.map(s=>s.q);const pool=qPool().filter(q=>!used.includes(q));const q=pick(pool.length?pool:qPool());DEEP.slots[i]={q,lock:false,a:''}}
+function rollDeep(){while(DEEP.slots.length<5)DEEP.slots.push({q:'',lock:false,a:''});DEEP.slots.forEach((s,i)=>{if(!s.lock)rollDeepOne(i)});saveDeep();renderDeepSlots()}
+function renderDeepWho(){$('#deepWho').innerHTML=`<option value="">（不指定人物）</option>`+ST.chars.map(c=>`<option value="${c.id}" ${c.id==DEEP.cid?'selected':''}>${esc(c.name||'（未命名）')}</option>`).join('')}
+function renderDeepSlots(){$('#deepSlots').innerHTML=DEEP.slots.map((s,i)=>{const [cat,q]=s.q.split('|');return `<div class="slot ${s.lock?'locked':''}"><div class="body"><div class="k">${esc(cat)}</div><div class="v">${esc(q)}</div><textarea rows="2" placeholder="想到什麼就寫下來（選填）" oninput="DEEP.slots[${i}].a=this.value;saveDeep()">${esc(s.a)}</textarea></div><div class="btns"><button class="sm" onclick="rollDeepOne(${i});saveDeep();renderDeepSlots()" ${s.lock?'disabled':''}>🎲 重骰</button><button class="sm ${s.lock?'on':''}" onclick="DEEP.slots[${i}].lock=!DEEP.slots[${i}].lock;saveDeep();renderDeepSlots()">${s.lock?'🔒 已鎖':'🔓 鎖住'}</button></div></div>`}).join('')}
+function saveDeepNotes(){const c=charById(DEEP.cid);if(!c){toast('請先在上方選擇人物');return}const ans=DEEP.slots.filter(s=>s.a.trim());if(!ans.length){toast('還沒有寫任何回答');return}c.deep=c.deep||[];ans.forEach(s=>{const q=s.q.split('|')[1],ex=c.deep.find(d=>d.q==q);if(ex)ex.a=s.a;else c.deep.push({q,c:s.q.split('|')[0],a:s.a})});persist();renderDeepNotes();toast(`已存入 ${ans.length} 題`)}
+function renderDeepNotes(){const c=charById(DEEP.cid),b=$('#deepNotes');if(!c){b.innerHTML='<p class="note">選擇人物後，這裡會顯示他的深化筆記。</p>';return}if(!(c.deep||[]).length){b.innerHTML=`<p class="note">${esc(c.name||'這位人物')}還沒有深化筆記。</p>`;return}
+ b.innerHTML=c.deep.map((d,i)=>`<div class="lst"><div class="row" style="justify-content:space-between"><b style="flex:1">${esc(d.q)}</b><button class="sm warn" onclick="charById(DEEP.cid).deep.splice(${i},1);persist();renderDeepNotes()">刪除</button></div><textarea rows="2" oninput="charById(DEEP.cid).deep[${i}].a=this.value;persist()">${esc(d.a)}</textarea></div>`).join('')}
+function deepData(){const c=charById(DEEP.cid);const notes=c?(c.deep||[]).map(d=>[d.q,d.a]):[];DEEP.slots.forEach(s=>{const q=s.q.split('|')[1];if(s.a.trim()&&!notes.some(n=>n[0]==q))notes.push([q,s.a])});return{c,notes,qs:DEEP.slots.map(s=>s.q.split('|')[1])}}
+function deepTxt(){const{c,notes,qs}=deepData();let t=`【${c?c.name||'未命名':'人物深化'}】人物深化\n\n`;if(notes.length)notes.forEach(([q,a])=>t+=`Q：${q}\nA：${a}\n\n`);else t+='本次題目：\n'+qs.map((q,i)=>`${i+1}. ${q}`).join('\n')+'\n';showText(t+`（${TOOL}）`,(c?c.name:'人物')+'_深化')}
+async function deepImg(){const{c,notes,qs}=deepData();showCard({title:(c?c.name||'未命名':'人物深化')+' 的人物深化',accent:c&&c.color,avatars:c?[{src:c.avatar,name:c.name,color:c.color}]:[],sections:notes.length?[{h:'深化筆記',rows:notes}]:[{h:'本次題目',text:qs.map((q,i)=>`${i+1}. ${q}`).join('\n')}]},(c?c.name:'人物')+'_深化')}
+function addMyQ(){const ls=$('#myQin').value.split('\n').map(s=>s.trim()).filter(Boolean).map(s=>s.includes('|')||s.includes('｜')?s.replace('｜','|'):'我的題目|'+s);ST.myQ=(ST.myQ||[]).concat(ls);$('#myQin').value='';persist();renderDeepCats();toast(`已加入 ${ls.length} 題`)}
+
+/* ===== CP設定 ===== */
+const WHO=[['chaser','誰展開追求？'],['confessor','誰先告白？'],['leader','誰領導關係？'],['comforter','誰擅長安慰人？'],['clingy','誰喜歡撒嬌／討抱？'],['apolog','吵架時誰先低頭？',1],['jealous','誰比較會吃醋？',1]];
+const STAGE_PH={0:'陌生人：初次見面時的態度、第一印象……',10:'點頭之交：知道彼此是誰，互動很客氣……',30:'熟人：有了固定的相處模式……',50:'朋友／曖昧：開始在意對方……',70:'親近：會主動關心、偶爾越界……',100:'完全信任：只在對方面前才有的樣子……'};
+const curCP=()=>ST.cps.find(c=>c.id==ST.curCP);
+function newCP(){const p={id:uid(),name:'',members:[{cid:'',name:''},{cid:'',name:''}],stages:[0,10,30,50,70,100].map(p=>({p,txt:'',img:null})),gallery:[],t:Date.now()};const ids=ST.chars.slice(0,2).map(c=>c.id);ids.forEach((id,i)=>p.members[i].cid=id);ST.cps.unshift(p);ST.curCP=p.id;persist();renderCP()}
+const mName=m=>{const c=m.cid&&charById(m.cid);return c?c.name||'（未命名）':m.name||'（未填）'};
+const mAv=m=>{const c=m.cid&&charById(m.cid);return m.av||(c&&c.avatar)||null};
+const mColor=m=>{const c=m.cid&&charById(m.cid);return(c&&c.color)||'#cdbb9c'};
+const cpTitle=p=>p.name||p.members.map(mName).join(' × ');
+function renderCPList(){$('#cpCount').textContent=ST.cps.length?`共 ${ST.cps.length} 組`:'還沒有 CP，先新增一組吧。';$('#cpList').innerHTML=ST.cps.map(p=>`<span class="pchip ${p.id==ST.curCP?'on':''}" onclick="ST.curCP='${p.id}';persist();renderCP()">${p.members.slice(0,2).map(m=>avHTML(mAv(m),mName(m))).join('')}${esc(cpTitle(p))}</span>`).join('')}
+function whoOpts(p,v){const n=p.members.length,names=p.members.map(mName);const o=[...names,n==2?'兩人都是':'大家都是','看情況／輪流','都不是'];return `<option value="">—</option>`+o.map(x=>`<option ${x==v?'selected':''}>${esc(x)}</option>`).join('')}
+function renderCP(){renderCPList();const p=curCP(),box=$('#cpEdit');if(!p){box.innerHTML='';return}
+ const co=`<option value="">（手動輸入名字）</option>`;
+ box.innerHTML=`<details class="fold" open><summary>👥 成員（${p.members.length} 人）</summary><div class="inner">
+ ${p.members.map((m,i)=>`<div class="lst"><div class="row">${avHTML(mAv(m),mName(m))}<select onchange="curCP().members[${i}].cid=this.value;persist();renderCP()">${co}${ST.chars.map(c=>`<option value="${c.id}" ${c.id==m.cid?'selected':''}>${esc(c.name||'（未命名）')}</option>`).join('')}</select>${m.cid?'':`<input placeholder="名字" value="${esc(m.name)}" oninput="curCP().members[${i}].name=this.value;persist();renderCPList()">`}
+ <label class="filebtn">單人頭貼<input type="file" accept="image/*" onchange="upImgs(this,512,d=>{curCP().members[${i}].av=d;persist();renderCP()})"></label>${m.av?`<button class="sm" onclick="curCP().members[${i}].av=null;persist();renderCP()">改回人物頭貼</button>`:''}${p.members.length>2?`<button class="sm warn" onclick="curCP().members.splice(${i},1);persist();renderCP()">移除</button>`:''}</div></div>`).join('')}
+ ${p.members.length<6?`<p><button onclick="curCP().members.push({cid:'',name:''});persist();renderCP()">＋ 加入成員（最多六人）</button></p>`:''}
+ <p class="note">選擇已存好的人物，會自動帶入名字和頭貼；也可以為這組 CP 另外上傳單人頭貼。</p></div></details>
+ <details class="fold" open><summary>💞 基本資料</summary><div class="inner"><div class="grid">
+ ${cpF('name','CP名（非必填）')}${cpF('ptype','配對類型',1,'BG、BL、GL、GB、Reverse Harem、Harem、Polyamory、無CP（羈絆）')}${cpF('status','關係現況',1,'曖昧中、交往中、已婚、分手、破鏡重圓中、單戀、祕密交往、契約關係')}
+ <label><span class="lab">年齡差</span><div class="row"><input data-cp="ageGap" value="${esc(p.ageGap||'')}" placeholder="例：差 5 歲"><button class="sm" onclick="cpAgeGap()">依年齡計算</button></div></label>
+ ${cpF('metYear','認識年份')}${cpF('dateYear','交往年份')}${cpF('marryYear','結婚年份（非必填）')}
+ ${cpF('callEach','怎麼稱呼彼此',1)}${cpF('dateSpot','常去的約會地點',1)}${cpF('token','定情物／重要物品',1)}${cpF('song','代表歌曲',1)}</div></div></details>
+ <details class="fold" open><summary>🙋 誰？</summary><div class="inner"><div class="grid">${WHO.map(([k,l,s])=>`<label><span class="lab">${l}${s?'<span class="sug">✦</span>':''}</span><select data-cp="${k}">${whoOpts(p,p[k])}</select></label>`).join('')}</div></div></details>
+ <details class="fold" open><summary>📶 認識程度與態度</summary><div class="inner"><p class="note">不同認識深淺階段的互動模式，可以寫文字，也可以上傳自己畫的互動圖。百分比可以修改，也能增減階段。</p>
+ ${p.stages.map((s,i)=>`<div class="stage"><div class="row"><input type="number" min="0" max="100" value="${s.p}" style="max-width:90px;flex:0" oninput="curCP().stages[${i}].p=this.value;persist()"><b>%</b><span style="flex:1"></span><label class="filebtn">上傳互動圖<input type="file" accept="image/*" onchange="upImgs(this,1200,d=>{curCP().stages[${i}].img=d;persist();renderCP()})"></label>${s.img?`<button class="sm" onclick="curCP().stages[${i}].img=null;persist();renderCP()">移除圖</button>`:''}<button class="sm warn" onclick="curCP().stages.splice(${i},1);persist();renderCP()">刪除階段</button></div>
+ <textarea rows="2" placeholder="${esc(STAGE_PH[s.p]||'這個階段的互動模式……')}" oninput="curCP().stages[${i}].txt=this.value;persist()">${esc(s.txt)}</textarea>${s.img?`<img src="${s.img}" alt="" onclick="zoom(this.src)">`:''}</div>`).join('')}
+ <button onclick="curCP().stages.push({p:'',txt:'',img:null});persist();renderCP()">＋ 新增階段</button></div></details>
+ <details class="fold" open><summary>📝 自由補充</summary><div class="inner"><textarea data-cp="free" rows="7">${esc(p.free||'')}</textarea></div></details>
+ <details class="fold" open><summary>🖼️ CP 圖庫</summary><div class="inner"><label class="filebtn">＋ 加入圖片<input type="file" accept="image/*" multiple onchange="upImgs(this,1200,d=>{curCP().gallery.push(d);persist();renderCP()})"></label><div class="gal">${p.gallery.map((g,i)=>`<div><img src="${g}" alt="" onclick="zoom(this.src)"><button onclick="curCP().gallery.splice(${i},1);persist();renderCP()">✕</button></div>`).join('')}</div></div></details>
+ <div class="actbar"><button onclick="persist();toast('已儲存到瀏覽器')">💾 儲存</button> <button onclick="cpImg()">🖼️ 存成圖片</button> <button onclick="showText(cpText(curCP()),cpTitle(curCP()))">📄 文字檔</button> <button onclick="copyText(cpText(curCP()))">📋 複製文字</button> <button class="warn" onclick="armed(this,delCP)">🗑️ 刪除</button></div>`}
+function cpF(k,l,s,dl){const p=curCP();return `<label><span class="lab">${l}${s?'<span class="sug">✦</span>':''}</span><input data-cp="${k}" value="${esc(p[k]||'')}" ${dl?`list="dl_cp_${k}"`:''}>${dl?`<datalist id="dl_cp_${k}">${S(dl).map(o=>`<option value="${o}">`).join('')}</datalist>`:''}</label>`}
+function onCPInput(e){const k=e.target.dataset.cp;if(!k)return;curCP()[k]=e.target.value;if(k=='name')renderCPList();persist()}
+function cpAgeGap(){const p=curCP();const ages=p.members.map(m=>{const c=m.cid&&charById(m.cid);return c?parseInt(c.age):NaN}).filter(a=>!isNaN(a));if(ages.length<2){toast('需要至少兩位已填年齡的人物');return}const g=Math.max(...ages)-Math.min(...ages);p.ageGap=g?`差 ${g} 歲`:'同齡';persist();renderCP()}
+function delCP(){ST.cps=ST.cps.filter(c=>c.id!=ST.curCP);ST.curCP=ST.cps[0]?.id||null;persist();renderCP()}
+function cpRows(p){const r=[['成員',p.members.map(mName).join('、')],['配對類型',p.ptype],['關係現況',p.status],['年齡差',p.ageGap],['認識年份',p.metYear],['交往年份',p.dateYear],['結婚年份',p.marryYear],['稱呼彼此',p.callEach],['約會地點',p.dateSpot],['定情物',p.token],['代表歌曲',p.song]];WHO.forEach(([k,l])=>r.push([l,p[k]]));return r.filter(x=>x[1])}
+function cpText(p){let t=`【${cpTitle(p)}】\n`;cpRows(p).forEach(([k,v])=>t+=`${k}：${v}\n`);const st=p.stages.filter(s=>s.txt||s.img);if(st.length){t+='\n— 認識程度與態度 —\n';st.forEach(s=>t+=`${s.p}%：${s.txt||'（附圖）'}\n`)}if(p.free)t+=`\n自由補充：\n${p.free}\n`;return t+`\n（${TOOL}）`}
+async function cpImg(){const p=curCP();showCard({title:cpTitle(p),sub:p.name?p.members.map(mName).join(' × '):(p.ptype||''),accent:mColor(p.members[0]),avatars:p.members.map(m=>({src:mAv(m),name:mName(m),color:mColor(m)})),sections:[{h:'CP設定',rows:cpRows(p)},{h:'認識程度與態度',stages:p.stages.filter(s=>s.txt||s.img).map(s=>({t:s.p+'%',txt:s.txt,img:s.img}))},{h:'自由補充',text:p.free},{h:'CP 圖庫',imgs:p.gallery}]},cpTitle(p))}
+
+/* ===== 人物關係表 ===== */
+const REL=S('青梅竹馬、戀人、前任、暗戀、單方面暗戀、互相暗戀、曖昧、夫妻、未婚夫妻、摯友、損友、同事、上司與下屬、兄弟、姊妹、兄妹、姊弟、父母、師生、室友、鄰居、情敵、宿敵、競爭對手、合作夥伴、救命恩人、互相看不順眼、監護人、主從、債主');
+const curMap=()=>{let m=ST.maps.find(x=>x.id==ST.curMap);if(!m){m=ST.maps[0];if(!m){m={id:uid(),name:'我的關係表',nodes:[],edges:[],ns:18,fs:15,r:36};ST.maps.push(m)}ST.curMap=m.id}return m};
+function newMap(){const m={id:uid(),name:'關係表 '+(ST.maps.length+1),nodes:[],edges:[],ns:18,fs:15,r:36};ST.maps.push(m);ST.curMap=m.id;persist();renderMap()}
+function renameMap(){const i=$('#mapName');i.classList.remove('hide');i.value=curMap().name;i.focus()}
+function delMap(){ST.maps=ST.maps.filter(m=>m.id!=ST.curMap);ST.curMap=null;curMap();persist();renderMap()}
+function mapClear(){const m=curMap();m.nodes=[];m.edges=[];persist();renderMap()}
+const nName=n=>{const c=n.cid&&charById(n.cid);return c?c.name||'（未命名）':n.name};
+const nImg=n=>{const c=n.cid&&charById(n.cid);return n.img||(c&&c.avatar)||null};
+function freeSpot(m){const k=m.nodes.length,a=k*2.4,r=60+k*22;return{x:450+Math.cos(a)*Math.min(r,330),y:300+Math.sin(a)*Math.min(r,230)}}
+function mapAddNodeObj(o){const m=curMap();const p=freeSpot(m);const n=Object.assign({id:uid(),x:p.x,y:p.y},o);m.nodes.push(n);return n}
+function mapImportChars(){const m=curMap();let k=0;$$('#mapImpCList input:checked').forEach(i=>{if(m.nodes.some(n=>n.cid==i.value))return;const c=charById(i.value);mapAddNodeObj({cid:c.id,name:c.name,color:c.color||'#c9a37a'});k++});persist();renderMap();toast(k?`已加入 ${k} 位`:'沒有新的人物可加入')}
+function mapImportCP(){const p=ST.cps.find(c=>c.id==$('#mapImpPSel').value);if(!p)return;const m=curMap();const ids=p.members.map(mb=>{let n=mb.cid?m.nodes.find(n=>n.cid==mb.cid):m.nodes.find(n=>!n.cid&&n.name==mb.name);if(!n)n=mapAddNodeObj({cid:mb.cid||'',name:mName(mb),color:mColor(mb),img:mb.av||null});return n.id});const lab=p.name||p.status||'戀人';for(let i=0;i<ids.length;i++)for(let j=i+1;j<ids.length;j++)if(!m.edges.some(e=>(e.a==ids[i]&&e.b==ids[j])||(e.a==ids[j]&&e.b==ids[i])))m.edges.push({id:uid(),a:ids[i],b:ids[j],label:lab,dir:2});persist();renderMap();toast('已帶入 CP')}
+function mapAddSide(){const nm=$('#sideName').value.trim();if(!nm){toast('請輸入名字');return}mapAddNodeObj({cid:'',name:nm,color:$('#sideColor').value,side:1});$('#sideName').value='';persist();renderMap()}
+function mapAddEdge(){const m=curMap(),a=$('#eA').value,b=$('#eB').value;if(!a||!b||a==b){toast('請選擇兩位不同的人物');return}m.edges.push({id:uid(),a,b,label:$('#eLabel').value.trim(),dir:+$('#eDir').value});$('#eLabel').value='';persist();renderMap()}
+function autoLayout(){const m=curMap(),n=m.nodes.length;m.nodes.forEach((d,i)=>{const a=-Math.PI/2+i*2*Math.PI/Math.max(n,1);d.x=450+Math.cos(a)*(n>1?300:0);d.y=300+Math.sin(a)*(n>1?215:0)});persist();drawMap()}
+function renderMap(){const m=curMap();$('#mapSel').innerHTML=ST.maps.map(x=>`<option value="${x.id}" ${x.id==m.id?'selected':''}>${esc(x.name)}</option>`).join('');$('#mapNs').value=m.ns;$('#mapFs').value=m.fs;$('#mapR').value=m.r;
+ $('#mapImpCList').innerHTML=ST.chars.length?ST.chars.map(c=>`<label><input type="checkbox" value="${c.id}" ${m.nodes.some(n=>n.cid==c.id)?'disabled':''}>${esc(c.name||'（未命名）')}</label>`).join(''):'<span class="note">還沒有存好的人物。</span>';
+ $('#mapImpPSel').innerHTML=ST.cps.length?ST.cps.map(p=>`<option value="${p.id}">${esc(cpTitle(p))}</option>`).join(''):'<option value="">還沒有 CP</option>';
+ const opts=m.nodes.map(n=>`<option value="${n.id}">${esc(nName(n))}</option>`).join('');$('#eA').innerHTML=opts;$('#eB').innerHTML=opts;if(m.nodes[1])$('#eB').value=m.nodes[1].id;
+ $('#relDL').innerHTML=REL.map(r=>`<option value="${r}">`).join('');
+ $('#mapList').innerHTML=(m.nodes.length?'':'<p class="note">先帶入人物、CP 或新增旁支人物。</p>')+m.nodes.map(n=>`<div class="lst row">${avHTML(nImg(n),nName(n))}${n.cid?`<b style="flex:1">${esc(nName(n))}</b>`:`<input value="${esc(n.name)}" oninput="mapNode('${n.id}').name=this.value;persist();drawMap()">`}<input type="color" value="${n.color}" title="代表色" oninput="mapNode('${n.id}').color=this.value;persist();drawMap()">${n.cid?'':`<label class="filebtn">頭像<input type="file" accept="image/*" onchange="upImgs(this,400,d=>{mapNode('${n.id}').img=d;persist();renderMap()})"></label>`}<button class="sm warn" onclick="mapDelNode('${n.id}')">移除</button></div>`).join('')
+ +(m.edges.length?'<p class="lab" style="margin-top:10px">關係</p>':'')+m.edges.map(e=>{const a=mapNode(e.a),b=mapNode(e.b);if(!a||!b)return'';return `<div class="lst row"><span style="min-width:8em">${esc(nName(a))} ${['—','→','↔'][e.dir]} ${esc(nName(b))}</span><input value="${esc(e.label)}" list="relDL" oninput="mapEdge('${e.id}').label=this.value;persist();drawMap()"><select onchange="mapEdge('${e.id}').dir=+this.value;persist();renderMap()"><option value="1" ${e.dir==1?'selected':''}>單向</option><option value="2" ${e.dir==2?'selected':''}>雙向</option><option value="0" ${e.dir==0?'selected':''}>無箭頭</option></select><button class="sm" onclick="const e=mapEdge('${e.id}');[e.a,e.b]=[e.b,e.a];persist();renderMap()" title="反轉方向">⇄</button><button class="sm warn" onclick="curMap().edges=curMap().edges.filter(x=>x.id!='${e.id}');persist();renderMap()">移除</button></div>`}).join('');
+ drawMap()}
+const mapNode=id=>curMap().nodes.find(n=>n.id==id),mapEdge=id=>curMap().edges.find(e=>e.id==id);
+function mapDelNode(id){const m=curMap();m.nodes=m.nodes.filter(n=>n.id!=id);m.edges=m.edges.filter(e=>e.a!=id&&e.b!=id);persist();renderMap()}
+function svgMap(m,forExport){const R=m.r||36,NS=m.ns||18,FS=m.fs||15;let defs='',body='';const seen={};
+ const tot={};m.edges.forEach(e=>{const key=[e.a,e.b].sort().join();tot[key]=(tot[key]||0)+1});m.edges.forEach(e=>{const a=mapNode(e.a),b=mapNode(e.b);if(!a||!b)return;const key=[e.a,e.b].sort().join();const k=seen[key]=(seen[key]||0)+1;const dx=b.x-a.x,dy=b.y-a.y,L=Math.hypot(dx,dy)||1,ux=dx/L,uy=dy/L;const sign=e.a<e.b?1:-1;const off=(k-1-(tot[key]-1)/2)*90*sign;const mx=(a.x+b.x)/2-uy*off,my=(a.y+b.y)/2+ux*off;
+  const t1x=mx-a.x,t1y=my-a.y,l1=Math.hypot(t1x,t1y)||1,t2x=b.x-mx,t2y=b.y-my,l2=Math.hypot(t2x,t2y)||1;const sx=a.x+t1x/l1*(R+6),sy=a.y+t1y/l1*(R+6),ex=b.x-t2x/l2*(R+6),ey=b.y-t2y/l2*(R+6);const col=a.color||'#8a6a3f';
+  body+=off?`<path d="M${sx},${sy} Q${mx},${my} ${ex},${ey}" fill="none" stroke="${col}" stroke-width="3"/>`:`<line x1="${sx}" y1="${sy}" x2="${ex}" y2="${ey}" stroke="${col}" stroke-width="3"/>`;
+  const arr=(x,y,vx,vy)=>{const l=Math.hypot(vx,vy)||1;vx/=l;vy/=l;const s=13;return `<polygon points="${x},${y} ${x-vx*s-vy*s*.55},${y-vy*s+vx*s*.55} ${x-vx*s+vy*s*.55},${y-vy*s-vx*s*.55}" fill="${col}"/>`};
+  if(e.dir>=1)body+=arr(ex,ey,off?ex-mx:dx,off?ey-my:dy);if(e.dir==2)body+=arr(sx,sy,off?sx-mx:-dx,off?sy-my:-dy);
+  if(e.label){const lines=[];let cur='';for(const ch of e.label){cur+=ch;if(cur.length>=10){lines.push(cur);cur=''}}if(cur)lines.push(cur);const lx=off?(a.x+2*mx+b.x)/4:mx,ly=off?(a.y+2*my+b.y)/4:my;const w=Math.max(...lines.map(l=>[...l].reduce((s,c)=>s+(c.charCodeAt(0)>255?1:.58),0)))*FS+14,h=lines.length*FS*1.3+8;
+   body+=`<rect x="${lx-w/2}" y="${ly-h/2}" width="${w}" height="${h}" rx="7" fill="#fffdf9" stroke="${col}" stroke-width="1.5"/>`+lines.map((l,i)=>`<text x="${lx}" y="${ly-h/2+4+FS*1.05+i*FS*1.3}" font-size="${FS}" text-anchor="middle" fill="#3d3226" font-family='${FONT}'>${esc(l)}</text>`).join('')}});
+ m.nodes.forEach(n=>{const img=nImg(n),nm=nName(n),col=n.color||'#c9a37a';defs+=`<clipPath id="cl${n.id}"><circle cx="${n.x}" cy="${n.y}" r="${R}"/></clipPath>`;const w=[...nm].reduce((s,c)=>s+(c.charCodeAt(0)>255?1:.6),0)*NS+18;
+  body+=`<g class="nodeg" data-id="${n.id}"><circle cx="${n.x}" cy="${n.y}" r="${R+4}" fill="${col}"/>${img?`<image href="${img}" x="${n.x-R}" y="${n.y-R}" width="${R*2}" height="${R*2}" preserveAspectRatio="xMidYMid slice" clip-path="url(#cl${n.id})"/>`:`<circle cx="${n.x}" cy="${n.y}" r="${R}" fill="#fffdf9"/><text x="${n.x}" y="${n.y+R*.32}" font-size="${R*.9}" text-anchor="middle" fill="${col}" font-weight="bold" font-family='${FONT}'>${esc(nm.slice(0,1))}</text>`}
+  <rect x="${n.x-w/2}" y="${n.y+R+8}" width="${w}" height="${NS*1.5}" rx="${NS*.75}" fill="${col}"/><text x="${n.x}" y="${n.y+R+8+NS*1.08}" font-size="${NS}" text-anchor="middle" fill="${inkOn(col)}" font-weight="bold" font-family='${FONT}'>${esc(nm)}</text></g>`});
+ const title=forExport?`<text x="24" y="40" font-size="24" font-weight="bold" fill="#8a6a3f" font-family='${FONT}'>${esc(m.name)}</text>`:'';
+ return `<defs>${defs}</defs>${forExport?'<rect width="900" height="600" fill="#fffdf9"/>':''}${title}${body}`}
+function drawMap(){const m=curMap();$('#mapsvg').innerHTML=m.nodes.length?svgMap(m):`<text x="450" y="300" text-anchor="middle" fill="#b3a385" font-size="20" font-family='${FONT}'>帶入人物或新增旁支人物後，就會出現在這裡</text>`}
+(function(){let drag=null;const sv=()=>$('#mapsvg');const pt=e=>{const s=sv(),p=s.createSVGPoint();p.x=e.clientX;p.y=e.clientY;return p.matrixTransform(s.getScreenCTM().inverse())};
+ document.addEventListener('pointerdown',e=>{const g=e.target.closest&&e.target.closest('#mapsvg .nodeg');if(!g)return;const n=mapNode(g.dataset.id);if(!n)return;const p=pt(e);drag={n,dx:n.x-p.x,dy:n.y-p.y};sv().setPointerCapture(e.pointerId);e.preventDefault()});
+ document.addEventListener('pointermove',e=>{if(!drag)return;const p=pt(e);drag.n.x=Math.max(20,Math.min(880,p.x+drag.dx));drag.n.y=Math.max(20,Math.min(560,p.y+drag.dy));drawMap()});
+ document.addEventListener('pointerup',()=>{if(drag){drag=null;persist()}})})();
+function mapImg(){const m=curMap();showCard(()=>new Promise((res,rej)=>{const svg=`<svg xmlns="http://www.w3.org/2000/svg" width="1800" height="1200" viewBox="0 0 900 600">${svgMap(m,true)}</svg>`;const im=new Image();im.onload=()=>{const c=document.createElement('canvas');c.width=1800;c.height=1200;c.getContext('2d').drawImage(im,0,0);res(c)};im.onerror=()=>{toast('圖片產生失敗');rej()};im.src='data:image/svg+xml;charset=utf-8,'+encodeURIComponent(svg)}),m.name)}
+function mapTxt(){const m=curMap();let t=`【${m.name}】\n\n人物：\n`+m.nodes.map(n=>'・'+nName(n)+(n.side?'（旁支）':'')).join('\n')+'\n\n關係：\n'+m.edges.map(e=>{const a=mapNode(e.a),b=mapNode(e.b);return a&&b?`・${nName(a)} ${['—','→','↔'][e.dir]} ${nName(b)}${e.label?'：'+e.label:''}`:''}).filter(Boolean).join('\n');showText(t+`\n\n（${TOOL}）`,m.name)}
+
+/* ===== 短文練習題 ===== */
+let DR={slots:[],cats:[]};
+function drillAll(){let a=P.concat(ST.myP||[]);if($('#dAdult').checked)a=a.concat(PA);if($('#dDark').checked)a=a.concat(PD);return a}
+function drillPool(){const a=drillAll();const f=DR.cats.length?a.filter(x=>DR.cats.includes(x.split('|')[0])):a;return f.length?f:a}
+function renderDrillCats(){const cats=[...new Set(drillAll().map(x=>x.split('|')[0]))];DR.cats=DR.cats.filter(c=>cats.includes(c));$('#drillCats').innerHTML=cats.map(c=>`<label><input type="checkbox" value="${esc(c)}" ${DR.cats.includes(c)?'checked':''} onchange="DR.cats=$$('#drillCats input:checked').map(i=>i.value);saveDrill()">${esc(c)}</label>`).join('');$('#myPn').textContent=(ST.myP||[]).length?`已加入 ${ST.myP.length} 題自訂練習題`:'';saveDrill()}
+function saveDrill(){ST.drill={cats:DR.cats,slots:DR.slots,adult:$('#dAdult').checked,dark:$('#dDark').checked};persist()}
+function rollDrillOne(i){const used=DR.slots.map(s=>s.p);const pool=drillPool().filter(x=>!used.includes(x));DR.slots[i]={p:pick(pool.length?pool:drillPool()),lock:false}}
+function rollDrill(){while(DR.slots.length<5)DR.slots.push({p:'',lock:false});DR.slots.forEach((s,i)=>{if(!s.lock)rollDrillOne(i)});saveDrill();renderDrill()}
+function renderDrill(){$('#drillSlots').innerHTML=DR.slots.map((s,i)=>{const [t,q]=s.p.split('|');return `<div class="slot ${s.lock?'locked':''}"><div class="body"><div class="k">${esc(t)}</div><div class="v">${esc(q)}</div></div><div class="btns"><button class="sm" onclick="rollDrillOne(${i});saveDrill();renderDrill()" ${s.lock?'disabled':''}>🎲 重骰</button><button class="sm ${s.lock?'on':''}" onclick="DR.slots[${i}].lock=!DR.slots[${i}].lock;saveDrill();renderDrill()">${s.lock?'🔒 已鎖':'🔓 鎖住'}</button><button class="sm" title="帶到人事時地物產生器" onclick="toScene(${i})">🎬 延伸</button></div></div>`}).join('')}
+const drillLines=()=>DR.slots.map((s,i)=>{const [t,q]=s.p.split('|');return `${i+1}. 【${t}】${q}`}).join('\n');
+function drillCopy(){copyText('短文練習題\n'+drillLines())}
+function drillTxt(){showText('短文練習題\n\n'+drillLines()+`\n\n（${TOOL}）`,'短文練習題')}
+async function drillImg(){showCard({title:'短文練習題',sub:'挑一題、幾題或全部，自由決定',sections:[{rows:DR.slots.map(s=>{const[t,q]=s.p.split('|');return[t,q]})}]},'短文練習題')}
+function toScene(i){const [t,q]=DR.slots[i].p.split('|');SC.theme=t+'｜'+q;$('#scTheme').value=SC.theme;saveScene();go('scene');toast('已帶入寫作主題，按重骰抽情境吧')}
+function addMyP(){const ls=$('#myPin').value.split('\n').map(s=>s.trim().replace('｜','|')).filter(Boolean).map(s=>s.includes('|')?s:'我的題目|'+s);ST.myP=(ST.myP||[]).concat(ls);$('#myPin').value='';persist();renderDrillCats();toast(`已加入 ${ls.length} 題`)}
+
+/* ===== 人事時地物產生器 ===== */
+let SC={v:{},lock:{},sets:[],chars:[],tropes:[],theme:'',note:''};
+const SLOTS=[['set','場域'],['ppl','人'],['hint','人物提示'],['ev','事'],['tm','時'],['loc','地'],['obj','物'],['mood','氣氛'],['sense','感官細節'],['twist','轉折'],['trope','梗']];
+function saveScene(){ST.scene={sets:SC.sets,chars:SC.chars,tropes:SC.tropes,v:SC.v,lock:SC.lock,theme:SC.theme,note:SC.note,region:$('#scRegion').value,tone:$('#scTone').value};persist()}
+function renderSceneSets(){const tone=$('#scTone').value;const keys=Object.keys(SET).filter(k=>!tone||SET[k].t==tone);SC.sets=SC.sets.filter(k=>keys.includes(k));$('#scSets').innerHTML=keys.map(k=>`<label><input type="checkbox" value="${k}" ${SC.sets.includes(k)?'checked':''} onchange="SC.sets=$$('#scSets input:checked').map(i=>i.value);saveScene()">${SET[k].n}${SET[k].t=='k'?'（暗黑）':''}</label>`).join('');
+ $('#scTropes').innerHTML=TROPE.map(([g,t])=>`<label><input type="checkbox" value="${g}" ${SC.tropes.includes(g)?'checked':''} onchange="SC.tropes=$$('#scTropes input:checked').map(i=>i.value);saveScene()">${g}</label>`).join('');saveScene()}
+function renderSceneChars(){SC.chars=SC.chars.filter(id=>charById(id));$('#scChars').innerHTML=ST.chars.length?ST.chars.map(c=>`<label><input type="checkbox" value="${c.id}" ${SC.chars.includes(c.id)?'checked':''} onchange="SC.chars=$$('#scChars input:checked').map(i=>i.value);saveScene()">${esc(c.name||'（未命名）')}</label>`).join(''):'<span class="note">還沒有存好的人物；會以「主角」代替。</span>'}
+function scRoll(k){const v=SC.v,tone=$('#scTone').value;
+ if(k=='set'){const keys=SC.sets.length?SC.sets:Object.keys(SET).filter(x=>!tone||SET[x].t==tone);v.set=pick(keys);v.region=$('#scRegion').value||pick(['tw','we','ot']);return}
+ const st=SET[v.set];if(!st)return;
+ if(k=='ppl'){let cs;if(SC.chars.length)cs=SC.chars.map(id=>charById(id)).filter(Boolean);else cs=pickN(ST.chars,Math.min(ST.chars.length,Math.random()<.5?1:2));v.pplIds=cs.map(c=>c.id);v.ppl=(cs.length?cs.map(c=>c.name||'（未命名）').join('、'):'主角')+'｜關鍵配角：'+pick(st.ppl);return}
+ if(k=='hint'){const cs=(v.pplIds||[]).map(id=>charById(id)).filter(Boolean);v.hint=cs.length?cs.map(c=>{const nm=c.name||'（未命名）';if((c.deep||[]).length){const d=pick(c.deep);return `${nm}｜${d.q}：${trunc(String(d.a).replace(/\s+/g,' '),80)}`}return `${nm}｜還沒有深化筆記，可以想想：${pick(Q).split('|')[1]}`}).join('\n'):'（沒有代入已存的人物，所以沒有提示）';return}
+ if(k=='ev')v.ev=pick(st.ev);
+ if(k=='tm')v.tm=pick(TIME_GEN)+'｜'+(Math.random()<.6?pick(st.tm):pick(HOLI[v.region]||HOLI.tw));
+ if(k=='loc')v.loc=pick(st.loc[v.region]||st.loc.tw)+'（'+REGION[v.region].replace(/（.*）/,'')+'）';
+ if(k=='obj')v.obj=pick(st.obj);
+ if(k=='mood')v.mood=pickN(MOOD[st.t],2).join('、');
+ if(k=='sense')v.sense=pickN(SENSE,2).join('；');
+ if(k=='twist')v.twist=pick(TWIST);
+ if(k=='trope'){const gs=TROPE.filter(([g,t])=>SC.tropes.length?SC.tropes.includes(g):(t=='b'||t==st.t));const g=pick(gs.length?gs:TROPE);v.trope='【'+g[0]+'】'+pick(g[2])}}
+const DEPS=['ppl','hint','ev','tm','loc','obj','mood','trope'];
+function rollScene(){SLOTS.forEach(([k])=>{if(!SC.lock[k]||!SC.v[k])scRoll(k)});saveScene();renderScene()}
+function rollSceneOne(k){scRoll(k);if(k=='ppl'&&!SC.lock.hint)scRoll('hint');if(k=='set')DEPS.forEach(d=>{if(!SC.lock[d])scRoll(d)});saveScene();renderScene()}
+function renderScene(){if(!SC.v.set){$('#sceneSlots').innerHTML='<div class="card note">按下方「🎲 重骰」開始抽情境。</div>';return}
+ $('#sceneSlots').innerHTML=SLOTS.map(([k,l])=>{let val=k=='set'?SET[SC.v.set].n+'（'+(SET[SC.v.set].t=='k'?'暗黑向':'日常向')+'）':SC.v[k];return `<div class="slot ${SC.lock[k]?'locked':''}"><div class="body"><div class="k">${l}</div><div class="v">${esc(val||'').replace(/\n/g,'<br>')}</div></div><div class="btns"><button class="sm" onclick="rollSceneOne('${k}')" ${SC.lock[k]?'disabled':''}>🎲 重骰</button><button class="sm ${SC.lock[k]?'on':''}" onclick="SC.lock['${k}']=!SC.lock['${k}'];saveScene();renderScene()">${SC.lock[k]?'🔒 已鎖':'🔓 鎖住'}</button></div></div>`}).join('')+`<p class="note">鎖住「場域」再重骰，人、事、地、物會跟著場域變化；重骰單一「場域」時，沒鎖住的相關欄位也會一起更新。</p>`}
+function sceneRows(v){return SLOTS.map(([k,l])=>[l,k=='set'?(SET[v.set]?SET[v.set].n:''):v[k]]).filter(r=>r[1])}
+function sceneText(v,theme,note,name){let t=`【${name||'情境'}】\n`;if(theme)t+=`寫作主題：${theme}\n`;sceneRows(v).forEach(([k,x])=>t+=`${k}：${x}\n`);if(note)t+=`\n寫作筆記：\n${note}\n`;return t+`\n（${TOOL}）`}
+function sceneCopy(){if(!SC.v.set)return toast('請先重骰');copyText(sceneText(SC.v,SC.theme,SC.note))}
+function sceneTxt(){if(!SC.v.set)return toast('請先重骰');showText(sceneText(SC.v,SC.theme,SC.note),'情境')}
+async function sceneImgOf(v,theme,note,name){showCard({title:name||'人事時地物',sub:theme?'寫作主題：'+theme:'',sections:[{rows:sceneRows(v)},{h:'寫作筆記',text:note}]},name||'情境')}
+function sceneImg(){if(!SC.v.set)return toast('請先重骰');sceneImgOf(SC.v,SC.theme,SC.note)}
+function saveSceneCard(){if(!SC.v.set)return toast('請先重骰');ST.scenes.unshift({id:uid(),name:'情境卡 '+new Date().toLocaleDateString('zh-TW'),v:JSON.parse(JSON.stringify(SC.v)),theme:SC.theme,note:SC.note});persist();renderSceneCards();toast('已存成情境卡')}
+function renderSceneCards(){$('#sceneCards').innerHTML=ST.scenes.length?ST.scenes.map((s,i)=>`<div class="lst"><div class="row"><input value="${esc(s.name)}" oninput="ST.scenes[${i}].name=this.value;persist()"></div><p class="note" style="margin:4px 0">${esc(sceneRows(s.v).map(r=>r[1]).slice(0,5).join('／'))}</p><button class="sm" onclick="loadScene(${i})">載入</button> <button class="sm" onclick="const s=ST.scenes[${i}];sceneImgOf(s.v,s.theme,s.note,s.name)">圖片</button> <button class="sm" onclick="const s=ST.scenes[${i}];showText(sceneText(s.v,s.theme,s.note,s.name),s.name)">文字</button> <button class="sm warn" onclick="armed(this,()=>{ST.scenes.splice(${i},1);persist();renderSceneCards()})">刪除</button></div>`).join(''):'<p class="note">還沒有情境卡。</p>'}
+function loadScene(i){const s=ST.scenes[i];SC.v=JSON.parse(JSON.stringify(s.v));SC.theme=s.theme||'';SC.note=s.note||'';$('#scTheme').value=SC.theme;$('#scNote').value=SC.note;saveScene();renderScene();scrollTo({top:0,behavior:'smooth'});toast('已載入')}
+
+
+/* ===== 時間軸 ===== */
+let TLE=null;
+const yNum=y=>{const m=String(y||'').match(/-?\d{1,4}/);return m?+m[0]:null};
+function tlSorted(list){return list.slice().sort((a,b)=>{const ya=yNum(a.y),yb=yNum(b.y);if(ya==null&&yb==null)return 0;if(ya==null)return 1;if(yb==null)return -1;return ya-yb||(+a.m||0)-(+b.m||0)})}
+function tlAges(e){const y=yNum(e.y);if(y==null||String(e.auto||'').startsWith('birth:'))return'';return(e.who||[]).map(id=>{const c=charById(id);const b=c&&yNum(c.byear);return c&&b!=null&&y>=b?`${c.name||'？'} ${y-b} 歲`:''}).filter(Boolean).join('、')}
+function tlFiltered(){const f=$('#tlF').value;let l=ST.events;if(f.startsWith('c:'))l=l.filter(e=>(e.who||[]).includes(f.slice(2)));if(f.startsWith('p:')){const p=ST.cps.find(x=>x.id==f.slice(2));const ids=p?p.members.map(m=>m.cid).filter(Boolean):[];l=l.filter(e=>e.cp==f.slice(2)||(ids.length>1&&ids.every(id=>(e.who||[]).includes(id))))}return tlSorted(l)}
+function renderTL(){const f=$('#tlF').value;$('#tlF').innerHTML=`<option value="">全部事件</option>`+(ST.chars.length?`<optgroup label="人物">${ST.chars.map(c=>`<option value="c:${c.id}">${esc(c.name||'（未命名）')}</option>`).join('')}</optgroup>`:'')+(ST.cps.length?`<optgroup label="CP">${ST.cps.map(p=>`<option value="p:${p.id}">${esc(cpTitle(p))}</option>`).join('')}</optgroup>`:'');$('#tlF').value=[...$('#tlF').options].some(o=>o.value==f)?f:'';
+ const sel=TLE?(ST.events.find(e=>e.id==TLE)||{}).who||[]:[...$$('#tlWho input:checked')].map(i=>i.value);
+ $('#tlWho').innerHTML=ST.chars.length?ST.chars.map(c=>`<label><input type="checkbox" value="${c.id}" ${sel.includes(c.id)?'checked':''}>${esc(c.name||'（未命名）')}</label>`).join(''):'<span class="note">還沒有存好的人物。</span>';
+ const l=tlFiltered();$('#tlList').innerHTML=l.length?`<div class="tl">${l.map(e=>{const ag=tlAges(e);return `<div class="tli"><div class="tly">${esc(e.y||'？')}${e.m?` <small>${e.m} 月</small>`:''}</div><div class="tlb"><b>${esc(e.t)}</b>${ag?`<div class="note">${esc(ag)}</div>`:''}${e.d?`<div>${esc(e.d).replace(/\n/g,'<br>')}</div>`:''}<div class="row" style="margin-top:4px">${(e.who||[]).map(id=>{const c=charById(id);return c?avHTML(c.avatar,c.name):''}).join('')}<span style="flex:1"></span><button class="sm" onclick="tlEdit('${e.id}')">編輯</button><button class="sm warn" onclick="armed(this,()=>tlDel('${e.id}'))">刪除</button></div></div></div>`}).join('')}</div>`:'<div class="card note">還沒有事件。可以按「從人物與 CP 帶入年份」，或在上方自己新增。</div>'}
+function tlForm(e){$('#tlY').value=e?e.y:'';$('#tlM').value=e&&e.m||'';$('#tlT').value=e?e.t:'';$('#tlD').value=e?e.d||'':'';$('#tlAdd').textContent=e?'✔️ 更新這個事件':'＋ 加入時間軸';$('#tlCancel').classList.toggle('hide',!e)}
+function tlAdd(){const t=$('#tlT').value.trim();if(!t){toast('請輸入事件');return}const o={y:$('#tlY').value.trim(),m:$('#tlM').value,t,d:$('#tlD').value.trim(),who:$$('#tlWho input:checked').map(i=>i.value)};if(TLE){Object.assign(ST.events.find(e=>e.id==TLE),o);TLE=null}else ST.events.push(Object.assign({id:uid()},o));tlForm(null);$$('#tlWho input').forEach(i=>i.checked=false);persist();renderTL();toast('已存到時間軸')}
+function tlEdit(id){TLE=id;const e=ST.events.find(x=>x.id==id);renderTL();tlForm(e);$('#timeline').scrollIntoView({behavior:'smooth'})}
+function tlCancel(){TLE=null;tlForm(null);$$('#tlWho input').forEach(i=>i.checked=false)}
+function tlDel(id){ST.events=ST.events.filter(e=>e.id!=id);persist();renderTL()}
+function tlImport(){let n=0;const up=(key,o)=>{const ex=ST.events.find(e=>e.auto==key);if(!o.y){if(ex){ST.events=ST.events.filter(e=>e!==ex)}return}if(ex){ex.y=o.y;ex.t=o.t;ex.who=o.who;if(o.m)ex.m=o.m}else{ST.events.push(Object.assign({id:uid(),auto:key,d:''},o));n++}};
+ ST.chars.forEach(c=>{const m=(c.bday||'').split('/')[0];up('birth:'+c.id,{y:c.byear||'',m:m||'',t:`${c.name||'（未命名）'} 出生`,who:[c.id]})});
+ ST.cps.forEach(p=>{const who=p.members.map(m=>m.cid).filter(Boolean),tt=cpTitle(p);[['metYear','認識'],['dateYear','開始交往'],['marryYear','結婚']].forEach(([k,l])=>up(k+':'+p.id,{y:p[k]||'',t:`${tt} ${l}`,who,cp:p.id}))});
+ persist();renderTL();toast(n?`新增 ${n} 個事件，已同步年份`:'年份已同步')}
+const tlLine=e=>{const ag=tlAges(e);return[(e.y||'？')+(e.m?` 年 ${e.m} 月`:''),e.t+(ag?`（${ag}）`:'')+(e.d?'\n'+e.d:'')]};
+function tlName(){const o=$('#tlF').selectedOptions[0];return $('#tlF').value?o.textContent+' 的時間軸':'時間軸'}
+function tlTxt(){const l=tlFiltered();showText(`【${tlName()}】\n\n`+l.map(e=>{const[a,b]=tlLine(e);return `${a}｜${b}`}).join('\n')+`\n\n（${TOOL}）`,tlName())}
+function tlImg(){const l=tlFiltered();if(!l.length)return toast('還沒有事件');const f=$('#tlF').value;const c=f.startsWith('c:')&&charById(f.slice(2)),p=f.startsWith('p:')&&ST.cps.find(x=>x.id==f.slice(2));showCard({title:tlName(),accent:c?c.color:p?mColor(p.members[0]):null,avatars:c?[{src:c.avatar,name:c.name,color:c.color}]:p?p.members.map(m=>({src:mAv(m),name:mName(m),color:mColor(m)})):[],sections:[{rows:l.map(tlLine)}]},tlName())}
+
+/* ===== 備份 ===== */
+function backupDL(){const t=JSON.stringify({tool:'oc-cp-notebook',v:1,date:new Date().toISOString(),data:ST});const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([t],{type:'application/json'}));a.download='OC設定手帳備份_'+new Date().toISOString().slice(0,10)+'.json';document.body.appendChild(a);a.click();a.remove();toast('開始下載備份檔')}
+function backupLoad(inp){const f=inp.files[0];inp.value='';if(!f)return;const fr=new FileReader();fr.onload=()=>{try{const j=JSON.parse(fr.result),d=j.data||j;if(!Array.isArray(d.chars))throw 0;const mode=$('input[name=bkm]:checked').value;if(mode=='replace')ST=Object.assign(ST,d);else{['chars','cps','maps','scenes','events'].forEach(k=>{ST[k]=ST[k]||[];const have=new Set(ST[k].map(x=>x.id));(d[k]||[]).forEach(x=>{if(!have.has(x.id))ST[k].push(x)})});['myQ','myP'].forEach(k=>{ST[k]=[...new Set((ST[k]||[]).concat(d[k]||[]))]})}persist();renderAll();$('#bkmsg').textContent=`還原完成：人物 ${ST.chars.length}、CP ${ST.cps.length}、關係表 ${ST.maps.length}、時間軸事件 ${ST.events.length}、情境卡 ${ST.scenes.length}`}catch(e){$('#bkmsg').textContent='這個檔案看起來不是本工具的備份檔。'}};fr.readAsText(f)}
+function wipeAll(){ST={chars:[],cps:[],maps:[],scenes:[],events:[],myQ:[],myP:[],curChar:null,curCP:null,curMap:null};DEEP={cid:'',slots:[],cats:[]};DR={slots:[],cats:[]};SC={v:{},lock:{},sets:[],chars:[],tropes:[],theme:'',note:''};persist();renderAll();rollDeep();rollDrill();toast('已清除全部資料')}
+async function showUsage(){try{const e=await navigator.storage.estimate();$('#usage').textContent=`目前約使用 ${(e.usage/1048576).toFixed(1)} MB${e.quota?`（瀏覽器可用上限約 ${(e.quota/1048576/1024).toFixed(1)} GB）`:''}`}catch(e){}}
+
+/* ===== 出處 ===== */
+function renderSrc(){$('#srcP').innerHTML=PSRC.map(([n,u])=>`<li><a href="${u}" target="_blank" rel="noopener">${esc(n)}</a></li>`).join('');$('#srcT').innerHTML=SRC.map(([g,n,u])=>`<li><a href="${u}" target="_blank" rel="noopener">${esc(n)}</a></li>`).join('')}
+
+/* ===== 頁面切換與初始化 ===== */
+const PAGES=['welcome','chars','deep','cp','map','timeline','drill','scene','backup','src'];
+function route(){let h=location.hash.slice(1);if(!PAGES.includes(h))h='welcome';$$('main>section').forEach(s=>s.classList.toggle('on',s.id==h));$$('#nav a').forEach(a=>a.classList.toggle('on',a.getAttribute('href')=='#'+h));$('#morebtn').classList.toggle('on',['backup','src'].includes(h));$('#moremenu').classList.remove('open');
+ if(h=='chars')renderChars();if(h=='deep'){renderDeepWho();renderDeepNotes()}if(h=='cp')renderCP();if(h=='map')renderMap();if(h=='timeline')renderTL();if(h=='scene'){renderSceneChars();renderSceneCards()}if(h=='backup')showUsage();window.scrollTo(0,0)}
+function renderAll(){renderChars();renderDeepWho();renderDeepCats();renderDeepSlots();renderDeepNotes();renderCP();renderMap();renderTL();renderDrillCats();renderDrill();renderSceneSets();renderSceneChars();renderScene();renderSceneCards()}
+$('#morebtn').onclick=e=>{e.stopPropagation();$('#moremenu').classList.toggle('open')};
+document.addEventListener('click',e=>{if(!e.target.closest('.more'))$('#moremenu').classList.remove('open')});
+document.addEventListener('keydown',e=>{if(e.key=='Escape')closeModal()});
+$('#charEdit').addEventListener('input',onCharInput);$('#charEdit').addEventListener('change',onCharInput);
+$('#cpEdit').addEventListener('input',onCPInput);$('#cpEdit').addEventListener('change',onCPInput);
+$('#scRegion').addEventListener('change',saveScene);
+window.addEventListener('hashchange',route);
+(async()=>{await STORE.init();const d=await STORE.get();if(d&&typeof d=='object')ST=Object.assign(ST,d);
+ ['chars','cps','maps','scenes','events','myQ','myP'].forEach(k=>{if(!Array.isArray(ST[k]))ST[k]=[]});
+ if(ST.deep)DEEP=Object.assign(DEEP,ST.deep);if(ST.drill){DR.cats=ST.drill.cats||[];DR.slots=ST.drill.slots||[];$('#dAdult').checked=!!ST.drill.adult;$('#dDark').checked=!!ST.drill.dark}
+ if(ST.scene){Object.assign(SC,{sets:ST.scene.sets||[],chars:ST.scene.chars||[],tropes:ST.scene.tropes||[],v:ST.scene.v||{},lock:ST.scene.lock||{},theme:ST.scene.theme||'',note:ST.scene.note||''});$('#scRegion').value=ST.scene.region||'';$('#scTone').value=ST.scene.tone||''}
+ $('#scTheme').value=SC.theme;$('#scNote').value=SC.note;
+ if(DEEP.slots.length<5)rollDeep();if(DR.slots.length<5)rollDrill();
+ renderSrc();renderAll();route()})();
+
+</script>
+</body>
+</html>
