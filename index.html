@@ -506,7 +506,7 @@ async function makeCard(spec){
   for(const s of spec.sections||[]){
    const has=(s.rows&&s.rows.some(r=>r[1]!==''&&r[1]!=null))||s.text||s.art&&IM[s.art]||(s.imgs&&s.imgs.some(i=>IM[i]))||(s.stages&&s.stages.length);if(!has)continue;
    if(s.h){if(draw){x.fillStyle=accent;x.fillRect(P,y,10,36);x.fillStyle='#8a6a3f';x.font=`bold 32px ${FONT}`;x.fillText(s.h,P+24,y+30)}y+=58}
-   if(s.rows){for(const [k,v] of s.rows){if(v===''||v==null)continue;x.font=`bold 26px ${FONT}`;const kw=Math.min(260,Math.max(140,x.measureText(k).width+20));x.font=`28px ${FONT}`;const ls=wrap(x,v,W-2*P-kw);if(draw){x.fillStyle='#8a7a62';x.font=`bold 26px ${FONT}`;wrap(x,k,kw-16).forEach((l,i)=>x.fillText(l,P,y+30+i*34));x.fillStyle='#2e261c';x.font=`28px ${FONT}`;ls.forEach((l,i)=>x.fillText(l,P+kw,y+30+i*42))}y+=Math.max(ls.length*42,wrap(x,k,kw-16).length*34)+10}y+=14}
+   if(s.rows){x.font=`bold 26px ${FONT}`;const kw=Math.min(320,Math.max(140,...s.rows.filter(r=>r[1]!==''&&r[1]!=null).map(r=>x.measureText(r[0]).width+28)));for(const [k,v] of s.rows){if(v===''||v==null)continue;x.font=`bold 26px ${FONT}`;const kl=wrap(x,k,kw-16).length;x.font=`28px ${FONT}`;const ls=wrap(x,v,W-2*P-kw);if(draw){x.fillStyle='#8a7a62';x.font=`bold 26px ${FONT}`;wrap(x,k,kw-16).forEach((l,i)=>x.fillText(l,P,y+30+i*34));x.fillStyle='#2e261c';x.font=`28px ${FONT}`;ls.forEach((l,i)=>x.fillText(l,P+kw,y+30+i*42))}y+=Math.max(ls.length*42,kl*34)+10}y+=14}
    if(s.text){x.font=`28px ${FONT}`;const ls=wrap(x,s.text,W-2*P);if(draw){x.fillStyle='#2e261c';ls.forEach((l,i)=>x.fillText(l,P,y+30+i*44))}y+=ls.length*44+24}
    if(s.art&&IM[s.art]){const im=IM[s.art],sc=Math.min((W-2*P)/im.width,900/im.height,1.6),w=im.width*sc,h=im.height*sc;if(draw)x.drawImage(im,(W-w)/2,y,w,h);y+=h+30}
    if(s.imgs){const ok=s.imgs.filter(i=>IM[i]).slice(0,9),nc=ok.length==1?1:ok.length==2||ok.length==4?2:3,cw=(W-2*P-16*(nc-1))/nc,ch=Array(nc).fill(0);ok.forEach(src=>{const im=IM[src];let h=cw*im.height/im.width;if(h>cw*2.2)h=cw*2.2;const col=ch.indexOf(Math.min(...ch)),cx=P+col*(cw+16),cy=y+ch[col];if(draw){x.save();x.beginPath();x.roundRect?x.roundRect(cx,cy,cw,h,14):x.rect(cx,cy,cw,h);x.clip();coverDraw(x,im,cx,cy,cw,h);x.restore()}ch[col]+=h+16});y+=Math.max(0,...ch)+20}
@@ -516,19 +516,19 @@ async function makeCard(spec){
  const H=Math.min(30000,run(false));c.height=H;x.fillStyle='#fffdf9';x.fillRect(0,0,W,H);run(true);return c}
 const TPL=[['long','長版（完整內容）'],['phone','直式手機桌布 9:16'],['square','方形社群 1:1']];let tplMode='long';
 const trunc=(t,n)=>{t=String(t||'');return t.length>n?t.slice(0,n)+'……':t};
-function shrink(spec,mode){const ph=mode=='phone',maxR=ph?14:9,maxT=ph?220:110;const sec=[];let rows=0;
+function shrink(spec,mode,k){k=k||1;const ph=mode=='phone',maxR=Math.round((ph?14:9)*k),maxT=Math.round((ph?220:110)*k);const sec=[];let rows=0;
  const src=(spec.sections||[]).slice();if(ph){const a=src.findIndex(s=>s.art);if(a>0)src.unshift(src.splice(a,1)[0])}
- for(const s of src){if(s.art){if(ph)sec.push(s);continue}if(s.imgs){if(ph)sec.push({h:s.h,imgs:s.imgs.slice(0,3)});continue}
-  if(s.rows){const left=maxR-rows;if(left<=0)continue;const r=s.rows.filter(x=>x[1]!==''&&x[1]!=null).slice(0,left).map(([k,v])=>[k,trunc(v,ph?70:40)]);rows+=r.length;if(r.length)sec.push({h:s.h,rows:r});continue}
+ for(const s of src){if(s.art){if(ph)sec.push(s);continue}if(s.imgs){if(ph||k>=2)sec.push({h:s.h,imgs:s.imgs.slice(0,Math.round(3*k))});continue}
+  if(s.rows){const left=maxR-rows;if(left<=0)continue;const r=s.rows.filter(x=>x[1]!==''&&x[1]!=null).slice(0,left).map(([a,v])=>[a,trunc(v,Math.round((ph?70:40)*Math.max(1,k*.8)))]);rows+=r.length;if(r.length)sec.push({h:s.h,rows:r});continue}
   if(s.text){sec.push({h:s.h,text:trunc(s.text,maxT)});continue}
-  if(s.stages){sec.push({h:s.h,stages:s.stages.slice(0,ph?4:3).map(t=>({t:t.t,txt:trunc(t.txt,ph?60:36),img:ph?t.img:null}))})}}
+  if(s.stages){sec.push({h:s.h,stages:s.stages.slice(0,Math.round((ph?4:3)*k)).map(t=>({t:t.t,txt:trunc(t.txt,Math.round((ph?60:36)*k)),img:ph?t.img:null}))})}}
  return Object.assign({},spec,{sections:sec})}
 function frameFit(src,mode){const TW=1080,TH=mode=='phone'?1920:1080,M=44,F=70;const c=document.createElement('canvas');c.width=TW;c.height=TH;const x=c.getContext('2d');
  x.fillStyle='#E0D3BC';x.fillRect(0,0,TW,TH);x.fillStyle='#d3c3a6';for(let i=0;i<TW;i+=36)for(let j=0;j<TH;j+=36)if((i+j)%72==0){x.beginPath();x.arc(i,j,3,0,7);x.fill()}
  const pw=TW-2*M,phh=TH-2*M-F;x.fillStyle='#fffdf9';x.beginPath();x.roundRect?x.roundRect(M,M,pw,phh,28):x.rect(M,M,pw,phh);x.fill();
  const s=Math.min((pw-24)/src.width,(phh-24)/src.height,1),w=src.width*s,h=src.height*s;x.save();x.beginPath();x.roundRect?x.roundRect(M,M,pw,phh,28):x.rect(M,M,pw,phh);x.clip();x.drawImage(src,M+(pw-w)/2,M+(h<phh-24?(phh-h)/2:12),w,h);x.restore();
  x.fillStyle='#6b5a43';x.font=`26px ${FONT}`;x.textAlign='center';x.fillText(TOOL,TW/2,TH-M+4);x.textAlign='left';return c}
-async function showCard(spec,name){const get=async mode=>{if(typeof spec=='function'){const c=await spec();return mode=='long'?c:frameFit(c,mode)}return mode=='long'?makeCard(spec):frameFit(await makeCard(shrink(spec,mode)),mode)};
+async function showCard(spec,name){const get=async mode=>{if(typeof spec=='function'){const c=await spec();return mode=='long'?c:frameFit(c,mode)}if(mode=='long')return makeCard(spec);const ar=mode=='phone'?(1920-88-70-24)/(1080-88-24):(1080-88-70-24)/(1080-88-24);let best=await makeCard(shrink(spec,mode,1));for(const k of [1.5,2,3,4,6]){const c=await makeCard(shrink(spec,mode,k));if(c.height/c.width>ar)break;best=c}return frameFit(best,mode)};
  $('#mTitle').textContent='存成圖片';$('#mBody').innerHTML=`<p class="row" id="mTpl">${TPL.map(([k,l])=>`<button class="sm ${k==tplMode?'on':''}" data-t="${k}">${l}</button>`).join('')}</p><p class="note">${typeof spec=='function'?'':'手機桌布與方形版會自動精簡內容，完整內容請選長版。'}按「下載圖片」儲存；若沒有反應，請長按或右鍵圖片另存。</p><p><button class="big" id="mDl">⬇️ 下載圖片</button></p><div id="mImg"><p class="note">圖片產生中…</p></div>`;$('#modal').classList.add('open');
  let url='';const draw=async()=>{$('#mImg').innerHTML='<p class="note">圖片產生中…</p>';$$('#mTpl button').forEach(b=>b.classList.toggle('on',b.dataset.t==tplMode));try{const c=await get(tplMode);url=c.toDataURL('image/png');$('#mImg').innerHTML=`<img src="${url}" alt="" style="${tplMode=='phone'?'max-height:70vh;width:auto':''}">`}catch(e){$('#mImg').innerHTML='<p class="note">圖片產生失敗，請再試一次。</p>'}};
  $('#mTpl').onclick=e=>{const t=e.target.dataset&&e.target.dataset.t;if(t){tplMode=t;draw()}};
