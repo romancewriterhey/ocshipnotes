@@ -100,6 +100,14 @@ ul.src{padding-left:1.2em;word-break:break-all}
 .hint{color:#a8875a;font-size:.72rem;margin-left:6px}
 .dropz{border:1.5px dashed transparent;border-radius:12px;padding:4px}
 .dropz.drag{border-color:#8a6a3f;background:var(--soft)}
+.workbar{display:flex;gap:6px;align-items:center;flex-wrap:wrap;margin-top:6px;font-size:.85rem;color:#3d3226}
+.workbar select{width:auto;max-width:200px;padding:2px 8px;background:#ffffffc0;border-color:#cdbb9c;color:#3d3226}
+.workbar button{margin:0}
+#bkBanner{background:#fff4dc;border-color:#e8c98a}
+.tli.now .tlb{background:var(--soft);border-color:#8a6a3f}
+.tli.now::before{background:#c0392b}
+.oc.dragging{opacity:.4}.oc.dragover{box-shadow:0 -3px 0 #8a6a3f}
+.ono{white-space:nowrap;color:var(--deep)}
 .conf{display:flex;align-items:center;gap:8px}
 .conf b{min-width:2.5em}
 </style>
@@ -108,8 +116,10 @@ ul.src{padding-left:1.2em;word-break:break-all}
 <header>
 <h1>📒 現代背景 OC／CP 設定手帳</h1>
 <nav id="nav"><a href="#welcome">歡迎使用</a><a href="#chars">人物設定</a><a href="#deep">人物深化</a><a href="#cp">CP設定</a><a href="#map">人物關係表</a><a href="#timeline">時間軸</a><a href="#drill">短文練習題</a><a href="#scene">人事時地物</a><span class="more"><button type="button" id="morebtn">更多 ▾</button><span id="moremenu"><a href="#backup">資料備份</a><a href="#src">出處資訊</a></span></span></nav>
+<div class="workbar"><span>📁 作品</span><select id="workSel" onchange="setWork(this.value)"></select><button class="sm" onclick="openWorks()">管理作品</button><button class="sm" onclick="exportBook()">📚 匯出設定集</button></div>
 </header>
 <main>
+<div id="bkBanner" class="card hide"></div>
 
 <section id="welcome">
 <h2>歡迎使用</h2>
@@ -135,6 +145,9 @@ ul.src{padding-left:1.2em;word-break:break-all}
 <p><b>④ 畫關係表。</b>「人物關係表」可以一鍵帶入人物或 CP，拖曳位置、換代表色、新增旁支人物，再下載成圖片。</p>
 <p><b>⑤ 排時間軸。</b>「時間軸」可以從人物的出生年、CP 的認識／交往／結婚年份一鍵帶入，也能自己加事件；有填出生年的人物，會自動算出當時幾歲。</p>
 <p><b>⑥ 動手寫。</b>「短文練習題」抽題目；按題目旁的「🎬」可以把題目帶到「人事時地物」，搭配已存好的人物抽出完整場景；如果人物有深化筆記，「人物提示」會隨機帶出一則，讓角色的個性直接進到場景裡。</p>
+<p><b>作品分組：</b>最上方的「📁 作品」可以切換作品，各頁只會顯示那部作品的人物、CP、關係表、時間軸和情境卡；在「管理作品」新增、改名，或把未分類的內容一次收進某部作品。人物和 CP 的編輯區上方可以勾選所屬作品，同一位人物可以屬於好幾部作品。「📚 匯出設定集」會把目前作品的全部內容整理成一份文字檔。</p>
+<p><b>故事年份與大綱：</b>在「時間軸」設定正文年份，有填出生年的人物年齡會自動換算。存下來的情境卡會依序排成劇情大綱，可以調整順序並匯出。</p>
+<p><b>備份提醒：</b>超過兩週沒有下載備份時，頁面上方會出現提醒。</p>
 <p><b>存圖與存文字：</b>每一頁都有「存成圖片」「文字檔」「複製文字」。存成圖片時可以選版面：長版（完整內容）、直式手機桌布（9:16）或方形社群貼文（1:1），後兩種會自動精簡內容。若按下載沒有反應（例如在某些預覽環境中），請在跳出的視窗裡長按或右鍵另存圖片，或使用「複製文字」。</p>
 </div></details>
 </section>
@@ -167,7 +180,7 @@ ul.src{padding-left:1.2em;word-break:break-all}
 <section id="map">
 <h2>人物關係表</h2>
 <p class="note">帶入人物或 CP，拖曳人物調整位置，點下方清單可改名、換代表色、加關係說明。內容存在這個瀏覽器。</p>
-<div class="card"><div class="row"><label style="flex:1;min-width:160px"><span class="lab">目前的關係表</span><select id="mapSel" onchange="ST.curMap=this.value;persist();renderMap()"></select></label><button onclick="newMap()">＋ 新的關係表</button><button onclick="renameMap()">重新命名</button><button class="warn" onclick="armed(this,delMap)">刪除這張表</button></div><input id="mapName" class="hide" placeholder="輸入新名稱後按 Enter" onkeydown="if(event.key=='Enter'){curMap().name=this.value||curMap().name;this.classList.add('hide');persist();renderMap()}"></div>
+<div class="card"><div class="row"><label style="flex:1;min-width:160px"><span class="lab">目前的關係表</span><select id="mapSel" onchange="ST.curMap=this.value;persist();renderMap()"></select></label><button onclick="newMap()">＋ 新的關係表</button><button onclick="renameMap()">重新命名</button><button class="warn" onclick="armed(this,delMap)">刪除這張表</button></div><div id="mapWorks" style="margin-top:6px"></div><input id="mapName" class="hide" placeholder="輸入新名稱後按 Enter" onkeydown="if(event.key=='Enter'){curMap().name=this.value||curMap().name;this.classList.add('hide');persist();renderMap()}"></div>
 <div class="card">
 <div class="row"><button onclick="toggle('#mapImpC')">👤 帶入人物</button><button onclick="toggle('#mapImpP')">💞 帶入 CP</button><button onclick="toggle('#mapSide')">＋ 旁支人物</button></div>
 <div id="mapImpC" class="hide" style="margin-top:8px"><div id="mapImpCList" class="chips"></div><button onclick="mapImportChars()">加入勾選的人物</button></div>
@@ -187,6 +200,7 @@ ul.src{padding-left:1.2em;word-break:break-all}
 <section id="timeline">
 <h2>時間軸</h2>
 <p class="note">把人物和 CP 的重要事件按年份排好。可以從人物設定（出生年）和 CP 設定（認識、交往、結婚年份）一鍵帶入；有填出生年的人物，會自動算出事件發生時幾歲。年份也可以寫成「2019 夏」「高二那年」這類文字，有數字的會照年份排序。</p>
+<div class="card"><div class="row"><span id="tlSYlab">故事正文發生在</span><input id="tlSY" style="max-width:120px;flex:0 0 120px" placeholder="例：2024" oninput="setSY(this.value)"><span>年</span></div><p class="note" id="tlSYages" style="margin:4px 0 0"></p><p class="note" style="margin:2px 0 0">設定後，有填出生年的人物，年齡會在人物設定、CP 年齡差和存圖裡自動換算；切換作品時，每部作品可以有自己的年份。</p></div>
 <div class="card"><p style="margin-top:0"><button onclick="tlImport()">⤵️ 從人物與 CP 帶入年份</button> <span class="note">再按一次會同步更新年份</span></p>
 <div class="grid"><label><span class="lab">年份</span><input id="tlY" placeholder="例：2019、2019 夏"></label><label><span class="lab">月份（選填）</span><select id="tlM"><option value="">—</option><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option><option>6</option><option>7</option><option>8</option><option>9</option><option>10</option><option>11</option><option>12</option></select></label><label class="wide"><span class="lab">事件</span><input id="tlT" placeholder="例：在咖啡店第一次見面"></label><label class="wide"><span class="lab">補充說明（選填）</span><textarea id="tlD" rows="2"></textarea></label></div>
 <p class="lab" style="margin:8px 0 2px">相關人物（可複選）</p><div id="tlWho" class="chips"></div>
@@ -220,7 +234,7 @@ ul.src{padding-left:1.2em;word-break:break-all}
 <div id="sceneSlots"></div>
 <div class="actbar"><button class="big" onclick="rollScene()">🎲 重骰（鎖住的保留）</button> <button onclick="saveSceneCard()">💾 存成情境卡</button> <button onclick="sceneCopy()">📋 複製</button> <button onclick="sceneTxt()">📄 文字檔</button> <button onclick="sceneImg()">🖼️ 存成圖片</button></div>
 <div class="card"><label><span class="lab">寫作筆記（會和情境卡一起存）</span><textarea id="scNote" rows="4" oninput="SC.note=this.value;saveScene()" placeholder="想到的開場、對白或畫面……"></textarea></label></div>
-<div class="card"><h3>我的情境卡</h3><div id="sceneCards"></div></div>
+<div class="card"><h3>我的情境卡／劇情大綱</h3><div id="sceneCards"></div></div>
 </section>
 
 <section id="backup">
@@ -430,7 +444,7 @@ async function copyText(t){try{await navigator.clipboard.writeText(t);toast('已
 function fileName(s){return String(s||'未命名').replace(/[\\/:*?"<>|]/g,'_').slice(0,40)}
 
 /* ===== 儲存（IndexedDB，失敗時改用 localStorage） ===== */
-let ST={chars:[],cps:[],maps:[],scenes:[],events:[],myQ:[],myP:[],curChar:null,curCP:null,curMap:null,deep:null,drill:null,scene:null};
+let ST={works:[],curWork:'',chars:[],cps:[],maps:[],scenes:[],events:[],myQ:[],myP:[],curChar:null,curCP:null,curMap:null,deep:null,drill:null,scene:null};
 const STORE={db:null,
  async init(){try{this.db=await new Promise((res,rej)=>{const r=indexedDB.open('oc-cp-notebook',1);r.onupgradeneeded=()=>r.result.createObjectStore('kv');r.onsuccess=()=>res(r.result);r.onerror=()=>rej(r.error)})}catch(e){this.db=null}},
  async get(){if(this.db){try{return await new Promise(res=>{const q=this.db.transaction('kv').objectStore('kv').get('state');q.onsuccess=()=>res(q.result||null);q.onerror=()=>res(null)})}catch(e){}}try{return JSON.parse(localStorage.getItem('oc-cp-notebook')||'null')}catch(e){return null}},
@@ -522,6 +536,49 @@ async function showCard(spec,name){const get=async mode=>{if(typeof spec=='funct
 function showText(t,name,msg){$('#mTitle').textContent='文字檔';$('#mBody').innerHTML=`<p class="note">${esc(msg||'可以下載成 .txt，或複製下方文字。')}</p><p><button class="big" id="mDl">⬇️ 下載文字檔</button> <button id="mCp">📋 複製</button></p><textarea rows="16" id="mTa"></textarea>`;$('#mTa').value=t;$('#mDl').onclick=()=>{const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([t],{type:'text/plain;charset=utf-8'}));a.download=fileName(name)+'.txt';document.body.appendChild(a);a.click();a.remove()};$('#mCp').onclick=()=>copyText(t);$('#modal').classList.add('open')}
 function closeModal(){$('#modal').classList.remove('open')}
 
+
+/* ===== 作品分組 ===== */
+const inW=o=>!ST.curWork||(ST.curWork=='__none'?!(o.works||[]).length:(o.works||[]).includes(ST.curWork));
+const VC=()=>ST.chars.filter(inW),VP=()=>ST.cps.filter(inW),VM=()=>ST.maps.filter(inW),VS=()=>ST.scenes.filter(inW);
+const VE=()=>ST.events.filter(e=>inW(e)||(!(e.works||[]).length&&ST.curWork&&ST.curWork!='__none'&&(e.who||[]).some(id=>{const c=charById(id);return c&&inW(c)})));
+const newWorks=()=>ST.curWork&&ST.curWork!='__none'?[ST.curWork]:[];
+const curWorkObj=()=>ST.works.find(w=>w.id==ST.curWork);
+const workTitle=()=>{const w=curWorkObj();return w?w.name:ST.curWork=='__none'?'未分類':'全部作品'};
+function renderWorkSel(){$('#workSel').innerHTML=`<option value="">全部作品</option>`+ST.works.map(w=>`<option value="${w.id}">${esc(w.name)}</option>`).join('')+(ST.works.length?`<option value="__none">未分類</option>`:'');$('#workSel').value=ST.curWork||''}
+function setWork(v){ST.curWork=v;persist();renderAll();route(true)}
+function worksHTML(kind){if(!ST.works.length)return`<span class="note">所屬作品：還沒有建立作品，可以在最上方「📁 管理作品」新增。</span>`;const o=kind=='char'?curChar():kind=='cp'?curCP():curMap();const ws=o.works||[];return`<span class="lab" style="display:inline">📁 所屬作品（可複選）：</span><span class="chips">${ST.works.map(w=>`<label><input type="checkbox" ${ws.includes(w.id)?'checked':''} onchange="toggleWork('${kind}','${w.id}',this.checked)">${esc(w.name)}</label>`).join('')}</span>`}
+function toggleWork(kind,id,on){const o=kind=='char'?curChar():kind=='cp'?curCP():curMap();o.works=(o.works||[]).filter(x=>x!=id);if(on)o.works.push(id);persist();if(kind=='char')renderCharList();if(kind=='cp')renderCPList();if(kind=='map')renderMapSel()}
+function openWorks(){$('#mTitle').textContent='管理作品';const box=()=>{$('#mBody').innerHTML=`<p class="note">把人物、CP、關係表、時間軸和情境卡分到不同作品。最上方切換作品後，各頁只會顯示那部作品的內容。同一位人物可以同時屬於好幾部作品（例如續集或聯動）。</p>
+ <div class="row"><input id="wNew" placeholder="新作品名稱"><button class="big" id="wAdd">＋ 新增作品</button></div>
+ ${ST.works.map(w=>`<div class="lst"><div class="row"><input value="${esc(w.name)}" data-wn="${w.id}"><button class="sm" data-wall="${w.id}" title="把還沒分類的人物、CP、關係表、事件、情境卡都歸到這部作品">收進未分類內容</button><button class="sm warn" data-wdel="${w.id}">刪除作品</button></div><p class="note" style="margin:2px 0">人物 ${ST.chars.filter(c=>(c.works||[]).includes(w.id)).length}・CP ${ST.cps.filter(c=>(c.works||[]).includes(w.id)).length}・關係表 ${ST.maps.filter(c=>(c.works||[]).includes(w.id)).length}</p></div>`).join('')||'<p class="note">還沒有作品。</p>'}
+ <p class="note">刪除作品不會刪掉裡面的人物和其他內容，它們只會變回「未分類」。</p>`;
+ $('#wAdd').onclick=()=>{const n=$('#wNew').value.trim();if(!n)return toast('請輸入作品名稱');const w={id:uid(),name:n,year:''};ST.works.push(w);ST.curWork=w.id;persist();renderAll();route(true);box()};
+ $$('[data-wn]').forEach(i=>i.oninput=()=>{ST.works.find(w=>w.id==i.dataset.wn).name=i.value;persist();renderWorkSel()});
+ $$('[data-wall]').forEach(b=>b.onclick=()=>{const id=b.dataset.wall;let n=0;[ST.chars,ST.cps,ST.maps,ST.scenes,ST.events].forEach(l=>l.forEach(o=>{if(!(o.works||[]).length){o.works=[id];n++}}));persist();renderAll();route(true);box();toast(`已收進 ${n} 項內容`)});
+ $$('[data-wdel]').forEach(b=>b.onclick=()=>armed(b,()=>{const id=b.dataset.wdel;ST.works=ST.works.filter(w=>w.id!=id);[ST.chars,ST.cps,ST.maps,ST.scenes,ST.events].forEach(l=>l.forEach(o=>{if(o.works)o.works=o.works.filter(x=>x!=id)}));if(ST.curWork==id)ST.curWork='';persist();renderAll();route(true);box()}))};
+ box();$('#modal').classList.add('open')}
+
+/* ===== 故事年份 ===== */
+function getSY(){const w=curWorkObj();const v=w?w.year:ST.storyYear;const m=String(v||'').match(/\d{1,4}/);return m?+m[0]:null}
+function setSY(v){const w=curWorkObj();if(w)w.year=v;else ST.storyYear=v;persist();renderTL();renderChars()}
+function ageOf(c){const sy=getSY(),m=String(c.byear||'').match(/\d{3,4}/);return sy!=null&&m?sy-(+m[0]):c.age}
+function syAges(){const sy=getSY();if(sy==null)return'';return VC().map(c=>{const m=String(c.byear||'').match(/\d{3,4}/);return m?`${c.name||'？'} ${sy-(+m[0])} 歲`:''}).filter(Boolean).join('、')}
+
+/* ===== 備份提醒 ===== */
+function checkBackup(){const b=$('#bkBanner');const has=ST.chars.length+ST.cps.length+ST.maps.length+ST.events.length;if(!has){b.classList.add('hide');return}const now=Date.now();if(!ST.firstAt){ST.firstAt=now;persist()}const last=ST.lastBackup||ST.firstAt,d=Math.floor((now-last)/864e5);if(d<14||(ST.snooze&&now-ST.snooze<3*864e5)){b.classList.add('hide');return}
+ b.innerHTML=`📦 ${ST.lastBackup?`已經 ${d} 天沒有備份了。`:'還沒有下載過備份。'}資料只存在這個瀏覽器，清除瀏覽器資料就會消失，建議下載一份備份檔。 <button class="sm big" onclick="backupDL()">立即下載備份</button> <button class="sm" onclick="ST.snooze=Date.now();persist();checkBackup()">三天後再提醒</button>`;b.classList.remove('hide')}
+
+/* ===== 一鍵匯出設定集 ===== */
+const noFoot=t=>t.replace(/\n*（現代背景 OC／CP 設定手帳）\s*$/,'');
+function exportBook(){const sy=getSY();const L=[];L.push(`《${workTitle()}》設定集`);if(sy!=null)L.push(`故事正文年份：${sy} 年${syAges()?`（${syAges()}）`:''}`);
+ const cs=VC(),ps=VP(),ms=VM(),es=tlSorted(VE()),ss=VS();
+ if(cs.length){L.push('\n==============================\n人物\n==============================');cs.forEach(c=>L.push(noFoot(charText(c))+'\n'))}
+ if(ps.length){L.push('\n==============================\nCP\n==============================');ps.forEach(p=>L.push(noFoot(cpText(p))+'\n'))}
+ if(ms.length){L.push('\n==============================\n人物關係表\n==============================');ms.forEach(m=>{L.push(`【${m.name}】`);m.edges.forEach(e=>{const a=m.nodes.find(n=>n.id==e.a),b=m.nodes.find(n=>n.id==e.b);if(a&&b)L.push(`・${nName(a)} ${['—','→','↔'][e.dir]} ${nName(b)}${e.label?'：'+e.label:''}`)});const lone=m.nodes.filter(n=>!m.edges.some(e=>e.a==n.id||e.b==n.id));if(lone.length)L.push('・其他人物：'+lone.map(nName).join('、'));L.push('')})}
+ if(es.length){L.push('\n==============================\n時間軸\n==============================');es.forEach(e=>{const[a,b]=tlLine(e);L.push(`${a}｜${b}`)})}
+ if(ss.length){L.push('\n==============================\n劇情大綱\n==============================');ss.forEach((x,i)=>L.push(outlineItem(x,i)))}
+ if(L.length<3)return toast('這個作品還沒有內容');showText(L.join('\n')+`\n\n（${TOOL}）`,workTitle()+'_設定集','整份設定集（人物、CP、關係表、時間軸、劇情大綱）。可以下載成 .txt，或複製貼到雲端文件。')}
+
 /* ===== 人物設定 ===== */
 const ZOD=S('牡羊座、金牛座、雙子座、巨蟹座、獅子座、處女座、天秤座、天蠍座、射手座、摩羯座、水瓶座、雙魚座');
 const CZ=S('鼠、牛、虎、兔、龍、蛇、馬、羊、猴、雞、狗、豬');
@@ -554,9 +611,9 @@ const CF=[
 const CONF_L=['0 完全沒自信','1 很沒自信','2 有點沒自信','3 普通','4 蠻有自信','5 非常有自信'];
 const curChar=()=>ST.chars.find(c=>c.id==ST.curChar);
 const charById=id=>ST.chars.find(c=>c.id==id);
-function newChar(){const c={id:uid(),name:'',conf:3,color:pick(['#c9a37a','#9fb7c9','#c99fae','#a3b899','#b8a3c9','#d4b483','#8fa3a3']),gallery:[],deep:[],t:Date.now()};ST.chars.unshift(c);ST.curChar=c.id;persist();renderChars();setTimeout(()=>{const i=$('#charEdit [data-k=name]');i&&i.focus()},50)}
-function renderCharList(){$('#charCount').textContent=ST.chars.length?`共 ${ST.chars.length} 位人物`:'還沒有人物，先新增一位吧。';$('#charList').innerHTML=ST.chars.map(c=>`<span class="pchip ${c.id==ST.curChar?'on':''}" onclick="ST.curChar='${c.id}';persist();renderChars()">${avHTML(c.avatar,c.name)}${esc(c.name||'（未命名）')}</span>`).join('')}
-function fieldHTML(f,c){const v=c[f.k]==null?'':c[f.k];const dl=f.dl?(Array.isArray(f.dl)?f.dl:S(f.dl)):null;const lab=`<span class="lab">${esc(f.l)}${dl?'<span class="hint">可從清單選，也可以自己輸入</span>':''}</span>`;let inp;
+function newChar(){const c={id:uid(),name:'',conf:3,color:pick(['#c9a37a','#9fb7c9','#c99fae','#a3b899','#b8a3c9','#d4b483','#8fa3a3']),gallery:[],deep:[],works:newWorks(),t:Date.now()};ST.chars.unshift(c);ST.curChar=c.id;persist();renderChars();setTimeout(()=>{const i=$('#charEdit [data-k=name]');i&&i.focus()},50)}
+function renderCharList(){const l=VC();$('#charCount').textContent=l.length?`${ST.curWork?`「${workTitle()}」`:''}共 ${l.length} 位人物`:'還沒有人物，先新增一位吧。';$('#charList').innerHTML=l.map(c=>`<span class="pchip ${c.id==ST.curChar?'on':''}" onclick="ST.curChar='${c.id}';persist();renderChars()">${avHTML(c.avatar,c.name)}${esc(c.name||'（未命名）')}</span>`).join('')}
+function fieldHTML(f,c){if(f.k=='age'){const sy=getSY(),auto=sy!=null&&/\d{3,4}/.test(c.byear||'');return `<label id="f_age"><span class="lab">年齡${sy!=null?`<span class="hint">故事年份 ${sy}</span>`:''}</span><input data-k="age" value="${esc(auto?ageOf(c):c.age||'')}" ${auto?'readonly title="依故事年份與出生年自動計算"':''} placeholder="例：27">${auto?`<small>依故事年份自動計算；想手動填寫請清空出生年</small>`:sy!=null&&c.age?`<button type="button" class="sm" onclick="ageToYear()">依年齡推算出生年</button>`:''}</label>`}const v=c[f.k]==null?'':c[f.k];const dl=f.dl?(Array.isArray(f.dl)?f.dl:S(f.dl)):null;const lab=`<span class="lab">${esc(f.l)}${dl?'<span class="hint">可從清單選，也可以自己輸入</span>':''}</span>`;let inp;
  if(f.t=='sel')inp=`<select data-k="${f.k}"><option value="">—</option>${f.o.map(o=>`<option ${o==v?'selected':''}>${esc(o)}</option>`).join('')}</select>`;
  else if(f.t=='ta')inp=`<textarea data-k="${f.k}" rows="${f.rows||3}" placeholder="${esc(f.ph||'')}">${esc(v)}</textarea>`;
  else if(f.t=='num')inp=`<input type="number" min="0" data-k="${f.k}" value="${esc(v)}">`;
@@ -566,8 +623,8 @@ function fieldHTML(f,c){const v=c[f.k]==null?'':c[f.k];const dl=f.dl?(Array.isAr
  else inp=`<input data-k="${f.k}" value="${esc(v)}" placeholder="${esc(f.ph||(dl?'點一下看選項，或直接輸入':''))}" ${dl?`list="dl_${f.k}"`:''}>${dl?`<datalist id="dl_${f.k}">${dl.map(o=>`<option value="${esc(o)}">`).join('')}</datalist>`:''}`;
  const hid=f.k=='healthNote'&&(!c.health||c.health=='健全者'||c.health=='不設定')?' hide':'';
  return `<label class="${f.w||f.t=='ta'?'wide':''}${hid}" id="f_${f.k}">${lab}${inp}</label>`}
-function renderChars(){renderCharList();const c=curChar(),box=$('#charEdit');if(!c){box.innerHTML='';return}
- box.innerHTML=`<div class="card"><div class="row">${avHTML(c.avatar,c.name,'lg')}<div style="flex:1;min-width:180px"><h3 id="ceTitle" style="margin:0">${esc(c.name||'（未命名）')}</h3><span class="note">內容會自動儲存</span></div><button class="big" onclick="toDeep('${c.id}')">🧠 深化角色</button></div></div>
+function renderChars(){if(!curChar()||!inW(curChar()))ST.curChar=VC()[0]?.id||null;renderCharList();const c=curChar(),box=$('#charEdit');if(!c){box.innerHTML='';return}
+ box.innerHTML=`<div class="card"><div class="row">${avHTML(c.avatar,c.name,'lg')}<div style="flex:1;min-width:180px"><h3 id="ceTitle" style="margin:0">${esc(c.name||'（未命名）')}</h3><span class="note">內容會自動儲存</span></div><button class="big" onclick="toDeep('${c.id}')">🧠 深化角色</button></div><div style="margin-top:8px">${worksHTML('char')}</div></div>
  <details class="fold" open><summary>🖼️ 頭貼、立繪與圖庫</summary><div class="inner"><div class="grid">
  <div class="imgbox ava"><span class="lab">人物頭貼</span>${c.avatar?`<img src="${c.avatar}" alt="" onclick="zoom(this.src)">`:''}<label class="filebtn">上傳頭貼<input type="file" accept="image/*" onchange="upCrop(this,{ratio:1,circle:1,max:600,title:'調整頭貼',onOrig:d=>{curChar().avatarOrig=d},onDone:d=>{curChar().avatar=d;persist();renderChars()}})"></label> ${c.avatar?`<button class="sm" onclick="openCrop(curChar().avatarOrig||curChar().avatar,{ratio:1,circle:1,max:600,title:'調整頭貼',onDone:d=>{curChar().avatar=d;persist();renderChars()}})">✂️ 調整</button> <button class="sm" onclick="curChar().avatar=null;curChar().avatarOrig=null;persist();renderChars()">移除</button>`:''}</div>
  <div class="imgbox"><span class="lab">人物立繪（保留原圖形狀）</span>${c.art?`<img src="${c.art}" alt="" onclick="zoom(this.src)">`:''}<label class="filebtn">上傳立繪<input type="file" accept="image/*" onchange="upImgs(this,1600,d=>{curChar().art=d;curChar().artOrig=d;persist();renderChars()})"></label> ${c.art?`<button class="sm" onclick="openCrop(curChar().artOrig||curChar().art,{max:1600,title:'裁切立繪',onDone:d=>{curChar().art=d;persist();renderChars()}})">✂️ 裁切／縮放</button> <button class="sm" onclick="curChar().art=null;curChar().artOrig=null;persist();renderChars()">移除</button>`:''}</div></div>
@@ -580,16 +637,17 @@ function onCharInput(e){const c=curChar();if(!c)return;const t=e.target;
  if(t.dataset.bd){const m=$('#charEdit [data-bd=m]').value,d=$('#charEdit [data-bd=d]').value;c.bday=m||d?`${m}/${d}`:'';if(m&&d){c.zodiac=zodiacOf(+m,+d);const z=$('#charEdit [data-k=zodiac]');if(z)z.value=c.zodiac}persist();return}
  const k=t.dataset.k;if(!k)return;c[k]=t.type=='range'||t.type=='number'?(t.value===''?'':+t.value):t.value;c.t=Date.now();
  if(k=='conf')$('#confv').textContent=CONF_L[c.conf];
- if(k=='byear'&&/^\d{4}$/.test(t.value)){c.czod=CZ[((+t.value-4)%12+12)%12];const z=$('#charEdit [data-k=czod]');if(z)z.value=c.czod}
+ if(k=='byear'){if(/^\d{4}$/.test(t.value)){c.czod=CZ[((+t.value-4)%12+12)%12];const z=$('#charEdit [data-k=czod]');if(z)z.value=c.czod}const f=CF[0][1].find(x=>x.k=='age');$('#f_age').outerHTML=fieldHTML(f,c)}
  if(k=='health')$('#f_healthNote').classList.toggle('hide',!c.health||c.health=='健全者'||c.health=='不設定');
  if(k=='name'){$('#ceTitle').textContent=c.name||'（未命名）';renderCharList()}
  persist()}
+function ageToYear(){const c=curChar(),sy=getSY(),a=parseInt(c.age);if(sy==null||isNaN(a))return;c.byear=String(sy-a);c.czod=CZ[(((sy-a)-4)%12+12)%12];persist();renderChars();toast(`出生年設為 ${c.byear}`)}
 function dupChar(){const c=JSON.parse(JSON.stringify(curChar()));c.id=uid();c.name=(c.name||'')+'（複本）';ST.chars.unshift(c);ST.curChar=c.id;persist();renderChars();toast('已複製一份')}
-function delChar(){const id=ST.curChar;ST.chars=ST.chars.filter(c=>c.id!=id);ST.curChar=ST.chars[0]?.id||null;persist();renderChars();toast('已刪除')}
+function delChar(){const id=ST.curChar;ST.chars=ST.chars.filter(c=>c.id!=id);ST.curChar=VC()[0]?.id||null;persist();renderChars();toast('已刪除')}
 function toDeep(id){DEEP.cid=id;saveDeep();go('deep')}
-function charRows(c){const r=[];CF.forEach(([g,fs])=>fs.forEach(f=>{if(f.k=='name'||f.k=='free'||f.k=='color')return;let v=c[f.k];if(f.k=='conf')v=v===''||v==null?'':`${'●'.repeat(v)}${'○'.repeat(5-v)}（${CONF_L[v].slice(2)}）`;if(f.k=='bday')v=v&&v!='/'?v.replace('/','月')+'日':'';if(f.k=='healthNote'&&(c.health=='健全者'||!c.health))v='';if(v!==''&&v!=null)r.push([f.l.replace(/（.*?）/g,''),String(v)])}));return r}
+function charRows(c){const r=[];CF.forEach(([g,fs])=>fs.forEach(f=>{if(f.k=='name'||f.k=='free'||f.k=='color')return;let v=f.k=='age'?ageOf(c):c[f.k];if(f.k=='conf')v=v===''||v==null?'':`${'●'.repeat(v)}${'○'.repeat(5-v)}（${CONF_L[v].slice(2)}）`;if(f.k=='bday')v=v&&v!='/'?v.replace('/','月')+'日':'';if(f.k=='healthNote'&&(c.health=='健全者'||!c.health))v='';if(v!==''&&v!=null)r.push([f.l.replace(/（.*?）/g,''),String(v)])}));return r}
 function charText(c){let t=`【${c.name||'未命名'}】\n`;charRows(c).forEach(([k,v])=>t+=`${k}：${v}\n`);if(c.free)t+=`\n自由補充：\n${c.free}\n`;if((c.deep||[]).length){t+='\n— 深化筆記 —\n';c.deep.forEach(d=>t+=`Q：${d.q}\nA：${d.a}\n\n`)}return t+`\n（${TOOL}）`}
-async function charImg(){const c=curChar();showCard({title:c.name||'未命名',sub:[c.age&&c.age+' 歲',c.gender,c.job].filter(Boolean).join('・'),accent:c.color,avatars:[{src:c.avatar,name:c.name,color:c.color}],sections:[{h:'人物設定',rows:charRows(c)},{h:'自由補充',text:c.free},{h:'立繪',art:c.art},{h:'深化筆記',rows:(c.deep||[]).map(d=>[d.q,d.a])},{h:'圖庫',imgs:c.gallery}]},c.name)}
+async function charImg(){const c=curChar();showCard({title:c.name||'未命名',sub:[ageOf(c)!==''&&ageOf(c)!=null&&ageOf(c)+' 歲',c.gender,c.job].filter(Boolean).join('・'),accent:c.color,avatars:[{src:c.avatar,name:c.name,color:c.color}],sections:[{h:'人物設定',rows:charRows(c)},{h:'自由補充',text:c.free},{h:'立繪',art:c.art},{h:'深化筆記',rows:(c.deep||[]).map(d=>[d.q,d.a])},{h:'圖庫',imgs:c.gallery}]},c.name)}
 
 /* ===== 人物深化 ===== */
 let DEEP={cid:'',slots:[],cats:[]};
@@ -599,7 +657,7 @@ function qCats(){return[...new Set(Q.concat(ST.myQ||[]).map(q=>q.split('|')[0]))
 function renderDeepCats(){$('#deepCats').innerHTML=qCats().map(c=>`<label><input type="checkbox" value="${esc(c)}" ${DEEP.cats.includes(c)?'checked':''} onchange="DEEP.cats=$$('#deepCats input:checked').map(i=>i.value);saveDeep()">${esc(c)}</label>`).join('');$('#myQn').textContent=(ST.myQ||[]).length?`已加入 ${ST.myQ.length} 題自訂題目`:''}
 function rollDeepOne(i){const used=DEEP.slots.map(s=>s.q);const pool=qPool().filter(q=>!used.includes(q));const q=pick(pool.length?pool:qPool());DEEP.slots[i]={q,lock:false,a:''}}
 function rollDeep(){while(DEEP.slots.length<5)DEEP.slots.push({q:'',lock:false,a:''});DEEP.slots.forEach((s,i)=>{if(!s.lock)rollDeepOne(i)});saveDeep();renderDeepSlots()}
-function renderDeepWho(){$('#deepWho').innerHTML=`<option value="">（不指定人物）</option>`+ST.chars.map(c=>`<option value="${c.id}" ${c.id==DEEP.cid?'selected':''}>${esc(c.name||'（未命名）')}</option>`).join('')}
+function renderDeepWho(){$('#deepWho').innerHTML=`<option value="">（不指定人物）</option>`+VC().map(c=>`<option value="${c.id}" ${c.id==DEEP.cid?'selected':''}>${esc(c.name||'（未命名）')}</option>`).join('')}
 function renderDeepSlots(){$('#deepSlots').innerHTML=DEEP.slots.map((s,i)=>{const [cat,q]=s.q.split('|');return `<div class="slot ${s.lock?'locked':''}"><div class="body"><div class="k">${esc(cat)}</div><div class="v">${esc(q)}</div><textarea rows="2" placeholder="想到什麼就寫下來（選填）" oninput="DEEP.slots[${i}].a=this.value;saveDeep()">${esc(s.a)}</textarea></div><div class="btns"><button class="sm" onclick="rollDeepOne(${i});saveDeep();renderDeepSlots()" ${s.lock?'disabled':''}>🎲 重骰</button><button class="sm ${s.lock?'on':''}" onclick="DEEP.slots[${i}].lock=!DEEP.slots[${i}].lock;saveDeep();renderDeepSlots()">${s.lock?'🔒 已鎖':'🔓 鎖住'}</button></div></div>`}).join('')}
 function saveDeepNotes(){const c=charById(DEEP.cid);if(!c){toast('請先在上方選擇人物');return}const ans=DEEP.slots.filter(s=>s.a.trim());if(!ans.length){toast('還沒有寫任何回答');return}c.deep=c.deep||[];ans.forEach(s=>{const q=s.q.split('|')[1],ex=c.deep.find(d=>d.q==q);if(ex)ex.a=s.a;else c.deep.push({q,c:s.q.split('|')[0],a:s.a})});persist();renderDeepNotes();toast(`已存入 ${ans.length} 題`)}
 function renderDeepNotes(){const c=charById(DEEP.cid),b=$('#deepNotes');if(!c){b.innerHTML='<p class="note">選擇人物後，這裡會顯示他的深化筆記。</p>';return}if(!(c.deep||[]).length){b.innerHTML=`<p class="note">${esc(c.name||'這位人物')}還沒有深化筆記。</p>`;return}
@@ -613,17 +671,17 @@ function addMyQ(){const ls=$('#myQin').value.split('\n').map(s=>s.trim()).filter
 const WHO=[['chaser','誰展開追求？'],['confessor','誰先告白？'],['leader','誰領導關係？'],['comforter','誰擅長安慰人？'],['clingy','誰喜歡撒嬌／討抱？'],['apolog','吵架時誰先低頭？',1],['jealous','誰比較會吃醋？',1]];
 const STAGE_PH={0:'陌生人：初次見面時的態度、第一印象……',10:'點頭之交：知道彼此是誰，互動很客氣……',30:'熟人：有了固定的相處模式……',50:'朋友／曖昧：開始在意對方……',70:'親近：會主動關心、偶爾越界……',100:'完全信任：只在對方面前才有的樣子……'};
 const curCP=()=>ST.cps.find(c=>c.id==ST.curCP);
-function newCP(){const p={id:uid(),name:'',members:[{cid:'',name:''},{cid:'',name:''}],stages:[0,10,30,50,70,100].map(p=>({p,txt:'',img:null})),gallery:[],t:Date.now()};const ids=ST.chars.slice(0,2).map(c=>c.id);ids.forEach((id,i)=>p.members[i].cid=id);ST.cps.unshift(p);ST.curCP=p.id;persist();renderCP()}
+function newCP(){const p={id:uid(),name:'',members:[{cid:'',name:''},{cid:'',name:''}],stages:[0,10,30,50,70,100].map(p=>({p,txt:'',img:null})),gallery:[],works:newWorks(),t:Date.now()};const ids=VC().slice(0,2).map(c=>c.id);ids.forEach((id,i)=>p.members[i].cid=id);ST.cps.unshift(p);ST.curCP=p.id;persist();renderCP()}
 const mName=m=>{const c=m.cid&&charById(m.cid);return c?c.name||'（未命名）':m.name||'（未填）'};
 const mAv=m=>{const c=m.cid&&charById(m.cid);return m.av||(c&&c.avatar)||null};
 const mColor=m=>{const c=m.cid&&charById(m.cid);return(c&&c.color)||'#cdbb9c'};
 const cpTitle=p=>p.name||p.members.map(mName).join(' × ');
-function renderCPList(){$('#cpCount').textContent=ST.cps.length?`共 ${ST.cps.length} 組`:'還沒有 CP，先新增一組吧。';$('#cpList').innerHTML=ST.cps.map(p=>`<span class="pchip ${p.id==ST.curCP?'on':''}" onclick="ST.curCP='${p.id}';persist();renderCP()">${p.members.slice(0,2).map(m=>avHTML(mAv(m),mName(m))).join('')}${esc(cpTitle(p))}</span>`).join('')}
+function renderCPList(){const l=VP();$('#cpCount').textContent=l.length?`${ST.curWork?`「${workTitle()}」`:''}共 ${l.length} 組`:'還沒有 CP，先新增一組吧。';$('#cpList').innerHTML=l.map(p=>`<span class="pchip ${p.id==ST.curCP?'on':''}" onclick="ST.curCP='${p.id}';persist();renderCP()">${p.members.slice(0,2).map(m=>avHTML(mAv(m),mName(m))).join('')}${esc(cpTitle(p))}</span>`).join('')}
 function whoOpts(p,v){const n=p.members.length,names=p.members.map(mName);const o=[...names,n==2?'兩人都是':'大家都是','看情況／輪流','都不是'];return `<option value="">—</option>`+o.map(x=>`<option ${x==v?'selected':''}>${esc(x)}</option>`).join('')}
-function renderCP(){renderCPList();const p=curCP(),box=$('#cpEdit');if(!p){box.innerHTML='';return}
+function renderCP(){if(!curCP()||!inW(curCP()))ST.curCP=VP()[0]?.id||null;renderCPList();const p=curCP(),box=$('#cpEdit');if(!p){box.innerHTML='';return}
  const co=`<option value="">（手動輸入名字）</option>`;
- box.innerHTML=`<details class="fold" open><summary>👥 成員（${p.members.length} 人）</summary><div class="inner">
- ${p.members.map((m,i)=>`<div class="lst"><div class="row">${avHTML(mAv(m),mName(m))}<select onchange="curCP().members[${i}].cid=this.value;persist();renderCP()">${co}${ST.chars.map(c=>`<option value="${c.id}" ${c.id==m.cid?'selected':''}>${esc(c.name||'（未命名）')}</option>`).join('')}</select>${m.cid?'':`<input placeholder="名字" value="${esc(m.name)}" oninput="curCP().members[${i}].name=this.value;persist();renderCPList()">`}
+ box.innerHTML=`<div class="card">${worksHTML('cp')}</div><details class="fold" open><summary>👥 成員（${p.members.length} 人）</summary><div class="inner">
+ ${p.members.map((m,i)=>`<div class="lst"><div class="row">${avHTML(mAv(m),mName(m))}<select onchange="curCP().members[${i}].cid=this.value;persist();renderCP()">${co}${ST.chars.filter(c=>inW(c)||c.id==m.cid).map(c=>`<option value="${c.id}" ${c.id==m.cid?'selected':''}>${esc(c.name||'（未命名）')}</option>`).join('')}</select>${m.cid?'':`<input placeholder="名字" value="${esc(m.name)}" oninput="curCP().members[${i}].name=this.value;persist();renderCPList()">`}
  <label class="filebtn">單人頭貼<input type="file" accept="image/*" onchange="upCrop(this,{ratio:1,circle:1,max:600,title:'調整頭貼',onDone:d=>{curCP().members[${i}].av=d;persist();renderCP()}})"></label>${m.av?`<button class="sm" onclick="curCP().members[${i}].av=null;persist();renderCP()">改回人物頭貼</button>`:''}${p.members.length>2?`<button class="sm warn" onclick="curCP().members.splice(${i},1);persist();renderCP()">移除</button>`:''}</div></div>`).join('')}
  ${p.members.length<6?`<p><button onclick="curCP().members.push({cid:'',name:''});persist();renderCP()">＋ 加入成員（最多六人）</button></p>`:''}
  <p class="note">選擇已存好的人物，會自動帶入名字和頭貼；也可以為這組 CP 另外上傳單人頭貼。</p></div></details>
@@ -642,16 +700,16 @@ function renderCP(){renderCPList();const p=curCP(),box=$('#cpEdit');if(!p){box.i
  <div class="actbar"><button onclick="persist();toast('已儲存到瀏覽器')">💾 儲存</button> <button onclick="cpImg()">🖼️ 存成圖片</button> <button onclick="showText(cpText(curCP()),cpTitle(curCP()))">📄 文字檔</button> <button onclick="copyText(cpText(curCP()))">📋 複製文字</button> <button class="warn" onclick="armed(this,delCP)">🗑️ 刪除</button></div>`;dropZone($('#cpDrop'),d=>{curCP().gallery.push(d);persist();renderCP()})}
 function cpF(k,l,s,dl){const p=curCP();return `<label><span class="lab">${l}</span><input data-cp="${k}" value="${esc(p[k]||'')}" ${dl?`list="dl_cp_${k}"`:''}>${dl?`<datalist id="dl_cp_${k}">${S(dl).map(o=>`<option value="${o}">`).join('')}</datalist>`:''}</label>`}
 function onCPInput(e){const k=e.target.dataset.cp;if(!k)return;curCP()[k]=e.target.value;if(k=='name')renderCPList();persist()}
-function cpAgeGap(){const p=curCP();const ages=p.members.map(m=>{const c=m.cid&&charById(m.cid);return c?parseInt(c.age):NaN}).filter(a=>!isNaN(a));if(ages.length<2){toast('需要至少兩位已填年齡的人物');return}const g=Math.max(...ages)-Math.min(...ages);p.ageGap=g?`差 ${g} 歲`:'同齡';persist();renderCP()}
-function delCP(){ST.cps=ST.cps.filter(c=>c.id!=ST.curCP);ST.curCP=ST.cps[0]?.id||null;persist();renderCP()}
+function cpAgeGap(){const p=curCP();const ages=p.members.map(m=>{const c=m.cid&&charById(m.cid);return c?parseInt(ageOf(c)):NaN}).filter(a=>!isNaN(a));if(ages.length<2){toast('需要至少兩位已填年齡的人物');return}const g=Math.max(...ages)-Math.min(...ages);p.ageGap=g?`差 ${g} 歲`:'同齡';persist();renderCP()}
+function delCP(){ST.cps=ST.cps.filter(c=>c.id!=ST.curCP);ST.curCP=VP()[0]?.id||null;persist();renderCP()}
 function cpRows(p){const r=[['成員',p.members.map(mName).join('、')],['配對類型',p.ptype],['關係現況',p.status],['年齡差',p.ageGap],['認識年份',p.metYear],['交往年份',p.dateYear],['結婚年份',p.marryYear],['稱呼彼此',p.callEach],['約會地點',p.dateSpot],['定情物',p.token],['代表歌曲',p.song]];WHO.forEach(([k,l])=>r.push([l,p[k]]));return r.filter(x=>x[1])}
 function cpText(p){let t=`【${cpTitle(p)}】\n`;cpRows(p).forEach(([k,v])=>t+=`${k}：${v}\n`);const st=p.stages.filter(s=>s.txt||s.img);if(st.length){t+='\n— 認識程度與態度 —\n';st.forEach(s=>t+=`${s.p}%：${s.txt||'（附圖）'}\n`)}if(p.free)t+=`\n自由補充：\n${p.free}\n`;return t+`\n（${TOOL}）`}
 async function cpImg(){const p=curCP();showCard({title:cpTitle(p),sub:p.name?p.members.map(mName).join(' × '):(p.ptype||''),accent:mColor(p.members[0]),avatars:p.members.map(m=>({src:mAv(m),name:mName(m),color:mColor(m)})),sections:[{h:'CP設定',rows:cpRows(p)},{h:'認識程度與態度',stages:p.stages.filter(s=>s.txt||s.img).map(s=>({t:s.p+'%',txt:s.txt,img:s.img}))},{h:'自由補充',text:p.free},{h:'CP 圖庫',imgs:p.gallery}]},cpTitle(p))}
 
 /* ===== 人物關係表 ===== */
 const REL=S('青梅竹馬、戀人、前任、暗戀、單方面暗戀、互相暗戀、曖昧、夫妻、未婚夫妻、摯友、損友、同事、上司與下屬、兄弟、姊妹、兄妹、姊弟、父母、師生、室友、鄰居、情敵、宿敵、競爭對手、合作夥伴、救命恩人、互相看不順眼、監護人、主從、債主');
-const curMap=()=>{let m=ST.maps.find(x=>x.id==ST.curMap);if(!m){m=ST.maps[0];if(!m){m={id:uid(),name:'我的關係表',nodes:[],edges:[],ns:18,fs:15,r:36};ST.maps.push(m)}ST.curMap=m.id}return m};
-function newMap(){const m={id:uid(),name:'關係表 '+(ST.maps.length+1),nodes:[],edges:[],ns:18,fs:15,r:36};ST.maps.push(m);ST.curMap=m.id;persist();renderMap()}
+const curMap=()=>{let m=ST.maps.find(x=>x.id==ST.curMap&&inW(x));if(!m){m=VM()[0];if(!m){m={id:uid(),name:ST.curWork&&ST.curWork!='__none'?workTitle()+' 關係表':'我的關係表',nodes:[],edges:[],ns:18,fs:15,r:36,works:newWorks()};ST.maps.push(m)}ST.curMap=m.id}return m};
+function newMap(){const m={id:uid(),name:'關係表 '+(VM().length+1),nodes:[],edges:[],ns:18,fs:15,r:36,works:newWorks()};ST.maps.push(m);ST.curMap=m.id;persist();renderMap()}
 function renameMap(){const i=$('#mapName');i.classList.remove('hide');i.value=curMap().name;i.focus()}
 function delMap(){ST.maps=ST.maps.filter(m=>m.id!=ST.curMap);ST.curMap=null;curMap();persist();renderMap()}
 function mapClear(){const m=curMap();m.nodes=[];m.edges=[];persist();renderMap()}
@@ -664,9 +722,10 @@ function mapImportCP(){const p=ST.cps.find(c=>c.id==$('#mapImpPSel').value);if(!
 function mapAddSide(){const nm=$('#sideName').value.trim();if(!nm){toast('請輸入名字');return}mapAddNodeObj({cid:'',name:nm,color:$('#sideColor').value,side:1});$('#sideName').value='';persist();renderMap()}
 function mapAddEdge(){const m=curMap(),a=$('#eA').value,b=$('#eB').value;if(!a||!b||a==b){toast('請選擇兩位不同的人物');return}m.edges.push({id:uid(),a,b,label:$('#eLabel').value.trim(),dir:+$('#eDir').value});$('#eLabel').value='';persist();renderMap()}
 function autoLayout(){const m=curMap(),n=m.nodes.length;m.nodes.forEach((d,i)=>{const a=-Math.PI/2+i*2*Math.PI/Math.max(n,1);d.x=450+Math.cos(a)*(n>1?300:0);d.y=300+Math.sin(a)*(n>1?215:0)});persist();drawMap()}
-function renderMap(){const m=curMap();$('#mapSel').innerHTML=ST.maps.map(x=>`<option value="${x.id}" ${x.id==m.id?'selected':''}>${esc(x.name)}</option>`).join('');$('#mapNs').value=m.ns;$('#mapFs').value=m.fs;$('#mapR').value=m.r;
- $('#mapImpCList').innerHTML=ST.chars.length?ST.chars.map(c=>`<label><input type="checkbox" value="${c.id}" ${m.nodes.some(n=>n.cid==c.id)?'disabled':''}>${esc(c.name||'（未命名）')}</label>`).join(''):'<span class="note">還沒有存好的人物。</span>';
- $('#mapImpPSel').innerHTML=ST.cps.length?ST.cps.map(p=>`<option value="${p.id}">${esc(cpTitle(p))}</option>`).join(''):'<option value="">還沒有 CP</option>';
+function renderMapSel(){const m=curMap();$('#mapSel').innerHTML=VM().map(x=>`<option value="${x.id}" ${x.id==m.id?'selected':''}>${esc(x.name)}</option>`).join('')}
+function renderMap(){const m=curMap();renderMapSel();$('#mapWorks').innerHTML=worksHTML('map');$('#mapNs').value=m.ns;$('#mapFs').value=m.fs;$('#mapR').value=m.r;
+ $('#mapImpCList').innerHTML=VC().length?VC().map(c=>`<label><input type="checkbox" value="${c.id}" ${m.nodes.some(n=>n.cid==c.id)?'disabled':''}>${esc(c.name||'（未命名）')}</label>`).join(''):'<span class="note">還沒有存好的人物。</span>';
+ $('#mapImpPSel').innerHTML=VP().length?VP().map(p=>`<option value="${p.id}">${esc(cpTitle(p))}</option>`).join(''):'<option value="">還沒有 CP</option>';
  const opts=m.nodes.map(n=>`<option value="${n.id}">${esc(nName(n))}</option>`).join('');$('#eA').innerHTML=opts;$('#eB').innerHTML=opts;if(m.nodes[1])$('#eB').value=m.nodes[1].id;
  $('#relDL').innerHTML=REL.map(r=>`<option value="${r}">`).join('');
  $('#mapList').innerHTML=(m.nodes.length?'':'<p class="note">先帶入人物、CP 或新增旁支人物。</p>')+m.nodes.map(n=>`<div class="lst row">${avHTML(nImg(n),nName(n))}${n.cid?`<b style="flex:1">${esc(nName(n))}</b>`:`<input value="${esc(n.name)}" oninput="mapNode('${n.id}').name=this.value;persist();drawMap()">`}<input type="color" value="${n.color}" title="代表色" oninput="mapNode('${n.id}').color=this.value;persist();drawMap()">${n.cid?'':`<label class="filebtn">頭像<input type="file" accept="image/*" onchange="upCrop(this,{ratio:1,circle:1,max:400,title:'調整頭像',onDone:d=>{mapNode('${n.id}').img=d;persist();renderMap()}})"></label>`}<button class="sm warn" onclick="mapDelNode('${n.id}')">移除</button></div>`).join('')
@@ -717,11 +776,11 @@ const SLOTS=[['set','場域'],['ppl','人'],['hint','人物提示'],['ev','事']
 function saveScene(){ST.scene={sets:SC.sets,chars:SC.chars,tropes:SC.tropes,v:SC.v,lock:SC.lock,theme:SC.theme,note:SC.note,region:$('#scRegion').value,tone:$('#scTone').value};persist()}
 function renderSceneSets(){const tone=$('#scTone').value;const keys=Object.keys(SET).filter(k=>!tone||SET[k].t==tone);SC.sets=SC.sets.filter(k=>keys.includes(k));$('#scSets').innerHTML=keys.map(k=>`<label><input type="checkbox" value="${k}" ${SC.sets.includes(k)?'checked':''} onchange="SC.sets=$$('#scSets input:checked').map(i=>i.value);saveScene()">${SET[k].n}${SET[k].t=='k'?'（暗黑）':''}</label>`).join('');
  $('#scTropes').innerHTML=TROPE.map(([g,t])=>`<label><input type="checkbox" value="${g}" ${SC.tropes.includes(g)?'checked':''} onchange="SC.tropes=$$('#scTropes input:checked').map(i=>i.value);saveScene()">${g}</label>`).join('');saveScene()}
-function renderSceneChars(){SC.chars=SC.chars.filter(id=>charById(id));$('#scChars').innerHTML=ST.chars.length?ST.chars.map(c=>`<label><input type="checkbox" value="${c.id}" ${SC.chars.includes(c.id)?'checked':''} onchange="SC.chars=$$('#scChars input:checked').map(i=>i.value);saveScene()">${esc(c.name||'（未命名）')}</label>`).join(''):'<span class="note">還沒有存好的人物；會以「主角」代替。</span>'}
+function renderSceneChars(){SC.chars=SC.chars.filter(id=>{const c=charById(id);return c&&inW(c)});$('#scChars').innerHTML=VC().length?VC().map(c=>`<label><input type="checkbox" value="${c.id}" ${SC.chars.includes(c.id)?'checked':''} onchange="SC.chars=$$('#scChars input:checked').map(i=>i.value);saveScene()">${esc(c.name||'（未命名）')}</label>`).join(''):'<span class="note">還沒有存好的人物；會以「主角」代替。</span>'}
 function scRoll(k){const v=SC.v,tone=$('#scTone').value;
  if(k=='set'){const keys=SC.sets.length?SC.sets:Object.keys(SET).filter(x=>!tone||SET[x].t==tone);v.set=pick(keys);v.region=$('#scRegion').value||pick(['tw','we','ot']);return}
  const st=SET[v.set];if(!st)return;
- if(k=='ppl'){let cs;if(SC.chars.length)cs=SC.chars.map(id=>charById(id)).filter(Boolean);else cs=pickN(ST.chars,Math.min(ST.chars.length,Math.random()<.5?1:2));v.pplIds=cs.map(c=>c.id);v.ppl=(cs.length?cs.map(c=>c.name||'（未命名）').join('、'):'主角')+'｜關鍵配角：'+pick(st.ppl);return}
+ if(k=='ppl'){let cs;if(SC.chars.length)cs=SC.chars.map(id=>charById(id)).filter(Boolean);else cs=pickN(VC(),Math.min(VC().length,Math.random()<.5?1:2));v.pplIds=cs.map(c=>c.id);v.ppl=(cs.length?cs.map(c=>c.name||'（未命名）').join('、'):'主角')+'｜關鍵配角：'+pick(st.ppl);return}
  if(k=='hint'){const cs=(v.pplIds||[]).map(id=>charById(id)).filter(Boolean);v.hint=cs.length?cs.map(c=>{const nm=c.name||'（未命名）';if((c.deep||[]).length){const d=pick(c.deep);return `${nm}｜${d.q}：${trunc(String(d.a).replace(/\s+/g,' '),80)}`}return `${nm}｜還沒有深化筆記，可以想想：${pick(Q).split('|')[1]}`}).join('\n'):'（沒有代入已存的人物，所以沒有提示）';return}
  if(k=='ev')v.ev=pick(st.ev);
  if(k=='tm')v.tm=pick(TIME_GEN)+'｜'+(Math.random()<.6?pick(st.tm):pick(HOLI[v.region]||HOLI.tw));
@@ -742,29 +801,37 @@ function sceneCopy(){if(!SC.v.set)return toast('請先重骰');copyText(sceneTex
 function sceneTxt(){if(!SC.v.set)return toast('請先重骰');showText(sceneText(SC.v,SC.theme,SC.note),'情境')}
 async function sceneImgOf(v,theme,note,name){showCard({title:name||'人事時地物',sub:theme?'寫作主題：'+theme:'',sections:[{rows:sceneRows(v)},{h:'寫作筆記',text:note}]},name||'情境')}
 function sceneImg(){if(!SC.v.set)return toast('請先重骰');sceneImgOf(SC.v,SC.theme,SC.note)}
-function saveSceneCard(){if(!SC.v.set)return toast('請先重骰');ST.scenes.unshift({id:uid(),name:'情境卡 '+new Date().toLocaleDateString('zh-TW'),v:JSON.parse(JSON.stringify(SC.v)),theme:SC.theme,note:SC.note});persist();renderSceneCards();toast('已存成情境卡')}
-function renderSceneCards(){$('#sceneCards').innerHTML=ST.scenes.length?ST.scenes.map((s,i)=>`<div class="lst"><div class="row"><input value="${esc(s.name)}" oninput="ST.scenes[${i}].name=this.value;persist()"></div><p class="note" style="margin:4px 0">${esc(sceneRows(s.v).map(r=>r[1]).slice(0,5).join('／'))}</p><button class="sm" onclick="loadScene(${i})">載入</button> <button class="sm" onclick="const s=ST.scenes[${i}];sceneImgOf(s.v,s.theme,s.note,s.name)">圖片</button> <button class="sm" onclick="const s=ST.scenes[${i}];showText(sceneText(s.v,s.theme,s.note,s.name),s.name)">文字</button> <button class="sm warn" onclick="armed(this,()=>{ST.scenes.splice(${i},1);persist();renderSceneCards()})">刪除</button></div>`).join(''):'<p class="note">還沒有情境卡。</p>'}
-function loadScene(i){const s=ST.scenes[i];SC.v=JSON.parse(JSON.stringify(s.v));SC.theme=s.theme||'';SC.note=s.note||'';$('#scTheme').value=SC.theme;$('#scNote').value=SC.note;saveScene();renderScene();scrollTo({top:0,behavior:'smooth'});toast('已載入')}
-
+function saveSceneCard(){if(!SC.v.set)return toast('請先重骰');ST.scenes.push({id:uid(),name:'場景 '+(VS().length+1),v:JSON.parse(JSON.stringify(SC.v)),theme:SC.theme,note:SC.note,works:newWorks()});persist();renderSceneCards();toast('已存成情境卡，排在大綱最後')}
+const scById=id=>ST.scenes.find(s=>s.id==id);
+const scSum=s=>sceneRows(s.v).filter(r=>['場域','人','事','時','地'].includes(r[0])).map(r=>r[1]).join('／');
+function outlineItem(s,i){return `第 ${i+1} 段｜${s.name}`+(s.theme?`\n　寫作主題：${s.theme}`:'')+`\n　場景：${scSum(s)}`+(s.v.trope?`\n　梗：${s.v.trope}`:'')+(s.note?`\n　筆記：${s.note.replace(/\n/g,'\n　　　')}`:'')+'\n'}
+function renderSceneCards(){const l=VS();$('#sceneCards').innerHTML=l.length?`<p class="note">情境卡會依下面的順序排成劇情大綱。用 ↑↓ 調整順序，電腦也可以直接拖曳卡片。</p><p><button onclick="outlineTxt()">📄 匯出大綱（文字）</button> <button onclick="outlineImg()">🖼️ 大綱存成圖片</button></p>`+l.map((s,i)=>`<div class="lst oc" draggable="true" data-id="${s.id}"><div class="row"><b class="ono">第 ${i+1} 段</b><input value="${esc(s.name)}" oninput="scById('${s.id}').name=this.value;persist()" placeholder="段落標題"><button class="sm" onclick="scMove('${s.id}',-1)" ${i?'':'disabled'}>↑</button><button class="sm" onclick="scMove('${s.id}',1)" ${i<l.length-1?'':'disabled'}>↓</button></div><p class="note" style="margin:4px 0">${esc(scSum(s))}${s.theme?`<br>主題：${esc(s.theme)}`:''}</p><textarea rows="2" placeholder="這一段的劇情筆記" oninput="scById('${s.id}').note=this.value;persist()">${esc(s.note||'')}</textarea><button class="sm" onclick="loadScene('${s.id}')">載入到產生器</button> <button class="sm" onclick="const s=scById('${s.id}');sceneImgOf(s.v,s.theme,s.note,s.name)">圖片</button> <button class="sm" onclick="const s=scById('${s.id}');showText(sceneText(s.v,s.theme,s.note,s.name),s.name)">文字</button> <button class="sm warn" onclick="armed(this,()=>{ST.scenes=ST.scenes.filter(x=>x.id!='${s.id}');persist();renderSceneCards()})">刪除</button></div>`).join(''):'<p class="note">還沒有情境卡。抽到喜歡的情境按「💾 存成情境卡」，就會依序排成劇情大綱。</p>';
+ $$('#sceneCards .oc').forEach(el=>{el.ondragstart=e=>{if(/INPUT|TEXTAREA/.test(document.activeElement.tagName)&&el.contains(document.activeElement)){e.preventDefault();return}e.dataTransfer.setData('text/plain',el.dataset.id);el.classList.add('dragging')};el.ondragend=()=>el.classList.remove('dragging');el.ondragover=e=>{e.preventDefault();el.classList.add('dragover')};el.ondragleave=()=>el.classList.remove('dragover');el.ondrop=e=>{e.preventDefault();el.classList.remove('dragover');const from=e.dataTransfer.getData('text/plain');if(!from||from==el.dataset.id)return;const it=scById(from);ST.scenes=ST.scenes.filter(x=>x.id!=from);ST.scenes.splice(ST.scenes.findIndex(x=>x.id==el.dataset.id),0,it);persist();renderSceneCards()}})}
+function scMove(id,d){const l=VS(),i=l.findIndex(x=>x.id==id),j=i+d;if(j<0||j>=l.length)return;const a=ST.scenes.indexOf(l[i]),b=ST.scenes.indexOf(l[j]);[ST.scenes[a],ST.scenes[b]]=[ST.scenes[b],ST.scenes[a]];persist();renderSceneCards()}
+function loadScene(id){const s=scById(id);SC.v=JSON.parse(JSON.stringify(s.v));SC.theme=s.theme||'';SC.note=s.note||'';$('#scTheme').value=SC.theme;$('#scNote').value=SC.note;saveScene();renderScene();scrollTo({top:0,behavior:'smooth'});toast('已載入')}
+function outlineTxt(){const l=VS();showText(`《${workTitle()}》劇情大綱\n\n`+l.map(outlineItem).join('\n')+`\n（${TOOL}）`,workTitle()+'_大綱')}
+function outlineImg(){const l=VS();showCard({title:'劇情大綱',sub:ST.curWork?workTitle():'',sections:[{rows:l.map((s,i)=>[`第 ${i+1} 段`,s.name+(s.theme?'\n主題：'+s.theme:'')+'\n'+scSum(s)+(s.note?'\n'+s.note:'')])}]},workTitle()+'_大綱')}
 
 /* ===== 時間軸 ===== */
 let TLE=null;
 const yNum=y=>{const m=String(y||'').match(/-?\d{1,4}/);return m?+m[0]:null};
 function tlSorted(list){return list.slice().sort((a,b)=>{const ya=yNum(a.y),yb=yNum(b.y);if(ya==null&&yb==null)return 0;if(ya==null)return 1;if(yb==null)return -1;return ya-yb||(+a.m||0)-(+b.m||0)})}
 function tlAges(e){const y=yNum(e.y);if(y==null||String(e.auto||'').startsWith('birth:'))return'';return(e.who||[]).map(id=>{const c=charById(id);const b=c&&yNum(c.byear);return c&&b!=null&&y>=b?`${c.name||'？'} ${y-b} 歲`:''}).filter(Boolean).join('、')}
-function tlFiltered(){const f=$('#tlF').value;let l=ST.events;if(f.startsWith('c:'))l=l.filter(e=>(e.who||[]).includes(f.slice(2)));if(f.startsWith('p:')){const p=ST.cps.find(x=>x.id==f.slice(2));const ids=p?p.members.map(m=>m.cid).filter(Boolean):[];l=l.filter(e=>e.cp==f.slice(2)||(ids.length>1&&ids.every(id=>(e.who||[]).includes(id))))}return tlSorted(l)}
-function renderTL(){const f=$('#tlF').value;$('#tlF').innerHTML=`<option value="">全部事件</option>`+(ST.chars.length?`<optgroup label="人物">${ST.chars.map(c=>`<option value="c:${c.id}">${esc(c.name||'（未命名）')}</option>`).join('')}</optgroup>`:'')+(ST.cps.length?`<optgroup label="CP">${ST.cps.map(p=>`<option value="p:${p.id}">${esc(cpTitle(p))}</option>`).join('')}</optgroup>`:'');$('#tlF').value=[...$('#tlF').options].some(o=>o.value==f)?f:'';
+function tlFiltered(){const f=$('#tlF').value;let l=VE();if(f.startsWith('c:'))l=l.filter(e=>(e.who||[]).includes(f.slice(2)));if(f.startsWith('p:')){const p=ST.cps.find(x=>x.id==f.slice(2));const ids=p?p.members.map(m=>m.cid).filter(Boolean):[];l=l.filter(e=>e.cp==f.slice(2)||(ids.length>1&&ids.every(id=>(e.who||[]).includes(id))))}return tlSorted(l)}
+function renderTL(){const f=$('#tlF').value;$('#tlF').innerHTML=`<option value="">全部事件</option>`+(VC().length?`<optgroup label="人物">${VC().map(c=>`<option value="c:${c.id}">${esc(c.name||'（未命名）')}</option>`).join('')}</optgroup>`:'')+(VP().length?`<optgroup label="CP">${VP().map(p=>`<option value="p:${p.id}">${esc(cpTitle(p))}</option>`).join('')}</optgroup>`:'');$('#tlF').value=[...$('#tlF').options].some(o=>o.value==f)?f:'';
  const sel=TLE?(ST.events.find(e=>e.id==TLE)||{}).who||[]:[...$$('#tlWho input:checked')].map(i=>i.value);
- $('#tlWho').innerHTML=ST.chars.length?ST.chars.map(c=>`<label><input type="checkbox" value="${c.id}" ${sel.includes(c.id)?'checked':''}>${esc(c.name||'（未命名）')}</label>`).join(''):'<span class="note">還沒有存好的人物。</span>';
- const l=tlFiltered();$('#tlList').innerHTML=l.length?`<div class="tl">${l.map(e=>{const ag=tlAges(e);return `<div class="tli"><div class="tly">${esc(e.y||'？')}${e.m?` <small>${e.m} 月</small>`:''}</div><div class="tlb"><b>${esc(e.t)}</b>${ag?`<div class="note">${esc(ag)}</div>`:''}${e.d?`<div>${esc(e.d).replace(/\n/g,'<br>')}</div>`:''}<div class="row" style="margin-top:4px">${(e.who||[]).map(id=>{const c=charById(id);return c?avHTML(c.avatar,c.name):''}).join('')}<span style="flex:1"></span><button class="sm" onclick="tlEdit('${e.id}')">編輯</button><button class="sm warn" onclick="armed(this,()=>tlDel('${e.id}'))">刪除</button></div></div></div>`}).join('')}</div>`:'<div class="card note">還沒有事件。可以按「從人物與 CP 帶入年份」，或在上方自己新增。</div>'}
+ $('#tlWho').innerHTML=VC().length?VC().map(c=>`<label><input type="checkbox" value="${c.id}" ${sel.includes(c.id)?'checked':''}>${esc(c.name||'（未命名）')}</label>`).join(''):'<span class="note">還沒有存好的人物。</span>';
+ const sy=getSY();$('#tlSY').value=(curWorkObj()?curWorkObj().year:ST.storyYear)||'';$('#tlSYlab').textContent=ST.curWork&&ST.curWork!='__none'?`「${workTitle()}」的正文發生在`:'故事正文發生在';$('#tlSYages').textContent=sy!=null?(syAges()?`正文當年：${syAges()}`:'人物填了出生年後，這裡會顯示正文當年的年齡。'):'';
+ let l=tlFiltered();if(sy!=null){const i=l.findIndex(e=>{const y=yNum(e.y);return y==null||y>sy});l=l.slice();l.splice(i<0?l.length:i,0,{virt:1,y:String(sy),t:'📖 正文進行中'})}
+ $('#tlList').innerHTML=l.length?`<div class="tl">${l.map(e=>{if(e.virt)return `<div class="tli now"><div class="tly">${sy}</div><div class="tlb"><b>📖 正文進行中</b>${syAges()?`<div class="note">${esc(syAges())}</div>`:''}</div></div>`;const ag=tlAges(e);return `<div class="tli"><div class="tly">${esc(e.y||'？')}${e.m?` <small>${e.m} 月</small>`:''}</div><div class="tlb"><b>${esc(e.t)}</b>${ag?`<div class="note">${esc(ag)}</div>`:''}${e.d?`<div>${esc(e.d).replace(/\n/g,'<br>')}</div>`:''}<div class="row" style="margin-top:4px">${(e.who||[]).map(id=>{const c=charById(id);return c?avHTML(c.avatar,c.name):''}).join('')}<span style="flex:1"></span><button class="sm" onclick="tlEdit('${e.id}')">編輯</button><button class="sm warn" onclick="armed(this,()=>tlDel('${e.id}'))">刪除</button></div></div></div>`}).join('')}</div>`:'<div class="card note">還沒有事件。可以按「從人物與 CP 帶入年份」，或在上方自己新增。</div>'}
 function tlForm(e){$('#tlY').value=e?e.y:'';$('#tlM').value=e&&e.m||'';$('#tlT').value=e?e.t:'';$('#tlD').value=e?e.d||'':'';$('#tlAdd').textContent=e?'✔️ 更新這個事件':'＋ 加入時間軸';$('#tlCancel').classList.toggle('hide',!e)}
-function tlAdd(){const t=$('#tlT').value.trim();if(!t){toast('請輸入事件');return}const o={y:$('#tlY').value.trim(),m:$('#tlM').value,t,d:$('#tlD').value.trim(),who:$$('#tlWho input:checked').map(i=>i.value)};if(TLE){Object.assign(ST.events.find(e=>e.id==TLE),o);TLE=null}else ST.events.push(Object.assign({id:uid()},o));tlForm(null);$$('#tlWho input').forEach(i=>i.checked=false);persist();renderTL();toast('已存到時間軸')}
+function tlAdd(){const t=$('#tlT').value.trim();if(!t){toast('請輸入事件');return}const o={y:$('#tlY').value.trim(),m:$('#tlM').value,t,d:$('#tlD').value.trim(),who:$$('#tlWho input:checked').map(i=>i.value)};if(TLE){Object.assign(ST.events.find(e=>e.id==TLE),o);TLE=null}else ST.events.push(Object.assign({id:uid(),works:newWorks()},o));tlForm(null);$$('#tlWho input').forEach(i=>i.checked=false);persist();renderTL();toast('已存到時間軸')}
 function tlEdit(id){TLE=id;const e=ST.events.find(x=>x.id==id);renderTL();tlForm(e);$('#timeline').scrollIntoView({behavior:'smooth'})}
 function tlCancel(){TLE=null;tlForm(null);$$('#tlWho input').forEach(i=>i.checked=false)}
 function tlDel(id){ST.events=ST.events.filter(e=>e.id!=id);persist();renderTL()}
-function tlImport(){let n=0;const up=(key,o)=>{const ex=ST.events.find(e=>e.auto==key);if(!o.y){if(ex){ST.events=ST.events.filter(e=>e!==ex)}return}if(ex){ex.y=o.y;ex.t=o.t;ex.who=o.who;if(o.m)ex.m=o.m}else{ST.events.push(Object.assign({id:uid(),auto:key,d:''},o));n++}};
- ST.chars.forEach(c=>{const m=(c.bday||'').split('/')[0];up('birth:'+c.id,{y:c.byear||'',m:m||'',t:`${c.name||'（未命名）'} 出生`,who:[c.id]})});
- ST.cps.forEach(p=>{const who=p.members.map(m=>m.cid).filter(Boolean),tt=cpTitle(p);[['metYear','認識'],['dateYear','開始交往'],['marryYear','結婚']].forEach(([k,l])=>up(k+':'+p.id,{y:p[k]||'',t:`${tt} ${l}`,who,cp:p.id}))});
+function tlImport(){let n=0;const up=(key,o)=>{const ex=ST.events.find(e=>e.auto==key);if(!o.y){if(ex){ST.events=ST.events.filter(e=>e!==ex)}return}if(ex){ex.y=o.y;ex.t=o.t;ex.who=o.who;if(o.m)ex.m=o.m}else{ST.events.push(Object.assign({id:uid(),auto:key,d:''},o));n++}};const wk=o=>(o.works||[]).slice();
+ VC().forEach(c=>{const m=(c.bday||'').split('/')[0];up('birth:'+c.id,{y:c.byear||'',m:m||'',t:`${c.name||'（未命名）'} 出生`,who:[c.id],works:wk(c)})});
+ VP().forEach(p=>{const who=p.members.map(m=>m.cid).filter(Boolean),tt=cpTitle(p);[['metYear','認識'],['dateYear','開始交往'],['marryYear','結婚']].forEach(([k,l])=>up(k+':'+p.id,{y:p[k]||'',t:`${tt} ${l}`,who,cp:p.id,works:wk(p)}))});
  persist();renderTL();toast(n?`新增 ${n} 個事件，已同步年份`:'年份已同步')}
 const tlLine=e=>{const ag=tlAges(e);return[(e.y||'？')+(e.m?` 年 ${e.m} 月`:''),e.t+(ag?`（${ag}）`:'')+(e.d?'\n'+e.d:'')]};
 function tlName(){const o=$('#tlF').selectedOptions[0];return $('#tlF').value?o.textContent+' 的時間軸':'時間軸'}
@@ -772,19 +839,19 @@ function tlTxt(){const l=tlFiltered();showText(`【${tlName()}】\n\n`+l.map(e=>
 function tlImg(){const l=tlFiltered();if(!l.length)return toast('還沒有事件');const f=$('#tlF').value;const c=f.startsWith('c:')&&charById(f.slice(2)),p=f.startsWith('p:')&&ST.cps.find(x=>x.id==f.slice(2));showCard({title:tlName(),accent:c?c.color:p?mColor(p.members[0]):null,avatars:c?[{src:c.avatar,name:c.name,color:c.color}]:p?p.members.map(m=>({src:mAv(m),name:mName(m),color:mColor(m)})):[],sections:[{rows:l.map(tlLine)}]},tlName())}
 
 /* ===== 備份 ===== */
-function backupDL(){const t=JSON.stringify({tool:'oc-cp-notebook',v:1,date:new Date().toISOString(),data:ST});const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([t],{type:'application/json'}));a.download='OC設定手帳備份_'+new Date().toISOString().slice(0,10)+'.json';document.body.appendChild(a);a.click();a.remove();toast('開始下載備份檔')}
-function backupLoad(inp){const f=inp.files[0];inp.value='';if(!f)return;const fr=new FileReader();fr.onload=()=>{try{const j=JSON.parse(fr.result),d=j.data||j;if(!Array.isArray(d.chars))throw 0;const mode=$('input[name=bkm]:checked').value;if(mode=='replace')ST=Object.assign(ST,d);else{['chars','cps','maps','scenes','events'].forEach(k=>{ST[k]=ST[k]||[];const have=new Set(ST[k].map(x=>x.id));(d[k]||[]).forEach(x=>{if(!have.has(x.id))ST[k].push(x)})});['myQ','myP'].forEach(k=>{ST[k]=[...new Set((ST[k]||[]).concat(d[k]||[]))]})}persist();renderAll();$('#bkmsg').textContent=`還原完成：人物 ${ST.chars.length}、CP ${ST.cps.length}、關係表 ${ST.maps.length}、時間軸事件 ${ST.events.length}、情境卡 ${ST.scenes.length}`}catch(e){$('#bkmsg').textContent='這個檔案看起來不是本工具的備份檔。'}};fr.readAsText(f)}
-function wipeAll(){ST={chars:[],cps:[],maps:[],scenes:[],events:[],myQ:[],myP:[],curChar:null,curCP:null,curMap:null};DEEP={cid:'',slots:[],cats:[]};DR={slots:[],cats:[]};SC={v:{},lock:{},sets:[],chars:[],tropes:[],theme:'',note:''};persist();renderAll();rollDeep();rollDrill();toast('已清除全部資料')}
-async function showUsage(){try{const e=await navigator.storage.estimate();$('#usage').textContent=`目前約使用 ${(e.usage/1048576).toFixed(1)} MB${e.quota?`（瀏覽器可用上限約 ${(e.quota/1048576/1024).toFixed(1)} GB）`:''}`}catch(e){}}
+function backupDL(){ST.lastBackup=Date.now();persist();checkBackup();const t=JSON.stringify({tool:'oc-cp-notebook',v:1,date:new Date().toISOString(),data:ST});const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([t],{type:'application/json'}));a.download='OC設定手帳備份_'+new Date().toISOString().slice(0,10)+'.json';document.body.appendChild(a);a.click();a.remove();toast('開始下載備份檔')}
+function backupLoad(inp){const f=inp.files[0];inp.value='';if(!f)return;const fr=new FileReader();fr.onload=()=>{try{const j=JSON.parse(fr.result),d=j.data||j;if(!Array.isArray(d.chars))throw 0;const mode=$('input[name=bkm]:checked').value;if(mode=='replace')ST=Object.assign(ST,d);else{['works','chars','cps','maps','scenes','events'].forEach(k=>{ST[k]=ST[k]||[];const have=new Set(ST[k].map(x=>x.id));(d[k]||[]).forEach(x=>{if(!have.has(x.id))ST[k].push(x)})});['myQ','myP'].forEach(k=>{ST[k]=[...new Set((ST[k]||[]).concat(d[k]||[]))]})}persist();renderAll();$('#bkmsg').textContent=`還原完成：人物 ${ST.chars.length}、CP ${ST.cps.length}、關係表 ${ST.maps.length}、時間軸事件 ${ST.events.length}、情境卡 ${ST.scenes.length}`}catch(e){$('#bkmsg').textContent='這個檔案看起來不是本工具的備份檔。'}};fr.readAsText(f)}
+function wipeAll(){ST={works:[],curWork:'',chars:[],cps:[],maps:[],scenes:[],events:[],myQ:[],myP:[],curChar:null,curCP:null,curMap:null};DEEP={cid:'',slots:[],cats:[]};DR={slots:[],cats:[]};SC={v:{},lock:{},sets:[],chars:[],tropes:[],theme:'',note:''};persist();renderAll();rollDeep();rollDrill();toast('已清除全部資料')}
+async function showUsage(){try{const e=await navigator.storage.estimate();$('#usage').textContent=(ST.lastBackup?`上次下載備份：${new Date(ST.lastBackup).toLocaleDateString('zh-TW')}。`:'還沒有下載過備份。')+`目前約使用 ${(e.usage/1048576).toFixed(1)} MB${e.quota?`（瀏覽器可用上限約 ${(e.quota/1048576/1024).toFixed(1)} GB）`:''}`}catch(e){}}
 
 /* ===== 出處 ===== */
 function renderSrc(){$('#srcP').innerHTML=PSRC.map(([n,u])=>`<li><a href="${u}" target="_blank" rel="noopener">${esc(n)}</a></li>`).join('');$('#srcT').innerHTML=SRC.map(([g,n,u])=>`<li><a href="${u}" target="_blank" rel="noopener">${esc(n)}</a></li>`).join('')}
 
 /* ===== 頁面切換與初始化 ===== */
 const PAGES=['welcome','chars','deep','cp','map','timeline','drill','scene','backup','src'];
-function route(){let h=location.hash.slice(1);if(!PAGES.includes(h))h='welcome';$$('main>section').forEach(s=>s.classList.toggle('on',s.id==h));$$('#nav a').forEach(a=>a.classList.toggle('on',a.getAttribute('href')=='#'+h));$('#morebtn').classList.toggle('on',['backup','src'].includes(h));$('#moremenu').classList.remove('open');
- if(h=='chars')renderChars();if(h=='deep'){renderDeepWho();renderDeepNotes()}if(h=='cp')renderCP();if(h=='map')renderMap();if(h=='timeline')renderTL();if(h=='scene'){renderSceneChars();renderSceneCards()}if(h=='backup')showUsage();window.scrollTo(0,0)}
-function renderAll(){renderChars();renderDeepWho();renderDeepCats();renderDeepSlots();renderDeepNotes();renderCP();renderMap();renderTL();renderDrillCats();renderDrill();renderSceneSets();renderSceneChars();renderScene();renderSceneCards()}
+function route(keep){let h=location.hash.slice(1);if(!PAGES.includes(h))h='welcome';$$('main>section').forEach(s=>s.classList.toggle('on',s.id==h));$$('#nav a').forEach(a=>a.classList.toggle('on',a.getAttribute('href')=='#'+h));$('#morebtn').classList.toggle('on',['backup','src'].includes(h));$('#moremenu').classList.remove('open');
+ if(h=='chars')renderChars();if(h=='deep'){renderDeepWho();renderDeepNotes()}if(h=='cp')renderCP();if(h=='map')renderMap();if(h=='timeline')renderTL();if(h=='scene'){renderSceneChars();renderSceneCards()}if(h=='backup')showUsage();checkBackup();if(!keep)window.scrollTo(0,0)}
+function renderAll(){renderWorkSel();renderChars();renderDeepWho();renderDeepCats();renderDeepSlots();renderDeepNotes();renderCP();renderMap();renderTL();renderDrillCats();renderDrill();renderSceneSets();renderSceneChars();renderScene();renderSceneCards()}
 $('#morebtn').onclick=e=>{e.stopPropagation();$('#moremenu').classList.toggle('open')};
 document.addEventListener('click',e=>{if(!e.target.closest('.more'))$('#moremenu').classList.remove('open')});
 document.addEventListener('keydown',e=>{if(e.key=='Escape')closeModal()});
@@ -793,7 +860,7 @@ $('#cpEdit').addEventListener('input',onCPInput);$('#cpEdit').addEventListener('
 $('#scRegion').addEventListener('change',saveScene);
 window.addEventListener('hashchange',route);
 (async()=>{await STORE.init();const d=await STORE.get();if(d&&typeof d=='object')ST=Object.assign(ST,d);
- ['chars','cps','maps','scenes','events','myQ','myP'].forEach(k=>{if(!Array.isArray(ST[k]))ST[k]=[]});
+ ['works','chars','cps','maps','scenes','events','myQ','myP'].forEach(k=>{if(!Array.isArray(ST[k]))ST[k]=[]});if(ST.curWork&&ST.curWork!='__none'&&!ST.works.some(w=>w.id==ST.curWork))ST.curWork='';
  if(ST.deep)DEEP=Object.assign(DEEP,ST.deep);if(ST.drill){DR.cats=ST.drill.cats||[];DR.slots=ST.drill.slots||[];$('#dAdult').checked=!!ST.drill.adult;$('#dDark').checked=!!ST.drill.dark}
  if(ST.scene){Object.assign(SC,{sets:ST.scene.sets||[],chars:ST.scene.chars||[],tropes:ST.scene.tropes||[],v:ST.scene.v||{},lock:ST.scene.lock||{},theme:ST.scene.theme||'',note:ST.scene.note||''});$('#scRegion').value=ST.scene.region||'';$('#scTone').value=ST.scene.tone||''}
  $('#scTheme').value=SC.theme;$('#scNote').value=SC.note;
