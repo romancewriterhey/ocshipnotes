@@ -14,12 +14,15 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
 header{position:sticky;top:env(safe-area-inset-top,0px);background:var(--main);z-index:9;padding:10px 12px;border-bottom:1px solid #cdbb9c}
 header h1{margin:0 0 6px;font-size:1.05rem;color:#3d3226}
 nav{display:flex;gap:4px;flex-wrap:wrap}
-nav a,nav .more>button{padding:4px 11px;border-radius:99px;background:#ffffffb0;color:#3d3226;text-decoration:none;font-size:.85rem;border:0;cursor:pointer;font-family:inherit}
-nav a.on,nav .more>button.on{background:#8a6a3f;color:#fff}
-nav .more{position:relative}
-#moremenu{display:none;position:absolute;right:0;top:115%;background:#fff;border-radius:12px;box-shadow:0 4px 16px #0003;padding:6px;z-index:50;min-width:150px}
-#moremenu.open{display:block}
-#moremenu a{display:block;background:none;border-radius:8px;padding:8px 12px;white-space:nowrap}
+nav a,nav .dd>button{padding:4px 11px;border-radius:99px;background:#ffffffb0;color:#3d3226;text-decoration:none;font-size:.85rem;border:0;cursor:pointer;font-family:inherit}
+nav a.on,nav .dd>button.on{background:#8a6a3f;color:#fff}
+nav .dd{position:relative}
+.ddm{display:none;position:absolute;left:0;top:115%;background:#fff;border-radius:12px;box-shadow:0 4px 16px #0003;padding:6px;z-index:50;min-width:150px}
+.ddm.r{left:auto;right:0}
+.dd.open .ddm{display:block}
+.ddm a{display:block;background:none!important;color:#3d3226!important;border-radius:8px;padding:8px 12px;white-space:nowrap}
+.ddm a:hover{background:#f3ece0!important}
+.ddm a.on{background:#f3ece0!important;font-weight:700;box-shadow:inset 3px 0 0 #8a6a3f}
 main{max-width:820px;margin:0 auto;padding:18px 14px 80px}
 section{display:none}section.on{display:block}
 h2{color:var(--deep);margin:.2em 0 .3em}
@@ -176,6 +179,24 @@ button.ghost{background:transparent;border-color:transparent;color:var(--sub)}bu
 .bcorebox{margin-top:12px}
 .bcore{margin:.3em 0}.bcore .bl{display:block;font-size:.75em;color:#8a7a62;font-weight:700;letter-spacing:.05em}
 .obody.nb{margin-left:0}
+
+.stats{display:grid;grid-template-columns:repeat(auto-fill,minmax(170px,1fr));gap:10px;margin:10px 0}
+.tile{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:12px 14px;display:flex;flex-direction:column;gap:2px}
+.tile span{font-size:.8rem;color:var(--sub)}.tile b{font-size:1.5rem;color:var(--deep);line-height:1.3}.tile small{color:var(--sub);font-size:.78rem}
+.tile.big{grid-column:span 2}.tile.big b{font-size:2rem}.tile.warn b{color:#b07a7a}
+@media(max-width:560px){.tile.big{grid-column:1/-1}}
+.pgadd{color:#6f9a6a;font-weight:700;min-width:6em}
+.fo2{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:6px}.fo2>div{display:flex;flex-direction:column;gap:4px}
+@media(max-width:560px){.fo2{grid-template-columns:1fr}}
+.fodet{margin-top:6px}
+.fowarn{background:#fff4dc;border:1px solid #e8c98a;border-radius:10px;padding:6px 10px;font-size:.85rem;color:#6b5a43;margin:8px 0 4px}
+.ptags{display:flex;flex-wrap:wrap;gap:6px;align-items:center;margin-top:8px}
+.pcbox{border:1px solid var(--line);border-radius:12px;padding:8px 10px;margin:8px 0;background:var(--soft)}.pcbox textarea{margin-top:4px}
+.pmeta{display:grid;grid-template-columns:auto 1fr;gap:4px 18px;margin:.6em 0 0;font-size:.95em}.pmeta dt{color:#8a7a62;font-weight:700}.pmeta dd{margin:0}
+.pchar{margin:.6em 0 1em}.pchar b{font-size:1.08em}
+.pch{color:#8a6a3f;font-size:1.05em;margin:1em 0 .2em}.pseg{font-weight:700;margin:.8em 0 0}
+.duesoon{font-size:.78rem;background:#fff1d6;color:#a06a1d;border-radius:99px;padding:1px 10px;white-space:nowrap}.duebad{font-size:.78rem;background:#f5ddd6;color:#7a2e1d;border-radius:99px;padding:1px 10px;white-space:nowrap}
+.ckrow{display:flex;align-items:center;justify-content:space-between;border-bottom:1px dashed var(--line);padding:3px 0}.ckd{text-decoration:line-through;color:var(--sub)}
 .conf{display:flex;align-items:center;gap:8px}
 .conf b{min-width:2.5em}
 </style>
@@ -183,7 +204,7 @@ button.ghost{background:transparent;border-color:transparent;color:var(--sub)}bu
 <body>
 <header>
 <h1>📒 現代背景 OC／CP 設定手帳</h1>
-<nav id="nav"><a href="#welcome">歡迎使用</a><a href="#chars">人物設定</a><a href="#deep">人物深化</a><a href="#cp">CP設定</a><a href="#map">人物關係表</a><a href="#timeline">時間軸</a><a href="#drill">短文練習題</a><a href="#scene">人事時地物</a><a href="#outline">劇情大綱</a><span class="more"><button type="button" id="morebtn">更多 ▾</button><span id="moremenu"><a href="#backup">資料備份</a><a href="#src">出處資訊</a></span></span></nav>
+<nav id="nav"><a href="#welcome">歡迎使用</a><span class="dd"><button type="button">👤 人物 ▾</button><span class="ddm"><a href="#chars">人物設定</a><a href="#deep">人物深化</a><a href="#cp">CP設定</a></span></span><span class="dd"><button type="button">🕸️ 關係 ▾</button><span class="ddm"><a href="#map">人物關係表</a><a href="#timeline">時間軸</a></span></span><span class="dd"><button type="button">📝 故事 ▾</button><span class="ddm"><a href="#outline">劇情大綱</a><a href="#fores">伏筆追蹤</a></span></span><span class="dd"><button type="button">✍️ 寫作 ▾</button><span class="ddm"><a href="#drill">短文練習題</a><a href="#scene">人事時地物</a><a href="#progress">寫作進度</a></span></span><a href="#pitch">📮 出版企劃</a><span class="dd"><button type="button">更多 ▾</button><span class="ddm r"><a href="#backup">資料備份</a><a href="#src">出處資訊</a></span></span></nav>
 <div class="workbar"><span>📁 作品</span><select id="workSel" onchange="setWork(this.value)"></select><button class="sm" onclick="openWorks()">管理作品</button><button class="sm" onclick="exportBook()">📚 匯出設定集</button></div>
 </header>
 <main>
@@ -193,7 +214,7 @@ button.ghost{background:transparent;border-color:transparent;color:var(--sub)}bu
 <h2>歡迎使用</h2>
 <div class="card">
 <p>這是由一位小說創作者個人製作的免費工具，無任何營利。</p>
-<p>如果你已經有自己的角色，想把設定整理清楚、慢慢深化人物、整理 CP 的互動與彼此的關係，排好時間軸與劇情大綱，再用練習題與情境產生器動手寫寫看，這本手帳就是為你準備的。內容聚焦在現代背景，日常向和暗黑向都能用。</p>
+<p>如果你已經有自己的角色，想把設定整理清楚、慢慢深化人物、整理 CP 的互動與彼此的關係，排好時間軸與劇情大綱，再用練習題與情境產生器動手寫寫看，一路整理到投稿用的出版企劃，這本手帳就是為你準備的。內容聚焦在現代背景，日常向和暗黑向都能用。</p>
 <p class="note">你填寫的人物、CP、關係表和上傳的圖片，都只存在你自己的瀏覽器，本工具不會蒐集或上傳任何資料。換裝置或清除瀏覽器資料就會消失，建議定期到「更多 → 資料備份」下載備份檔。</p>
 </div>
 <div class="portals">
@@ -205,6 +226,9 @@ button.ghost{background:transparent;border-color:transparent;color:var(--sub)}bu
 <button class="portal" onclick="go('drill')"><b>✍️ 短文練習題</b><span>從三十題／五十題題庫隨機抽五題，自由挑選來寫。</span></button>
 <button class="portal" onclick="go('scene')"><b>🎬 人事時地物</b><span>依地區與場域，抽出人、事、時、地、物、氣氛和梗，幫練習題延伸成場景。</span></button>
 <button class="portal" onclick="go('outline')"><b>📝 劇情大綱</b><span>可切換「簡要大綱」整理大方向，或「章節細綱」一段一段寫；能整份貼上已寫好的大綱，改字色、字級，輸出成文字檔或 PDF。</span></button>
+<button class="portal" onclick="go('fores')"><b>🧵 伏筆追蹤</b><span>記下伏筆埋在哪段、在哪回收，未回收的一眼就看得到。</span></button>
+<button class="portal" onclick="go('progress')"><b>📈 寫作進度</b><span>設定目標字數與截稿日，記錄每天寫了多少、連續寫作幾天。</span></button>
+<button class="portal" onclick="go('pitch')"><b>📮 出版企劃</b><span>把人物與大綱整理成投稿用的企劃書，輸出 PDF，並記錄投稿進度。</span></button>
 </div>
 <details class="fold"><summary>使用教學</summary><div class="inner">
 <p><b>① 先建立人物。</b>到「人物設定」按「＋ 新增人物」，填好的內容會自動存在瀏覽器裡。<b>不知道、還沒想法的欄位都可以留空</b>，之後想到再補就好。性傾向、性別、血型、MBTI、依附類型、身心狀態等欄位，除了從清單選，也可以自己輸入清單上沒有的選項（例如性傾向填「性單戀」「半性戀」）。</p>
@@ -216,6 +240,10 @@ button.ghost{background:transparent;border-color:transparent;color:var(--sub)}bu
 <p><b>⑥ 動手寫。</b>「短文練習題」抽題目；按題目旁的「🎬」可以把題目帶到「人事時地物」，搭配已存好的人物抽出完整場景；如果人物有深化筆記，「人物提示」會隨機帶出一則，讓角色的個性直接進到場景裡。</p>
 <p><b>⑦ 整理大綱。</b>「劇情大綱」最上方可以切換兩種模式：<b>🧭 簡要大綱</b>只整理大方向，可以自由書寫，或用起承轉合、三幕劇、感情線五階段當引導；<b>📑 章節細綱</b>則是一章一段整理細節，可以手動新增，也可以按「📋 貼上整份大綱」把寫好的大綱一次放進來，工具會自動切段並先讓你預覽。簡要大綱寫好後，按「轉成章節細綱」就能接著細寫。人事時地物的情境卡也可以按「📌 加入大綱」送過來。</p>
 <p><b>大綱的字色與輸出：</b>選取文字後，可以套用人物代表色或自訂顏色、調整字級；勾選「人物名字自動套上代表色」，閱讀模式和輸出時名字會自動上色。可以輸出成文字檔、PDF，或用「列印／另存 PDF」存成文字可選取的 PDF。</p>
+<p><b>⑧ 追蹤伏筆。</b>「伏筆追蹤」可以記下每個伏筆埋在哪段、打算在哪回收，直接選劇情大綱的段落；按「從大綱的伏筆／備註帶入」能把大綱裡寫過的伏筆一次收進來。回收段落排在埋下段落之前、或回收段落已完成但伏筆還沒標回收時，會跳出提醒。</p>
+<p><b>⑨ 記錄進度。</b>「寫作進度」可以設定目標字數與截稿日，每天記下寫了幾字（也可以直接填目前總字數，工具會自動算出差多少），看完成度、連續寫作天數和最近 30 天的長條圖。</p>
+<p><b>⑩ 準備投稿。</b>「出版企劃」會把一句話故事、故事簡介、主要人物和劇情大綱整理成企劃書，可以預覽後輸出 PDF 或文字檔。下方的「投稿紀錄」能記下投給哪裡、目前狀態和回覆期限，每家各有一份可打勾的投稿要求清單。</p>
+<p><b>導覽列：</b>頁面依「人物、關係、故事、寫作」分組，點一下分組名稱就會展開選單。</p>
 <p><b>作品分組：</b>最上方的「📁 作品」可以切換作品，各頁只會顯示那部作品的人物、CP、關係表、時間軸、情境卡和劇情大綱；在「管理作品」新增、改名，或把未分類的內容一次收進某部作品。人物和 CP 的編輯區上方可以勾選所屬作品，同一位人物可以屬於好幾部作品。「📚 匯出設定集」會把目前作品的全部內容整理成一份文字檔。</p>
 <p><b>故事年份：</b>在「時間軸」設定正文年份，有填出生年的人物年齡會自動換算。</p>
 <p><b>備份提醒：</b>超過兩週沒有下載備份時，頁面上方會出現提醒。</p>
@@ -321,6 +349,33 @@ button.ghost{background:transparent;border-color:transparent;color:var(--sub)}bu
 <div id="oList"></div>
 <div class="actbar" style="position:static"><button onclick="outlineTxt()">📄 文字檔</button> <button onclick="outlinePDF()">📕 下載 PDF</button> <button onclick="outlinePrint()">🖨️ 列印／另存 PDF</button> <button onclick="if(oSet().kind=='brief'){if(briefHas())copyText(briefPlain());else toast('還沒有內容')}else if(VO().length)copyText(outlinePlain());else toast('還沒有大綱')">📋 複製文字</button></div>
 <p class="note">「📕 下載 PDF」會照畫面上的顏色與字級排成 A4 頁面；「🖨️ 列印／另存 PDF」用瀏覽器的列印功能，存出來的文字可以選取、複製。</p>
+</section>
+
+<section id="fores">
+<h2>伏筆追蹤</h2>
+<p class="note">記下每個伏筆埋在哪裡、打算在哪裡回收。「埋在哪裡」「在哪裡回收」可以直接選劇情大綱（章節細綱）的段落，也可以自己寫。</p>
+<div class="card"><div class="row"><button class="big" onclick="foAdd()">＋ 新增伏筆</button><button onclick="foImport()">⤵️ 從大綱的伏筆／備註帶入</button><span style="flex:1"></span><span class="seg2" id="foTabs"><button data-f="all" onclick="FOF='all';renderFores()">全部</button><button data-f="open" onclick="FOF='open';renderFores()">未回收</button><button data-f="done" onclick="FOF='done';renderFores()">已回收</button></span></div><div id="foSum" class="note" style="margin-top:6px"></div></div>
+<div id="foList"></div>
+<div class="actbar" style="position:static"><button onclick="foTxt()">📄 文字檔</button> <button onclick="if(VF().length)copyText(foPlain());else toast('還沒有伏筆')">📋 複製文字</button></div>
+</section>
+
+<section id="progress">
+<h2>寫作進度</h2>
+<p class="note" id="pgWork"></p>
+<div class="card"><div class="grid"><label><span class="lab">目標字數</span><input type="number" min="0" id="pgGoal" placeholder="例：100000" onchange="pgSet('goal',this.value)"></label><label><span class="lab">截稿日（選填）</span><input type="date" id="pgDl" onchange="pgSet('deadline',this.value)"></label><label><span class="lab">開始記錄前已經寫好的字數（選填）</span><input type="number" min="0" id="pgBase" placeholder="0" onchange="pgSet('base',this.value)"></label></div></div>
+<div id="pgStats" class="stats"></div>
+<div class="card"><h3>記錄進度</h3><div class="grid"><label><span class="lab">日期</span><input type="date" id="pgDate"></label><label><span class="lab">記錄方式</span><select id="pgMode"><option value="add">這天寫了幾字</option><option value="total">目前總字數是</option></select></label><label><span class="lab">字數</span><input type="number" min="0" id="pgN" onkeydown="if(event.key=='Enter')pgAdd()"></label><label class="wide"><span class="lab">備註（選填）</span><input id="pgNote" placeholder="例：寫完第三章"></label></div><p><button class="big" onclick="pgAdd()">＋ 記錄</button> <span class="note">選「目前總字數」時，會自動算出和上次相比多寫了幾字。</span></p></div>
+<div class="card"><h3>最近 30 天</h3><div id="pgChart"></div></div>
+<div class="card"><h3>紀錄</h3><div id="pgLogs"></div></div>
+</section>
+
+<section id="pitch">
+<h2>出版企劃</h2>
+<p class="note" id="pWork"></p>
+<p class="note">把人物、大綱整理成投稿用的企劃書。所有欄位都是選填，沒填的不會出現在輸出裡；一句話故事、故事簡介、人物介紹和字數，可以從其他頁面自動帶入。</p>
+<div class="card"><div class="row"><span id="pModeBtns" class="seg2"><button data-m="edit" onclick="PMODE='edit';renderPitch()">✏️ 編輯</button><button data-m="read" onclick="PMODE='read';renderPitch()">📖 預覽</button></span><span style="flex:1"></span><button onclick="pitchTxt()">📄 文字檔</button><button onclick="pitchPDF()">📕 下載 PDF</button><button onclick="pitchPrint()">🖨️ 列印／另存 PDF</button><button onclick="copyText(pitchPlain())">📋 複製文字</button></div></div>
+<div id="pEdit"></div>
+<div class="card"><div class="row"><h3 style="margin:0;flex:1">📮 投稿紀錄</h3><button class="big" onclick="subAdd()">＋ 新增投稿</button></div><p class="note">各家出版社和比賽的徵稿規定都不一樣，也會變動，投稿前請以對方最新公告為準。可以按「套用常見清單」再自行增減。</p><datalist id="dl_subk"><option value="出版社"><option value="比賽"><option value="平台"><option value="文學獎"></datalist><div id="pSubs"></div></div>
 </section>
 
 <section id="backup">
@@ -531,7 +586,7 @@ async function copyText(t){try{await navigator.clipboard.writeText(t);toast('已
 function fileName(s){return String(s||'未命名').replace(/[\\/:*?"<>|]/g,'_').slice(0,40)}
 
 /* ===== 儲存（IndexedDB，失敗時改用 localStorage） ===== */
-let ST={works:[],curWork:'',chars:[],cps:[],maps:[],scenes:[],events:[],outline:[],oset:null,myQ:[],myP:[],curChar:null,curCP:null,curMap:null,deep:null,drill:null,scene:null};
+let ST={works:[],curWork:'',chars:[],cps:[],maps:[],scenes:[],events:[],outline:[],fores:[],oset:null,myQ:[],myP:[],curChar:null,curCP:null,curMap:null,deep:null,drill:null,scene:null};
 const STORE={db:null,
  async init(){try{this.db=await new Promise((res,rej)=>{const r=indexedDB.open('oc-cp-notebook',1);r.onupgradeneeded=()=>r.result.createObjectStore('kv');r.onsuccess=()=>res(r.result);r.onerror=()=>rej(r.error)})}catch(e){this.db=null}},
  async get(){if(this.db){try{return await new Promise(res=>{const q=this.db.transaction('kv').objectStore('kv').get('state');q.onsuccess=()=>res(q.result||null);q.onerror=()=>res(null)})}catch(e){}}try{return JSON.parse(localStorage.getItem('oc-cp-notebook')||'null')}catch(e){return null}},
@@ -641,8 +696,8 @@ function openWorks(){$('#mTitle').textContent='管理作品';const box=()=>{$('#
  <p class="note">刪除作品不會刪掉裡面的人物和其他內容，它們只會變回「未分類」。</p>`;
  $('#wAdd').onclick=()=>{const n=$('#wNew').value.trim();if(!n)return toast('請輸入作品名稱');const w={id:uid(),name:n,year:''};ST.works.push(w);ST.curWork=w.id;persist();renderAll();route(true);box()};
  $$('[data-wn]').forEach(i=>i.oninput=()=>{ST.works.find(w=>w.id==i.dataset.wn).name=i.value;persist();renderWorkSel()});
- $$('[data-wall]').forEach(b=>b.onclick=()=>{const id=b.dataset.wall;let n=0;[ST.chars,ST.cps,ST.maps,ST.scenes,ST.events,ST.outline].forEach(l=>l.forEach(o=>{if(!(o.works||[]).length){o.works=[id];n++}}));persist();renderAll();route(true);box();toast(`已收進 ${n} 項內容`)});
- $$('[data-wdel]').forEach(b=>b.onclick=()=>armed(b,()=>{const id=b.dataset.wdel;ST.works=ST.works.filter(w=>w.id!=id);[ST.chars,ST.cps,ST.maps,ST.scenes,ST.events,ST.outline].forEach(l=>l.forEach(o=>{if(o.works)o.works=o.works.filter(x=>x!=id)}));if(ST.curWork==id)ST.curWork='';persist();renderAll();route(true);box()}))};
+ $$('[data-wall]').forEach(b=>b.onclick=()=>{const id=b.dataset.wall;let n=0;[ST.chars,ST.cps,ST.maps,ST.scenes,ST.events,ST.outline,ST.fores].forEach(l=>l.forEach(o=>{if(!(o.works||[]).length){o.works=[id];n++}}));persist();renderAll();route(true);box();toast(`已收進 ${n} 項內容`)});
+ $$('[data-wdel]').forEach(b=>b.onclick=()=>armed(b,()=>{const id=b.dataset.wdel;ST.works=ST.works.filter(w=>w.id!=id);[ST.chars,ST.cps,ST.maps,ST.scenes,ST.events,ST.outline,ST.fores].forEach(l=>l.forEach(o=>{if(o.works)o.works=o.works.filter(x=>x!=id)}));if(ST.curWork==id)ST.curWork='';persist();renderAll();route(true);box()}))};
  box();$('#modal').classList.add('open')}
 
 /* ===== 故事年份 ===== */
@@ -665,6 +720,7 @@ function exportBook(){const sy=getSY();const L=[];L.push(`《${workTitle()}》�
  if(es.length){L.push('\n==============================\n時間軸\n==============================');es.forEach(e=>{const[a,b]=tlLine(e);L.push(`${a}｜${b}`)})}
  if(briefHas()){L.push('\n==============================\n故事大綱\n==============================');L.push(briefPlain())}
  if(os.length){L.push('\n==============================\n劇情大綱\n==============================');L.push(outlinePlain())}
+ if(VF().length){L.push('\n==============================\n伏筆追蹤\n==============================');L.push(foPlain())}
  if(ss.length){L.push('\n==============================\n情境卡\n==============================');ss.forEach((x,i)=>L.push(outlineItem(x,i)))}
  if(L.length<3)return toast('這個作品還沒有內容');showText(L.join('\n')+`\n\n（${TOOL}）`,workTitle()+'_設定集','整份設定集（人物、CP、關係表、時間軸、劇情大綱）。可以下載成 .txt，或複製貼到雲端文件。')}
 
@@ -929,8 +985,8 @@ function tlImg(){const l=tlFiltered();if(!l.length)return toast('還沒有事件
 
 /* ===== 備份 ===== */
 function backupDL(){ST.lastBackup=Date.now();persist();checkBackup();const t=JSON.stringify({tool:'oc-cp-notebook',v:1,date:new Date().toISOString(),data:ST});const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([t],{type:'application/json'}));a.download='OC設定手帳備份_'+new Date().toISOString().slice(0,10)+'.json';document.body.appendChild(a);a.click();a.remove();toast('開始下載備份檔')}
-function backupLoad(inp){const f=inp.files[0];inp.value='';if(!f)return;const fr=new FileReader();fr.onload=()=>{try{const j=JSON.parse(fr.result),d=j.data||j;if(!Array.isArray(d.chars))throw 0;const mode=$('input[name=bkm]:checked').value;if(mode=='replace')ST=Object.assign(ST,d);else{['works','chars','cps','maps','scenes','events','outline'].forEach(k=>{ST[k]=ST[k]||[];const have=new Set(ST[k].map(x=>x.id));(d[k]||[]).forEach(x=>{if(!have.has(x.id))ST[k].push(x)})});['myQ','myP'].forEach(k=>{ST[k]=[...new Set((ST[k]||[]).concat(d[k]||[]))]});if(d.briefs&&typeof d.briefs=='object'){ST.briefs=ST.briefs||{};Object.entries(d.briefs).forEach(([k,v])=>{if(!ST.briefs[k]||!briefHas(ST.briefs[k]))ST.briefs[k]=v})}}persist();renderAll();$('#bkmsg').textContent=`還原完成：人物 ${ST.chars.length}、CP ${ST.cps.length}、關係表 ${ST.maps.length}、時間軸事件 ${ST.events.length}、情境卡 ${ST.scenes.length}`}catch(e){$('#bkmsg').textContent='這個檔案看起來不是本工具的備份檔。'}};fr.readAsText(f)}
-function wipeAll(){ST={works:[],curWork:'',chars:[],cps:[],maps:[],scenes:[],events:[],outline:[],oset:null,myQ:[],myP:[],curChar:null,curCP:null,curMap:null};DEEP={cid:'',slots:[],cats:[]};DR={slots:[],cats:[]};SC={v:{},lock:{},sets:[],chars:[],tropes:[],theme:'',note:''};persist();renderAll();rollDeep();rollDrill();toast('已清除全部資料')}
+function backupLoad(inp){const f=inp.files[0];inp.value='';if(!f)return;const fr=new FileReader();fr.onload=()=>{try{const j=JSON.parse(fr.result),d=j.data||j;if(!Array.isArray(d.chars))throw 0;const mode=$('input[name=bkm]:checked').value;if(mode=='replace')ST=Object.assign(ST,d);else{['works','chars','cps','maps','scenes','events','outline','fores'].forEach(k=>{ST[k]=ST[k]||[];const have=new Set(ST[k].map(x=>x.id));(d[k]||[]).forEach(x=>{if(!have.has(x.id))ST[k].push(x)})});['myQ','myP'].forEach(k=>{ST[k]=[...new Set((ST[k]||[]).concat(d[k]||[]))]});['prog','pitch'].forEach(k=>{if(d[k]&&typeof d[k]=='object'){const o=objStore(k);Object.entries(d[k]).forEach(([kk,v])=>{if(!o[kk])o[kk]=v})}});if(d.briefs&&typeof d.briefs=='object'){ST.briefs=ST.briefs||{};Object.entries(d.briefs).forEach(([k,v])=>{if(!ST.briefs[k]||!briefHas(ST.briefs[k]))ST.briefs[k]=v})}}persist();renderAll();$('#bkmsg').textContent=`還原完成：人物 ${ST.chars.length}、CP ${ST.cps.length}、關係表 ${ST.maps.length}、時間軸事件 ${ST.events.length}、情境卡 ${ST.scenes.length}`}catch(e){$('#bkmsg').textContent='這個檔案看起來不是本工具的備份檔。'}};fr.readAsText(f)}
+function wipeAll(){ST={works:[],curWork:'',chars:[],cps:[],maps:[],scenes:[],events:[],outline:[],fores:[],oset:null,myQ:[],myP:[],curChar:null,curCP:null,curMap:null};DEEP={cid:'',slots:[],cats:[]};DR={slots:[],cats:[]};SC={v:{},lock:{},sets:[],chars:[],tropes:[],theme:'',note:''};persist();renderAll();rollDeep();rollDrill();toast('已清除全部資料')}
 async function showUsage(){try{const e=await navigator.storage.estimate();$('#usage').textContent=(ST.lastBackup?`上次下載備份：${new Date(ST.lastBackup).toLocaleDateString('zh-TW')}。`:'還沒有下載過備份。')+`目前約使用 ${(e.usage/1048576).toFixed(1)} MB${e.quota?`（瀏覽器可用上限約 ${(e.quota/1048576/1024).toFixed(1)} GB）`:''}`}catch(e){}}
 
 /* ===== 出處 ===== */
@@ -939,19 +995,18 @@ function renderSrc(){$('#srcP').innerHTML=PSRC.map(([n,u])=>`<li><a href="${u}" 
 /* ===== 頁面切換與初始化 ===== */
 function setHH(){const h=document.querySelector('header');if(h)document.documentElement.style.setProperty('--hh',h.offsetHeight+'px')}
 window.addEventListener('resize',setHH);
-const PAGES=['welcome','chars','deep','cp','map','timeline','drill','scene','outline','backup','src'];
-function route(keep){let h=location.hash.slice(1);if(!PAGES.includes(h))h='welcome';$$('main>section').forEach(s=>s.classList.toggle('on',s.id==h));$$('#nav a').forEach(a=>a.classList.toggle('on',a.getAttribute('href')=='#'+h));$('#morebtn').classList.toggle('on',['backup','src'].includes(h));$('#moremenu').classList.remove('open');
- if(h=='chars')renderChars();if(h=='deep'){renderDeepWho();renderDeepNotes()}if(h=='cp')renderCP();if(h=='map')renderMap();if(h=='timeline')renderTL();if(h=='scene'){renderSceneChars();renderSceneCards()}if(h=='outline')renderOutline();if(h=='backup')showUsage();setHH();checkBackup();if(!keep)window.scrollTo(0,0)}
-function renderAll(){renderWorkSel();renderChars();renderDeepWho();renderDeepCats();renderDeepSlots();renderDeepNotes();renderCP();renderMap();renderTL();renderDrillCats();renderDrill();renderSceneSets();renderSceneChars();renderScene();renderSceneCards();renderOutline()}
-$('#morebtn').onclick=e=>{e.stopPropagation();$('#moremenu').classList.toggle('open')};
-document.addEventListener('click',e=>{if(!e.target.closest('.more'))$('#moremenu').classList.remove('open')});
+const PAGES=['welcome','chars','deep','cp','map','timeline','drill','scene','outline','fores','progress','pitch','backup','src'];
+function route(keep){let h=location.hash.slice(1);if(!PAGES.includes(h))h='welcome';$$('main>section').forEach(s=>s.classList.toggle('on',s.id==h));navMark(h);
+ if(h=='chars')renderChars();if(h=='deep'){renderDeepWho();renderDeepNotes()}if(h=='cp')renderCP();if(h=='map')renderMap();if(h=='timeline')renderTL();if(h=='scene'){renderSceneChars();renderSceneCards()}if(h=='outline')renderOutline();if(h=='fores')renderFores();if(h=='progress')renderProg();if(h=='pitch')renderPitch();if(h=='backup')showUsage();setHH();checkBackup();if(!keep)window.scrollTo(0,0)}
+function renderAll(){renderWorkSel();renderChars();renderDeepWho();renderDeepCats();renderDeepSlots();renderDeepNotes();renderCP();renderMap();renderTL();renderDrillCats();renderDrill();renderSceneSets();renderSceneChars();renderScene();renderSceneCards();renderOutline();renderFores();renderProg();renderPitch()}
+navInit();
 document.addEventListener('keydown',e=>{if(e.key=='Escape')closeModal()});
 $('#charEdit').addEventListener('input',onCharInput);$('#charEdit').addEventListener('change',onCharInput);
 $('#cpEdit').addEventListener('input',onCPInput);$('#cpEdit').addEventListener('change',onCPInput);
 $('#scRegion').addEventListener('change',saveScene);
 window.addEventListener('hashchange',route);
 (async()=>{await STORE.init();const d=await STORE.get();if(d&&typeof d=='object')ST=Object.assign(ST,d);
- ['works','chars','cps','maps','scenes','events','outline','myQ','myP'].forEach(k=>{if(!Array.isArray(ST[k]))ST[k]=[]});if(ST.curWork&&ST.curWork!='__none'&&!ST.works.some(w=>w.id==ST.curWork))ST.curWork='';
+ ['works','chars','cps','maps','scenes','events','outline','fores','myQ','myP'].forEach(k=>{if(!Array.isArray(ST[k]))ST[k]=[]});if(ST.curWork&&ST.curWork!='__none'&&!ST.works.some(w=>w.id==ST.curWork))ST.curWork='';
  if(ST.deep)DEEP=Object.assign(DEEP,ST.deep);if(ST.drill){DR.cats=ST.drill.cats||[];DR.slots=ST.drill.slots||[];$('#dAdult').checked=!!ST.drill.adult;$('#dDark').checked=!!ST.drill.dark}
  if(ST.scene){Object.assign(SC,{sets:ST.scene.sets||[],chars:ST.scene.chars||[],tropes:ST.scene.tropes||[],v:ST.scene.v||{},lock:ST.scene.lock||{},theme:ST.scene.theme||'',note:ST.scene.note||''});$('#scRegion').value=ST.scene.region||'';$('#scTone').value=ST.scene.tone||''}
  $('#scTheme').value=SC.theme;$('#scNote').value=SC.note;
@@ -1116,6 +1171,132 @@ function pdfFromCanvases(cs){const enc=new TextEncoder(),parts=[],offs=[];let le
 async function outlinePDF(){const br=oSet().kind=='brief';if(br?!briefHas():!VO().length)return toast('還沒有內容');toast('PDF 產生中…');const pages=br?await briefPages():await outlinePages();const blob=pdfFromCanvases(pages);const url=URL.createObjectURL(blob),name=fileName(workTitle()+'_劇情大綱')+'.pdf';
  $('#mTitle').textContent='下載 PDF';$('#mBody').innerHTML=`<p class="note">共 ${pages.length} 頁（A4）。若按了沒有反應（例如在某些預覽環境中），請改用「🖨️ 列印／另存 PDF」，或下載文字檔。</p><p><button class="big" id="mDl">⬇️ 下載 PDF</button></p><div class="opdfprev">${pages.slice(0,3).map(p=>`<img src="${p.toDataURL('image/jpeg',.7)}" alt="">`).join('')}</div>${pages.length>3?`<p class="note">（預覽前 3 頁）</p>`:''}`;$('#mDl').onclick=()=>{const a=document.createElement('a');a.href=url;a.download=name;document.body.appendChild(a);a.click();a.remove()};$('#modal').classList.add('open')}
 function outlinePrint(){if(oSet().kind=='brief'?!briefHas():!VO().length)return toast('還沒有內容');const m=OMODE;OMODE='read';renderOutline();const pa=$('#printArea');pa.innerHTML=$('#oList').innerHTML;pa.style.setProperty('--ofs',oSet().fs+'px');OMODE=m;renderOutline();try{window.print()}catch(e){toast('這個環境無法列印，請改用下載 PDF')}}
+
+/* ===== 導覽列下拉選單 ===== */
+function navInit(){$$('#nav .dd>button').forEach(b=>b.onclick=e=>{e.stopPropagation();const d=b.parentNode,o=d.classList.contains('open');$$('#nav .dd').forEach(x=>x.classList.remove('open'));if(!o){d.classList.add('open');const m=d.querySelector('.ddm');m.classList.remove('r');if(m.getBoundingClientRect().right>innerWidth-8)m.classList.add('r')}});
+ document.addEventListener('click',e=>{if(!e.target.closest('#nav .dd'))$$('#nav .dd').forEach(x=>x.classList.remove('open'))})}
+function navMark(h){$$('#nav a').forEach(a=>a.classList.toggle('on',a.getAttribute('href')=='#'+h));$$('#nav .dd').forEach(d=>{d.querySelector('button').classList.toggle('on',!!d.querySelector('a.on'));d.classList.remove('open')})}
+
+/* ===== 通用：文件型 PDF 排版 ===== */
+async function docPages(items,footer){const fs=oSet().fs,W=1240,H=1754,M=110,CW=W-2*M,base=fs*1.6;const pages=[];let c,x,y;
+ const np=()=>{c=document.createElement('canvas');c.width=W;c.height=H;x=c.getContext('2d');x.fillStyle='#fffdf9';x.fillRect(0,0,W,H);x.fillStyle='#E0D3BC';x.fillRect(0,0,W,14);pages.push(c);y=M};const need=h=>{if(y+h>H-M-20)np()};np();
+ const rich=(html,ind,z)=>{for(const ln of layoutRuns(x,runsOf(html,z||base*.82),CW-ind,1.7)){need(ln.h);let xx=M+ind;for(const p of ln.parts){x.font=`${p.i?'italic ':''}${p.b?'bold ':''}${p.z}px ${FONT}`;x.fillStyle=p.c;x.fillText(p.t,xx,y+ln.h*.75);xx+=p.w}y+=ln.h}};
+ for(const it of items){
+  if(it.t=='title'){x.fillStyle='#3d3226';x.font=`bold ${base*2}px ${FONT}`;wrap(x,it.text,CW).forEach(t=>{x.fillText(t,M,y+base*1.9);y+=base*2.5});if(it.sub){x.fillStyle='#8a6a3f';x.font=`${base}px ${FONT}`;x.fillText(it.sub,M,y+base*1.0);y+=base*1.7}x.fillStyle='#E0D3BC';x.fillRect(M,y+8,CW,3);y+=base*1.4}
+  else if(it.t=='meta'){const kw=base*5.2;for(const [k,v] of it.rows){x.font=`${base*.78}px ${FONT}`;const ls=wrap(x,v,CW-kw);need(ls.length*base*1.25+6);x.fillStyle='#8a7a62';x.font=`bold ${base*.72}px ${FONT}`;x.fillText(k,M,y+base*.95);x.fillStyle='#2e261c';x.font=`${base*.78}px ${FONT}`;ls.forEach((l,i)=>x.fillText(l,M+kw,y+base*.95+i*base*1.25));y+=ls.length*base*1.25+base*.35}y+=base*.5}
+  else if(it.t=='h'){need(base*3.6);y+=base*.5;x.font=`bold ${base*1.2}px ${FONT}`;x.fillStyle='#8a6a3f';x.fillText(it.text,M,y+base*1.2);y+=base*1.65;x.fillStyle='#e3d6bf';x.fillRect(M,y+2,CW,2);y+=base*.75}
+  else if(it.t=='sh'){need(base*2.4);x.font=`bold ${base*.9}px ${FONT}`;x.fillStyle=it.color||'#3d3226';x.fillText(it.text,M,y+base*1.0);y+=base*1.45}
+  else if(it.t=='p'){rich(it.html!=null?it.html:autoColorHTML(esc(it.text||'').replace(/\n/g,'<br>')),it.ind||0);y+=base*.55}}
+ pages.forEach((p,i)=>{const g=p.getContext('2d');g.fillStyle='#b3a385';g.font=`22px ${FONT}`;g.textAlign='center';g.fillText(`${footer}　${i+1} / ${pages.length}`,W/2,H-50);g.textAlign='left'});return pages}
+function showPDF(pages,name){const url=URL.createObjectURL(pdfFromCanvases(pages));$('#mTitle').textContent='下載 PDF';$('#mBody').innerHTML=`<p class="note">共 ${pages.length} 頁（A4）。若按了沒有反應（例如在某些預覽環境中），請改用「🖨️ 列印／另存 PDF」，或下載文字檔。</p><p><button class="big" id="mDl">⬇️ 下載 PDF</button></p><div class="opdfprev">${pages.slice(0,3).map(p=>`<img src="${p.toDataURL('image/jpeg',.7)}" alt="">`).join('')}</div>`;$('#mDl').onclick=()=>{const a=document.createElement('a');a.href=url;a.download=fileName(name)+'.pdf';document.body.appendChild(a);a.click();a.remove()};$('#modal').classList.add('open')}
+function printHTML(html){const pa=$('#printArea');pa.innerHTML=html;pa.style.setProperty('--ofs',oSet().fs+'px');try{window.print()}catch(e){toast('這個環境無法列印，請改用下載 PDF')}}
+const todayStr=()=>{const d=new Date();d.setMinutes(d.getMinutes()-d.getTimezoneOffset());return d.toISOString().slice(0,10)};
+const dayDiff=(a,b)=>Math.round((new Date(b+'T00:00:00')-new Date(a+'T00:00:00'))/864e5);
+const addDays=(d,n)=>{const x=new Date(d+'T12:00:00');x.setDate(x.getDate()+n);return x.getFullYear()+'-'+String(x.getMonth()+1).padStart(2,'0')+'-'+String(x.getDate()).padStart(2,'0')};
+const nf=n=>Number(n||0).toLocaleString('zh-TW');
+function objStore(k){ST[k]=ST[k]&&typeof ST[k]=='object'&&!Array.isArray(ST[k])?ST[k]:{};return ST[k]}
+
+/* ===== 寫作進度 ===== */
+function curProg(){const S=objStore('prog'),k=briefKey();return S[k]||(S[k]={goal:'',deadline:'',base:'',logs:[]})}
+const progTotal=p=>(+p.base||0)+p.logs.reduce((s,l)=>s+(+l.add||0),0);
+function progStats(p){const t=todayStr(),days=new Set(p.logs.filter(l=>+l.add>0).map(l=>l.d));let st=0,d=t;if(!days.has(d))d=addDays(t,-1);while(days.has(d)){st++;d=addDays(d,-1)}
+ const wk=p.logs.filter(l=>{const k=dayDiff(l.d,t);return k>=0&&k<7}).reduce((s,l)=>s+(+l.add||0),0);const act=p.logs.filter(l=>+l.add>0);const avg=act.length?Math.round(act.reduce((s,l)=>s+(+l.add),0)/act.length):0;return{total:progTotal(p),streak:st,week:wk,avg}}
+function renderProg(){if(!$('#pgStats'))return;const p=curProg(),s=progStats(p),g=+p.goal||0;$('#pgWork').textContent=ST.curWork&&ST.curWork!='__none'?`目前作品：《${workTitle()}》`:'目前顯示：全部作品（建議先在上方選一部作品，各作品會分開記錄）';
+ $('#pgGoal').value=p.goal;$('#pgDl').value=p.deadline;$('#pgBase').value=p.base;if(!$('#pgDate').value)$('#pgDate').value=todayStr();
+ const pct=g?Math.min(100,Math.round(s.total/g*100)):0;let dl='';if(p.deadline){const left=dayDiff(todayStr(),p.deadline);dl=left>=0?`<div class="tile"><span>截稿倒數</span><b>${left} 天</b>${g&&s.total<g?`<small>每天約需 ${nf(Math.ceil((g-s.total)/Math.max(1,left)))} 字</small>`:''}</div>`:`<div class="tile warn"><span>截稿日</span><b>已過 ${-left} 天</b></div>`}
+ const segs=VO().filter(o=>o.type=='seg'),done=segs.filter(o=>o.status=='done').length;
+ $('#pgStats').innerHTML=`<div class="tile big"><span>目前字數</span><b>${nf(s.total)}</b>${g?`<small>目標 ${nf(g)} 字</small><div class="obar"><span style="width:${pct}%;background:#6f9a6a"></span></div><small>完成 ${pct}%</small>`:'<small>設定目標字數後會顯示完成度</small>'}</div><div class="tile"><span>連續寫作</span><b>${s.streak} 天</b></div><div class="tile"><span>最近 7 天</span><b>${nf(s.week)} 字</b></div><div class="tile"><span>平均每個寫作日</span><b>${nf(s.avg)} 字</b></div>${dl}${segs.length?`<div class="tile"><span>大綱段落</span><b>${done} / ${segs.length}</b><small>標為完成</small></div>`:''}`;
+ const t=todayStr(),days=[...Array(30)].map((_,i)=>addDays(t,i-29)),vals=days.map(d=>p.logs.filter(l=>l.d==d).reduce((s,l)=>s+(+l.add||0),0)),mx=Math.max(1,...vals);
+ $('#pgChart').innerHTML=vals.some(v=>v)?`<svg viewBox="0 0 600 170" style="width:100%;height:auto" role="img" aria-label="最近 30 天每日字數">${vals.map((v,i)=>{const h=v?Math.max(3,v/mx*120):0;return `<rect x="${i*20+3}" y="${135-h}" width="14" height="${h}" rx="3" fill="${days[i]==t?'#8a6a3f':'#cdbb9c'}"><title>${days[i]}：${nf(v)} 字</title></rect>`}).join('')}<line x1="0" y1="135.5" x2="600" y2="135.5" stroke="#e3d6bf"/>${[0,10,20,29].map(i=>`<text x="${i==0?3:i==29?597:i*20+10}" y="156" font-size="11" text-anchor="${i==0?'start':i==29?'end':'middle'}" fill="#8a7a62">${days[i].slice(5).replace('-','/')}</text>`).join('')}<text x="2" y="12" font-size="11" fill="#8a7a62">最多 ${nf(mx)} 字</text></svg>`:'<p class="note">還沒有紀錄。記下第一天的字數後，這裡會出現每日長條圖。</p>';
+ const L=p.logs.slice().sort((a,b)=>b.d.localeCompare(a.d));$('#pgLogs').innerHTML=L.length?L.map(l=>`<div class="lst row"><b style="min-width:6.5em">${l.d.replace(/-/g,'/')}</b><span class="pgadd">${+l.add>=0?'+':''}${nf(l.add)} 字</span><span class="note" style="flex:1">${esc(l.note||'')}</span><button class="sm warn" onclick="armed(this,()=>{curProg().logs=curProg().logs.filter(x=>x.id!='${l.id}');persist();renderProg()})">刪除</button></div>`).join(''):'<p class="note">還沒有紀錄。</p>'}
+function pgSet(k,v){curProg()[k]=v;persist();renderProg()}
+function pgAdd(){const p=curProg(),n=+$('#pgN').value,d=$('#pgDate').value||todayStr(),mode=$('#pgMode').value;if(!$('#pgN').value){toast('請輸入字數');return}let add=mode=='total'?n-progTotal(p):n;if(mode=='total'&&add<0&&!confirmNeg(add))return;const note=$('#pgNote').value.trim();const ex=p.logs.find(l=>l.d==d);if(ex){ex.add=(+ex.add||0)+add;if(note)ex.note=(ex.note?ex.note+'；':'')+note}else p.logs.push({id:uid(),d,add,note});$('#pgN').value='';$('#pgNote').value='';persist();renderProg();toast(`已記錄 ${add>=0?'+':''}${nf(add)} 字`)}
+function confirmNeg(add){toast(`總字數比之前少了 ${nf(-add)} 字，已照實記錄（刪稿也是進度）`);return true}
+
+/* ===== 伏筆追蹤 ===== */
+const FST={open:['未回收','#d39b4a'],done:['已回收','#6f9a6a'],drop:['不用了','#b9ad98']};let FOF='all';
+const VF=()=>ST.fores.filter(inW);const foById=id=>ST.fores.find(f=>f.id==id);
+function segOpts(sel){const l=VO(),nums=oNums(l);let o='<option value="">（不指定段落）</option>',ch='';l.forEach(s=>{if(s.type=='ch'){ch=s.title;o+=`<optgroup label="${esc(s.title||'章節')}">`;return}o+=`<option value="${s.id}" ${s.id==sel?'selected':''}>第 ${nums[s.id]} 段${s.title?'・'+esc(s.title):''}</option>`});return o}
+function segLabel(id){if(!id)return'';const l=VO(),n=oNums(l)[id],s=oById(id);return s&&n?`第 ${n} 段${s.title?'「'+s.title+'」':''}`:''}
+const segPos=id=>VO().findIndex(o=>o.id==id);
+function foWhere(w){return[segLabel(w.seg),w.txt].filter(Boolean).join('・')}
+function foAdd(){const f={id:uid(),title:'',detail:'',plant:{seg:'',txt:''},payoff:{seg:'',txt:''},status:'open',who:[],works:newWorks()};ST.fores.unshift(f);FOF='all';persist();renderFores();setTimeout(()=>{const i=$(`[data-ft="${f.id}"]`);i&&i.focus()},30)}
+function foImport(){let n=0;VO().filter(o=>o.type=='seg'&&(o.note||'').trim()).forEach(o=>{if(ST.fores.some(f=>f.src==o.id))return;const lines=o.note.trim().split('\n'),t=lines[0].replace(/^\s*(伏筆|备注|備註)\s*[:：]\s*/,'');ST.fores.push({id:uid(),src:o.id,title:t,detail:lines.slice(1).join('\n'),plant:{seg:o.id,txt:''},payoff:{seg:'',txt:''},status:'open',who:o.who.slice(),works:o.works&&o.works.length?o.works.slice():newWorks()});n++});persist();renderFores();toast(n?`從大綱帶入 ${n} 個伏筆`:'大綱的「伏筆／備註」裡沒有新的內容')}
+function foWarn(f){const w=[];const a=segPos(f.plant.seg),b=segPos(f.payoff.seg);if(f.plant.seg&&f.payoff.seg&&a>=0&&b>=0&&b<a)w.push('回收的段落排在埋下的段落之前，順序可能要再確認');if(f.status=='open'&&f.payoff.seg){const s=oById(f.payoff.seg);if(s&&s.status=='done')w.push('回收的段落已經標為「完成」，確認寫進去了的話，記得改成「已回收」')}if(f.status=='open'&&!f.payoff.seg&&!f.payoff.txt)w.push('還沒決定在哪裡回收');return w}
+function renderFores(){if(!$('#foList'))return;const all=VF(),l=FOF=='all'?all:all.filter(f=>f.status==FOF);$$('#foTabs button').forEach(b=>b.classList.toggle('on',b.dataset.f==FOF));
+ const op=all.filter(f=>f.status=='open').length,dn=all.filter(f=>f.status=='done').length;$('#foSum').innerHTML=all.length?`共 ${all.length} 個伏筆・<b style="color:${FST.open[1]}">未回收 ${op}</b>・已回收 ${dn}`:'';
+ if(!all.length){$('#foList').innerHTML='<div class="oempty"><b>還沒有伏筆</b><p>按「＋ 新增伏筆」，或從劇情大綱裡寫過的「伏筆／備註」一鍵帶入。</p></div>';return}
+ const chars=VC();
+ $('#foList').innerHTML=l.map(f=>{const st=FST[f.status]||FST.open,w=foWarn(f);return `<div class="ocard" style="--sc:${st[1]}"><div class="ohd"><span class="ono" style="background:${st[1]}">伏</span><input class="oti" data-ft="${f.id}" value="${esc(f.title)}" placeholder="伏筆名稱，例：他怎麼知道她會頭痛？" oninput="foById('${f.id}').title=this.value;persist()"><select class="ostsel" onchange="foById('${f.id}').status=this.value;persist();renderFores()">${Object.entries(FST).map(([k,[n]])=>`<option value="${k}" ${k==f.status?'selected':''}>${n}</option>`).join('')}</select><button class="sm ghost" onclick="armed(this,()=>{ST.fores=ST.fores.filter(x=>x.id!='${f.id}');persist();renderFores()})" title="刪除">✕</button></div>
+ <textarea rows="2" class="fodet" placeholder="說明（選填）：埋了什麼、真相是什麼" oninput="foById('${f.id}').detail=this.value;persist()">${esc(f.detail)}</textarea>
+ <div class="fo2">${[['plant','🌱 埋在哪裡','例：第一章，電梯裡的那句話'],['payoff','🌸 在哪裡回收','例：第五章，他終於說出原因']].map(([k,l,ph])=>`<div><span class="lab">${l}</span><select onchange="foById('${f.id}').${k}.seg=this.value;persist();renderFores()">${segOpts(f[k].seg)}</select><input value="${esc(f[k].txt)}" placeholder="${ph}" oninput="foById('${f.id}').${k}.txt=this.value;persist()"></div>`).join('')}</div>
+ ${chars.length?`<div class="owho" style="margin:6px 0 2px">${chars.map(c=>`<button class="pchip sm2 ${f.who.includes(c.id)?'on':''}" style="--c:${c.color||'#8a6a3f'}" onclick="const f=foById('${f.id}');f.who=f.who.includes('${c.id}')?f.who.filter(x=>x!='${c.id}'):f.who.concat('${c.id}');persist();renderFores()">${esc(c.name||'？')}</button>`).join('')}</div>`:''}
+ ${w.length?`<p class="fowarn">${w.map(x=>'⚠️ '+esc(x)).join('<br>')}</p>`:''}</div>`}).join('')||'<p class="note">這個分類沒有伏筆。</p>'}
+function foPlain(){const L=[];VF().forEach((f,i)=>{L.push(`${i+1}. ${f.title||'（未命名伏筆）'}［${FST[f.status][0]}］`);if(f.detail)L.push('   說明：'+f.detail.replace(/\n/g,'\n         '));const a=foWhere(f.plant),b=foWhere(f.payoff);if(a)L.push('   埋在：'+a);if(b)L.push('   回收：'+b);if(f.who.length)L.push('   相關人物：'+f.who.map(id=>(charById(id)||{}).name).filter(Boolean).join('、'));L.push('')});return L.join('\n')}
+function foTxt(){if(!VF().length)return toast('還沒有伏筆');showText(`《${workTitle()}》伏筆追蹤\n\n`+foPlain()+`\n（${TOOL}）`,workTitle()+'_伏筆追蹤')}
+
+/* ===== 出版企劃 ===== */
+const PFIELDS=[['age','年齡'],['gender','性別'],['job','職業／身分'],['traits','個性'],['looks','外貌'],['goal','目標與渴望'],['secret','祕密／弱點'],['orient','性傾向'],['nation','國籍／居住地']];
+const GENRES=S('現代言情、都會愛情、校園青春、職場、豪門、黑幫／暗黑、懸疑、犯罪、療癒日常、BL、GL、多人關係、輕小說');
+const SUBST={prep:['準備中','#b9ad98'],sent:['已投稿','#7f9cb8'],review:['審稿中','#d39b4a'],rej:['退稿','#b07a7a'],ok:['錄取','#6f9a6a']};
+const COMMON_REQ=S('出版企劃書、故事大綱、主要人物介紹、試閱稿（依規定章數）、字數符合徵稿範圍、檔案格式與檔名符合規定、作者聯絡資料、確認是否接受一稿多投、確認回覆期限');
+let PMODE='edit',TAGPOOL=[];
+function curPitch(){const S=objStore('pitch'),k=briefKey();const p=S[k]||(S[k]={title:'',pen:'',genre:'',tags:'',expWords:'',blurb:'',logline:'',synopsis:'',selling:'',readers:'',comps:'',bio:'',contact:'',chars:[],cfields:['age','gender','job','traits'],cintro:{},outline:VO().some(o=>o.type=='seg')?'detail':'brief',subs:[]});p.subs=p.subs||[];p.chars=p.chars||[];p.cintro=p.cintro||{};p.cfields=p.cfields||[];return p}
+const autoLogline=()=>(curBrief().logline||'').trim();
+function autoSynopsis(){const b=curBrief(),[,bl]=BTPL[b.tpl];return bl.map(([k])=>plain(b.blocks[k]||'').trim()).filter(Boolean).join('\n')}
+const pv=(k,auto)=>{const v=(curPitch()[k]||'').trim();return v||auto||''};
+const pTitle=()=>pv('title',ST.curWork&&ST.curWork!='__none'?workTitle():'');
+function charIntro(id){const p=curPitch(),c=charById(id);if(!c)return'';const cu=(p.cintro[id]||'').trim();if(cu)return cu;const meta=[];const rest=[];p.cfields.forEach(k=>{let v=(c[k]==null?'':String(c[k])).trim();if(!v)return;if(k=='age')meta.push(v+(/\d$/.test(v)?' 歲':''));else if(k=='gender'||k=='job')meta.push(v);else rest.push(`${(PFIELDS.find(f=>f[0]==k)||[k,k])[1]}：${v}`)});return[meta.join('・'),...rest].filter(Boolean).join('\n')}
+function pitchMeta(){const p=curPitch(),pr=curProg(),tot=progTotal(pr),g=+(p.expWords||pr.goal||0);const r=[['筆名',p.pen],['類型',p.genre],['標籤',p.tags],['預計總字數',g?nf(g)+' 字':''],['目前字數',tot?nf(tot)+' 字'+(g?`（約 ${Math.min(100,Math.round(tot/g*100))}%）`:''):'']];return r.filter(x=>(x[1]||'').toString().trim())}
+function pitchOutline(){const k=curPitch().outline;if(k=='brief'){if(!briefHas())return null;const b=curBrief(),[,bl]=BTPL[b.tpl];return bl.filter(([kk])=>plain(b.blocks[kk]||'').trim()).map(([kk,l])=>({h:b.tpl=='free'?'':l,html:oClean(b.blocks[kk])}))}if(k=='detail'){const l=VO();if(!l.length)return null;const nums=oNums(l);return l.map(o=>o.type=='ch'?{ch:o.title}:{h:`第 ${nums[o.id]} 段${o.title?'・'+o.title:''}`,html:oClean(o.html)})}return null}
+function pitchSections(){const p=curPitch();const S=[['一句話故事',pv('logline',autoLogline())],['文案',p.blurb],['故事簡介',pv('synopsis',autoSynopsis())],['作品賣點',p.selling],['目標讀者',p.readers],['類似作品參考',p.comps]];return S.filter(x=>(x[1]||'').trim())}
+function pitchChars(){return curPitch().chars.map(id=>charById(id)).filter(c=>c&&inW(c))}
+function pitchPlain(){const p=curPitch(),L=[`《${pTitle()||'（作品名稱）'}》出版企劃書`,''];pitchMeta().forEach(([k,v])=>L.push(`${k}：${v}`));pitchSections().forEach(([k,v])=>L.push('',`【${k}】`,v));const cs=pitchChars();if(cs.length){L.push('','【主要人物】');cs.forEach(c=>{L.push(`◆ ${c.name}`);const t=charIntro(c.id);if(t)L.push(t);L.push('')})}const ol=pitchOutline();if(ol){L.push('','【故事大綱】');ol.forEach(o=>{if(o.ch!=null){L.push('',`— ${o.ch} —`);return}if(o.h)L.push(o.h);L.push(plain(o.html).trim(),'')})}if(p.bio)L.push('','【作者簡介】',p.bio);if(p.contact)L.push('','【聯絡方式】',p.contact);return L.join('\n').replace(/\n{3,}/g,'\n\n')}
+function pitchHTML(){const p=curPitch(),cs=pitchChars(),ol=pitchOutline();const sec=(h,body)=>`<h2 class="och">${esc(h)}</h2>${body}`;const para=t=>`<div class="obody nb">${autoColorHTML(esc(t).replace(/\n/g,'<br>'))}</div>`;
+ return `<article class="odoc"><h1>${esc(pTitle()||'（作品名稱）')}</h1><p class="osubt">出版企劃書</p>${pitchMeta().length?`<dl class="pmeta">${pitchMeta().map(([k,v])=>`<dt>${esc(k)}</dt><dd>${esc(v)}</dd>`).join('')}</dl>`:''}
+ ${pitchSections().map(([k,v])=>sec(k,para(v))).join('')}${cs.length?sec('主要人物',cs.map(c=>`<div class="pchar"><b style="color:${txtColor(c.color||'#8a6a3f')}">${esc(c.name)}</b>${para(charIntro(c.id))}</div>`).join('')):''}
+ ${ol?sec('故事大綱',ol.map(o=>o.ch!=null?`<h3 class="pch">${esc(o.ch)}</h3>`:`${o.h?`<p class="pseg">${esc(o.h)}</p>`:''}<div class="obody nb">${autoColorHTML(o.html)}</div>`).join('')):''}${p.bio?sec('作者簡介',para(p.bio)):''}${p.contact?sec('聯絡方式',para(p.contact)):''}</article>`}
+async function pitchPDF(){const p=curPitch(),it=[{t:'title',text:pTitle()||'（作品名稱）',sub:'出 版 企 劃 書'}];const m=pitchMeta();if(m.length)it.push({t:'meta',rows:m});pitchSections().forEach(([k,v])=>{it.push({t:'h',text:k},{t:'p',text:v})});const cs=pitchChars();if(cs.length){it.push({t:'h',text:'主要人物'});cs.forEach(c=>{it.push({t:'sh',text:c.name,color:txtColor(c.color||'#8a6a3f')},{t:'p',text:charIntro(c.id)})})}const ol=pitchOutline();if(ol){it.push({t:'h',text:'故事大綱'});ol.forEach(o=>{if(o.ch!=null){it.push({t:'sh',text:o.ch,color:'#8a6a3f'});return}if(o.h)it.push({t:'sh',text:o.h});it.push({t:'p',html:autoColorHTML(o.html)})})}if(p.bio)it.push({t:'h',text:'作者簡介'},{t:'p',text:p.bio});if(p.contact)it.push({t:'h',text:'聯絡方式'},{t:'p',text:p.contact});
+ toast('PDF 產生中…');showPDF(await docPages(it,(pTitle()||'作品')+'・出版企劃書'),(pTitle()||'作品')+'_出版企劃書')}
+function pitchTxt(){showText(pitchPlain()+`\n\n（${TOOL}）`,(pTitle()||'作品')+'_出版企劃書')}
+function pSet(k,v){curPitch()[k]=v;persist()}
+function pField(k,l,o){o=o||{};const p=curPitch();const v=p[k]||'';const inp=o.ta?`<textarea rows="${o.rows||3}" placeholder="${esc(o.ph||'')}" oninput="pSet('${k}',this.value)">${esc(v)}</textarea>`:`<input value="${esc(v)}" placeholder="${esc(o.ph||'')}" ${o.dl?`list="${o.dl}"`:''} oninput="pSet('${k}',this.value)">`;return `<label class="${o.w?'wide':''}" style="display:block"><span class="lab">${l}${o.auto?` <button class="sm ghost" type="button" onclick="pSet('${k}',${o.auto}());renderPitch()">⤵️ ${o.autoL||'帶入'}</button>`:''}</span>${inp}${o.hint?`<span class="note">${o.hint}</span>`:''}</label>`}
+function pTagAdd(t){const p=curPitch();const a=(p.tags||'').split(/[、,，]\s*/).map(s=>s.trim()).filter(Boolean);if(!a.includes(t))a.push(t);p.tags=a.join('、');persist();renderPitch()}
+function tagPool(){const all=TROPE.flatMap(([g,,a])=>a.map(t=>t.replace(/（[A-Za-z][^）]*）/,'').trim()));return[...new Set(all)]}
+function renderPitch(){if(!$('#pEdit'))return;const p=curPitch();$$('#pModeBtns button').forEach(b=>b.classList.toggle('on',b.dataset.m==PMODE));$('#pWork').textContent=ST.curWork&&ST.curWork!='__none'?`目前作品：《${workTitle()}》`:'目前顯示：全部作品（建議先在上方選一部作品，每部作品各有一份企劃書）';
+ if(PMODE=='read'){$('#pEdit').innerHTML=pitchHTML();renderSubs();return}
+ if(!TAGPOOL.length)TAGPOOL=pickN(tagPool(),12);
+ const ll=autoLogline(),sy=autoSynopsis(),pr=curProg(),tot=progTotal(pr),chars=VC();
+ $('#pEdit').innerHTML=`<details class="fold" open><summary>🪪 基本資料</summary><div class="inner"><div class="grid">
+ ${pField('title','作品名稱',{ph:ST.curWork&&ST.curWork!='__none'?'空白時使用作品名稱：'+workTitle():'作品名稱'})}${pField('pen','筆名')}${pField('genre','類型',{dl:'dl_genre',ph:'點一下看選項，或自己輸入'})}
+ ${pField('expWords','預計總字數',{ph:pr.goal?'空白時使用寫作進度的目標：'+nf(pr.goal):'例：100000'})}
+ <label class="wide"><span class="lab">目前字數（從「寫作進度」自動帶入）</span><div class="note" style="font-size:1rem">${tot?nf(tot)+' 字':'還沒有紀錄，可以到「寫作進度」記錄'}</div></label>
+ ${pField('tags','標籤',{w:1,ph:'用頓號分隔，例：先婚後愛、慢熱、職場'})}</div>
+ <div class="ptags"><span class="lab" style="margin:0">從套路挑標籤：</span>${TAGPOOL.map(t=>`<button class="pchip sm2" style="--c:#cdbb9c" onclick="pTagAdd('${esc(t).replace(/'/g,'&#39;')}')">${esc(t)}</button>`).join('')}<button class="sm ghost" onclick="TAGPOOL=[];renderPitch()">🎲 換一批</button></div>
+ <datalist id="dl_genre">${GENRES.map(g=>`<option value="${g}">`).join('')}</datalist></div></details>
+ <details class="fold" open><summary>📖 故事</summary><div class="inner">
+ ${pField('logline','一句話故事',{ta:1,rows:2,ph:ll?'空白時使用簡要大綱的：'+ll:'用一句話說出這個故事',auto:ll?'autoLogline':'',autoL:'帶入簡要大綱'})}
+ ${pField('blurb','文案（書背或封底的介紹文）',{ta:1,rows:4,ph:'吸引讀者翻開這本書的一段話'})}
+ ${pField('synopsis','故事簡介',{ta:1,rows:5,ph:sy?'空白時使用簡要大綱的內容':'故事的完整走向，包含結局',auto:sy?'autoSynopsis':'',autoL:'帶入簡要大綱',hint:'投稿用的故事簡介通常要寫出結局，和文案不同。'})}
+ ${pField('selling','作品賣點',{ta:1,rows:3,ph:'這個故事和別人不一樣的地方'})}${pField('readers','目標讀者',{ta:1,rows:2,ph:'例：喜歡慢熱職場戀愛、二十到三十多歲的讀者'})}${pField('comps','類似作品參考',{ta:1,rows:2,ph:'風格或題材相近的作品，幫助編輯快速理解'})}</div></details>
+ <details class="fold" open><summary>👥 主要人物</summary><div class="inner">${chars.length?`<p class="lab">選擇要放進企劃書的人物（依點選順序排列）</p><div class="owho">${chars.map(c=>`<button class="pchip sm2 ${p.chars.includes(c.id)?'on':''}" style="--c:${c.color||'#8a6a3f'}" onclick="const p=curPitch();p.chars=p.chars.includes('${c.id}')?p.chars.filter(x=>x!='${c.id}'):p.chars.concat('${c.id}');persist();renderPitch()">${esc(c.name||'？')}</button>`).join('')}</div>
+ <p class="lab" style="margin-top:10px">自動介紹要包含的欄位</p><div class="chips">${PFIELDS.map(([k,l])=>`<label><input type="checkbox" ${p.cfields.includes(k)?'checked':''} onchange="const p=curPitch();p.cfields=this.checked?p.cfields.concat('${k}'):p.cfields.filter(x=>x!='${k}');persist();renderPitch()">${l}</label>`).join('')}</div>
+ ${pitchChars().map(c=>`<div class="pcbox"><b style="color:${txtColor(c.color||'#8a6a3f')}">${esc(c.name)}</b><textarea rows="3" placeholder="${esc(charIntro(c.id)&&!(p.cintro[c.id]||'').trim()?'自動介紹：'+charIntro(c.id).replace(/\n/g,'／'):'自訂介紹')}" oninput="curPitch().cintro['${c.id}']=this.value;persist()">${esc(p.cintro[c.id]||'')}</textarea><span class="note">空白時使用上方欄位自動產生的介紹；填了就以這裡為準。</span></div>`).join('')}`:'<p class="note">還沒有人物，可以先到「人物設定」新增。</p>'}</div></details>
+ <details class="fold" open><summary>🗺️ 故事大綱</summary><div class="inner"><label><span class="lab">企劃書要附的大綱</span><select onchange="pSet('outline',this.value)" style="width:auto"><option value="brief" ${p.outline=='brief'?'selected':''}>簡要大綱</option><option value="detail" ${p.outline=='detail'?'selected':''}>章節細綱</option><option value="none" ${p.outline=='none'?'selected':''}>不附</option></select></label><p class="note">內容直接從「劇情大綱」帶入，要修改請到劇情大綱頁。</p></div></details>
+ <details class="fold"><summary>✍️ 作者</summary><div class="inner">${pField('bio','作者簡介',{ta:1,rows:3})}${pField('contact','聯絡方式',{ta:1,rows:2,hint:'只在寄給出版社的檔案裡填；公開分享時請注意個人資料。'})}</div></details>`;
+ renderSubs()}
+/* 投稿紀錄 */
+function subById(id){return curPitch().subs.find(s=>s.id==id)}
+function subAdd(){curPitch().subs.unshift({id:uid(),to:'',kind:'出版社',date:'',status:'prep',due:'',note:'',check:[]});persist();renderSubs()}
+function subCommon(id){const s=subById(id);COMMON_REQ.forEach(t=>{if(!s.check.some(c=>c.t==t))s.check.push({t,d:false})});persist();renderSubs()}
+function renderSubs(){const l=curPitch().subs,t=todayStr();$('#pSubs').innerHTML=l.length?l.map(s=>{const st=SUBST[s.status]||SUBST.prep;let due='';if(s.due&&!['rej','ok'].includes(s.status)){const k=dayDiff(t,s.due);due=k<0?`<span class="duebad">已過期 ${-k} 天</span>`:k<=7?`<span class="duesoon">⏰ 剩 ${k} 天</span>`:''}const dn=s.check.filter(c=>c.d).length;
+ return `<div class="ocard" style="--sc:${st[1]}"><div class="ohd"><input class="oti" value="${esc(s.to)}" placeholder="出版社、比賽或平台名稱" oninput="subById('${s.id}').to=this.value;persist()"><select class="ostsel" onchange="subById('${s.id}').status=this.value;persist();renderSubs()">${Object.entries(SUBST).map(([k,[n]])=>`<option value="${k}" ${k==s.status?'selected':''}>${n}</option>`).join('')}</select>${due}<button class="sm ghost" onclick="armed(this,()=>{curPitch().subs=curPitch().subs.filter(x=>x.id!='${s.id}');persist();renderSubs()})" title="刪除">✕</button></div>
+ <div class="grid" style="margin:6px 0"><label><span class="lab">種類</span><input value="${esc(s.kind)}" list="dl_subk" oninput="subById('${s.id}').kind=this.value;persist()"></label><label><span class="lab">投稿日期</span><input type="date" value="${esc(s.date)}" onchange="subById('${s.id}').date=this.value;persist()"></label><label><span class="lab">回覆期限／截止日</span><input type="date" value="${esc(s.due)}" onchange="subById('${s.id}').due=this.value;persist();renderSubs()"></label></div>
+ <textarea rows="2" placeholder="備註（選填）：聯絡窗口、回覆內容……" oninput="subById('${s.id}').note=this.value;persist()">${esc(s.note)}</textarea>
+ <details class="onotes" style="margin-left:0" open><summary>投稿要求清單 ${s.check.length?`（${dn} / ${s.check.length}）`:''}</summary>
+ ${s.check.map((c,i)=>`<div class="ckrow"><label><input type="checkbox" ${c.d?'checked':''} onchange="subById('${s.id}').check[${i}].d=this.checked;persist();renderSubs()"> <span class="${c.d?'ckd':''}">${esc(c.t)}</span></label><button class="sm ghost" onclick="subById('${s.id}').check.splice(${i},1);persist();renderSubs()">✕</button></div>`).join('')}
+ <div class="row" style="margin-top:6px"><input placeholder="新增一項要求，例：附前三章試閱" onkeydown="if(event.key=='Enter'&&this.value.trim()){subById('${s.id}').check.push({t:this.value.trim(),d:false});persist();renderSubs()}"><button class="sm" onclick="subCommon('${s.id}')">套用常見清單</button></div></details></div>`}).join(''):'<p class="note">還沒有投稿紀錄。按「＋ 新增投稿」開始記錄。</p>'}
+function pitchPrint(){printHTML(pitchHTML())}
 
 </script>
 </body>
