@@ -108,6 +108,61 @@ ul.src{padding-left:1.2em;word-break:break-all}
 .tli.now::before{background:#c0392b}
 .oc.dragging{opacity:.4}.oc.dragover{box-shadow:0 -3px 0 #8a6a3f}
 .ono{white-space:nowrap;color:var(--deep)}
+
+.otbwrap{position:sticky;top:calc(env(safe-area-inset-top,0px) + var(--hh,100px));z-index:6}
+.otb{display:flex;flex-wrap:wrap;align-items:center;gap:6px;background:var(--card);border:1px solid var(--line);border-radius:14px;padding:8px 10px;box-shadow:0 4px 14px #0000001a;margin:8px 0}
+.otl{font-size:.8rem;color:var(--sub)}
+.otsep{width:1px;height:22px;background:var(--line);margin:0 4px}
+.sw{width:28px;height:28px;border-radius:50%;padding:0;margin:0;background:var(--c);border:2px solid #fff;box-shadow:0 0 0 1px var(--line);color:#fff;font-size:.75rem;font-weight:700;text-shadow:0 0 2px #0007}
+.swc{display:inline-flex;align-items:center;justify-content:center;width:30px;height:30px;border-radius:50%;border:1px dashed #cdbb9c;cursor:pointer;position:relative;font-size:.9rem}
+.swc input{position:absolute;inset:0;opacity:0;cursor:pointer;width:100%;height:100%;padding:0}
+button.ghost{background:transparent;border-color:transparent;color:var(--sub)}button.ghost:hover{background:var(--soft)}
+#oList{--ofs:17px}
+.ocard{background:var(--card);border:1px solid var(--line);border-left:5px solid var(--sc);border-radius:16px;padding:12px 14px 6px;margin:12px 0;box-shadow:0 1px 3px #0000000d}
+.ohd{display:flex;align-items:center;gap:8px}
+.grip{cursor:grab;color:#c4b49a;font-size:1.1rem;user-select:none}
+.ono{flex:0 0 auto;min-width:28px;height:28px;border-radius:99px;background:#8a6a3f;color:#fff;display:inline-flex;align-items:center;justify-content:center;font-size:.85rem;font-weight:700;padding:0 7px}
+.oti{border:0;background:transparent;font-weight:700;font-size:1.08rem;padding:4px 2px;flex:1;min-width:100px;border-bottom:1px dashed transparent;border-radius:0}
+.oti:focus{outline:none;border-bottom-color:#cdbb9c}
+.oti.ch{font-size:1.3rem;color:var(--deep)}
+.ostsel{width:auto;font-size:.8rem;padding:2px 8px;border-radius:99px;border:1.5px solid var(--sc)}
+.obtns{display:flex;flex-shrink:0}
+.obtns button{padding:2px 7px;margin:0}
+.ometa-e{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin:6px 0 4px 36px}
+.ometa-e>input{width:190px;flex:0 0 auto;font-size:.85rem;padding:3px 12px;border-radius:99px}
+.owho{display:flex;flex-wrap:wrap;gap:4px}
+.pchip.sm2{padding:1px 10px;font-size:.8rem;border:1.5px solid var(--c);background:transparent;margin:0;color:var(--ink)}
+.pchip.sm2.on{background:var(--c);color:#fff}
+.oed{margin:6px 0 4px 36px;min-height:3.2em;padding:8px 10px;border-radius:10px;border:1px solid transparent;font-size:var(--ofs);line-height:1.85;outline:none;white-space:pre-wrap;word-break:break-word}
+.oed:hover{border-color:var(--line)}.oed:focus{border-color:#cdbb9c;background:var(--soft)}
+.oed:empty::before{content:attr(data-ph);color:#b3a385}
+.onotes{margin:0 0 4px 36px;font-size:.85rem}.onotes summary{cursor:pointer;color:var(--sub)}
+.oins{display:flex;gap:4px;justify-content:flex-end;opacity:0;transition:opacity .15s}
+.ocard:hover .oins,.ocard:focus-within .oins{opacity:1}
+@media(hover:none){.oins{opacity:1}}
+@media(max-width:560px){.ometa-e,.oed,.onotes{margin-left:0}}
+.och-e{display:flex;align-items:center;gap:8px;margin:26px 0 6px;padding:4px;border-bottom:2px solid var(--main)}
+.dragging{opacity:.4}.dragover{outline:2px dashed #8a6a3f;outline-offset:2px}
+.obar{display:flex;height:8px;border-radius:99px;background:#efe6d6;overflow:hidden;margin-bottom:4px}.obar span{display:block;height:100%}
+.oempty{text-align:center;padding:40px 16px;color:var(--sub);border:2px dashed var(--line);border-radius:16px;margin:12px 0}.oempty b{font-size:1.1rem;color:var(--deep)}
+.seg2{display:inline-flex;border:1px solid var(--line);border-radius:99px;overflow:hidden}
+.seg2 button{border:0;border-radius:0;margin:0;background:transparent;padding:4px 14px}.seg2 button.on{background:#8a6a3f;color:#fff}
+.odoc{background:#fffdf9;color:#2e261c;border:1px solid var(--line);border-radius:18px;padding:44px 48px;margin:12px 0;font-size:var(--ofs);line-height:1.9;box-shadow:0 4px 18px #8a6a3f1a}
+@media(max-width:560px){.odoc{padding:26px 18px}.odoc .ometa,.odoc .obody,.odoc .onote{margin-left:0}}
+.odoc h1{font-size:1.9em;margin:0;color:#3d3226;line-height:1.3}
+.osubt{color:#8a6a3f;margin:2px 0 1em;letter-spacing:.2em;font-size:.85em}
+.och{font-size:1.3em;color:#8a6a3f;margin:1.6em 0 .6em;padding-bottom:.3em;border-bottom:2px solid #e3d6bf}
+.oseg{margin:1.2em 0 1.6em}.oseg .ohd b{font-size:1.1em}
+.ost{font-size:.68em;padding:1px 10px;border-radius:99px;background:var(--c);color:#fff;margin-left:auto;white-space:nowrap}
+.ometa{margin:.2em 0 .3em 36px;color:#8a7a62;font-size:.85em}
+.obody{margin-left:36px;white-space:pre-wrap}
+.onote{margin:.5em 0 0 36px;background:#f3ece0;border-radius:10px;padding:.4em .8em;font-size:.85em;color:#6b5a43}
+.oprev{max-height:260px;overflow:auto;border:1px solid var(--line);border-radius:12px;padding:8px 12px;background:var(--soft)}
+.opch{font-weight:700;color:var(--deep);margin:8px 0 4px;border-bottom:1px solid var(--line)}
+.opseg{font-size:.9rem;margin:4px 0 4px 12px;padding-left:8px;border-left:3px solid var(--main)}
+.opdfprev{display:flex;gap:8px;overflow-x:auto}.opdfprev img{width:200px;flex-shrink:0;border:1px solid var(--line)}
+#printArea{display:none}
+@media print{body::before{display:none!important}body>*{display:none!important}#printArea{display:block!important;font-size:var(--ofs)}#printArea .odoc{box-shadow:none;border:0;padding:0;margin:0}*{-webkit-print-color-adjust:exact;print-color-adjust:exact}.oseg{break-inside:avoid}}
 .conf{display:flex;align-items:center;gap:8px}
 .conf b{min-width:2.5em}
 </style>
@@ -115,7 +170,7 @@ ul.src{padding-left:1.2em;word-break:break-all}
 <body>
 <header>
 <h1>📒 現代背景 OC／CP 設定手帳</h1>
-<nav id="nav"><a href="#welcome">歡迎使用</a><a href="#chars">人物設定</a><a href="#deep">人物深化</a><a href="#cp">CP設定</a><a href="#map">人物關係表</a><a href="#timeline">時間軸</a><a href="#drill">短文練習題</a><a href="#scene">人事時地物</a><span class="more"><button type="button" id="morebtn">更多 ▾</button><span id="moremenu"><a href="#backup">資料備份</a><a href="#src">出處資訊</a></span></span></nav>
+<nav id="nav"><a href="#welcome">歡迎使用</a><a href="#chars">人物設定</a><a href="#deep">人物深化</a><a href="#cp">CP設定</a><a href="#map">人物關係表</a><a href="#timeline">時間軸</a><a href="#drill">短文練習題</a><a href="#scene">人事時地物</a><a href="#outline">劇情大綱</a><span class="more"><button type="button" id="morebtn">更多 ▾</button><span id="moremenu"><a href="#backup">資料備份</a><a href="#src">出處資訊</a></span></span></nav>
 <div class="workbar"><span>📁 作品</span><select id="workSel" onchange="setWork(this.value)"></select><button class="sm" onclick="openWorks()">管理作品</button><button class="sm" onclick="exportBook()">📚 匯出設定集</button></div>
 </header>
 <main>
@@ -135,6 +190,7 @@ ul.src{padding-left:1.2em;word-break:break-all}
 <button class="portal" onclick="go('map')"><b>🕸️ 人物關係表</b><span>帶入人物與 CP，拖曳排版、換代表色，下載成圖片。</span></button>
 <button class="portal" onclick="go('timeline')"><b>📅 時間軸</b><span>把人物和 CP 的重要事件按年份排好，可一鍵帶入出生年與認識、交往、結婚年份。</span></button>
 <button class="portal" onclick="go('drill')"><b>✍️ 短文練習題</b><span>從三十題／五十題題庫隨機抽五題，自由挑選來寫。</span></button>
+<button class="portal" onclick="go('outline')"><b>📝 劇情大綱</b><span>一段一段寫，或把寫好的大綱整份貼進來；可改字色、字級，輸出成文字檔或 PDF。</span></button>
 <button class="portal" onclick="go('scene')"><b>🎬 人事時地物</b><span>依地區與場域，抽出人、事、時、地、物、氣氛和梗，幫練習題延伸成場景。</span></button>
 </div>
 <details class="fold"><summary>使用教學</summary><div class="inner">
@@ -145,6 +201,7 @@ ul.src{padding-left:1.2em;word-break:break-all}
 <p><b>④ 畫關係表。</b>「人物關係表」可以一鍵帶入人物或 CP，拖曳位置、換代表色、新增旁支人物，再下載成圖片。</p>
 <p><b>⑤ 排時間軸。</b>「時間軸」可以從人物的出生年、CP 的認識／交往／結婚年份一鍵帶入，也能自己加事件；有填出生年的人物，會自動算出當時幾歲。</p>
 <p><b>⑥ 動手寫。</b>「短文練習題」抽題目；按題目旁的「🎬」可以把題目帶到「人事時地物」，搭配已存好的人物抽出完整場景；如果人物有深化筆記，「人物提示」會隨機帶出一則，讓角色的個性直接進到場景裡。</p>
+<p><b>⑦ 整理大綱。</b>「劇情大綱」可以一段一段新增，也可以按「📋 貼上整份大綱」把寫好的大綱一次放進來，工具會自動切段並先讓你預覽。選取文字後可以套用人物代表色、調整字級；勾選「人物名字自動套上代表色」，閱讀模式和輸出時名字會自動上色。可以輸出成文字檔或 PDF。</p>
 <p><b>作品分組：</b>最上方的「📁 作品」可以切換作品，各頁只會顯示那部作品的人物、CP、關係表、時間軸和情境卡；在「管理作品」新增、改名，或把未分類的內容一次收進某部作品。人物和 CP 的編輯區上方可以勾選所屬作品，同一位人物可以屬於好幾部作品。「📚 匯出設定集」會把目前作品的全部內容整理成一份文字檔。</p>
 <p><b>故事年份與大綱：</b>在「時間軸」設定正文年份，有填出生年的人物年齡會自動換算。存下來的情境卡會依序排成劇情大綱，可以調整順序並匯出。</p>
 <p><b>備份提醒：</b>超過兩週沒有下載備份時，頁面上方會出現提醒。</p>
@@ -237,6 +294,20 @@ ul.src{padding-left:1.2em;word-break:break-all}
 <div class="card"><h3>我的情境卡／劇情大綱</h3><div id="sceneCards"></div></div>
 </section>
 
+<section id="outline">
+<h2>劇情大綱</h2>
+<p class="note">手動一段一段整理，或把寫好的大綱整份貼進來。選取文字可以改顏色和字級；切到「📖 閱讀」可以看整理好的樣子。</p>
+<div class="card otop">
+<div class="row"><button class="big" onclick="oAdd('seg')">＋ 段落</button><button onclick="oAdd('ch')">＋ 章節標題</button><button onclick="oPasteOpen()">📋 貼上整份大綱</button><span style="flex:1"></span><span id="oModeBtns" class="seg2"><button data-m="edit" onclick="oMode('edit')">✏️ 編輯</button><button data-m="read" onclick="oMode('read')">📖 閱讀</button></span></div>
+<div class="row" style="margin-top:10px"><label class="conf" style="flex:1;min-width:220px"><span style="white-space:nowrap">內文字級</span><input type="range" id="oFs" min="13" max="24" step="1" oninput="oSet().fs=+this.value;persist();renderOutline()"></label><label style="font-size:.9rem"><input type="checkbox" id="oAuto" onchange="oSet().auto=this.checked;persist();renderOutline()"> 人物名字自動套上代表色<span class="note">（閱讀模式與輸出時）</span></label></div>
+<div id="oProg" style="margin-top:8px"></div>
+</div>
+<div id="otbWrap" class="otbwrap"></div>
+<div id="oList"></div>
+<div class="actbar" style="position:static"><button onclick="outlineTxt()">📄 文字檔</button> <button onclick="outlinePDF()">📕 下載 PDF</button> <button onclick="outlinePrint()">🖨️ 列印／另存 PDF</button> <button onclick="if(VO().length)copyText(outlinePlain());else toast('還沒有大綱')">📋 複製文字</button></div>
+<p class="note">「📕 下載 PDF」會照畫面上的顏色與字級排成 A4 頁面；「🖨️ 列印／另存 PDF」用瀏覽器的列印功能，存出來的文字可以選取、複製。</p>
+</section>
+
 <section id="backup">
 <h2>資料備份</h2>
 <div class="card"><p>人物、CP、關係表、情境卡和圖片都存在你這個瀏覽器裡。換裝置、換瀏覽器或清除瀏覽器資料就會消失，建議定期下載備份檔。</p>
@@ -260,6 +331,7 @@ ul.src{padding-left:1.2em;word-break:break-all}
 
 <div id="modal" onclick="if(event.target==this)closeModal()"><div class="box"><div class="row" style="justify-content:space-between"><b id="mTitle"></b><button onclick="closeModal()">關閉</button></div><div id="mBody"></div></div></div>
 <div id="toast"></div>
+<div id="printArea"></div>
 <script>
 const S=s=>s.split('、');
 /* ===== 人物深化：作者原創角色分析單題庫 ===== */
@@ -444,7 +516,7 @@ async function copyText(t){try{await navigator.clipboard.writeText(t);toast('已
 function fileName(s){return String(s||'未命名').replace(/[\\/:*?"<>|]/g,'_').slice(0,40)}
 
 /* ===== 儲存（IndexedDB，失敗時改用 localStorage） ===== */
-let ST={works:[],curWork:'',chars:[],cps:[],maps:[],scenes:[],events:[],myQ:[],myP:[],curChar:null,curCP:null,curMap:null,deep:null,drill:null,scene:null};
+let ST={works:[],curWork:'',chars:[],cps:[],maps:[],scenes:[],events:[],outline:[],oset:null,myQ:[],myP:[],curChar:null,curCP:null,curMap:null,deep:null,drill:null,scene:null};
 const STORE={db:null,
  async init(){try{this.db=await new Promise((res,rej)=>{const r=indexedDB.open('oc-cp-notebook',1);r.onupgradeneeded=()=>r.result.createObjectStore('kv');r.onsuccess=()=>res(r.result);r.onerror=()=>rej(r.error)})}catch(e){this.db=null}},
  async get(){if(this.db){try{return await new Promise(res=>{const q=this.db.transaction('kv').objectStore('kv').get('state');q.onsuccess=()=>res(q.result||null);q.onerror=()=>res(null)})}catch(e){}}try{return JSON.parse(localStorage.getItem('oc-cp-notebook')||'null')}catch(e){return null}},
@@ -554,8 +626,8 @@ function openWorks(){$('#mTitle').textContent='管理作品';const box=()=>{$('#
  <p class="note">刪除作品不會刪掉裡面的人物和其他內容，它們只會變回「未分類」。</p>`;
  $('#wAdd').onclick=()=>{const n=$('#wNew').value.trim();if(!n)return toast('請輸入作品名稱');const w={id:uid(),name:n,year:''};ST.works.push(w);ST.curWork=w.id;persist();renderAll();route(true);box()};
  $$('[data-wn]').forEach(i=>i.oninput=()=>{ST.works.find(w=>w.id==i.dataset.wn).name=i.value;persist();renderWorkSel()});
- $$('[data-wall]').forEach(b=>b.onclick=()=>{const id=b.dataset.wall;let n=0;[ST.chars,ST.cps,ST.maps,ST.scenes,ST.events].forEach(l=>l.forEach(o=>{if(!(o.works||[]).length){o.works=[id];n++}}));persist();renderAll();route(true);box();toast(`已收進 ${n} 項內容`)});
- $$('[data-wdel]').forEach(b=>b.onclick=()=>armed(b,()=>{const id=b.dataset.wdel;ST.works=ST.works.filter(w=>w.id!=id);[ST.chars,ST.cps,ST.maps,ST.scenes,ST.events].forEach(l=>l.forEach(o=>{if(o.works)o.works=o.works.filter(x=>x!=id)}));if(ST.curWork==id)ST.curWork='';persist();renderAll();route(true);box()}))};
+ $$('[data-wall]').forEach(b=>b.onclick=()=>{const id=b.dataset.wall;let n=0;[ST.chars,ST.cps,ST.maps,ST.scenes,ST.events,ST.outline].forEach(l=>l.forEach(o=>{if(!(o.works||[]).length){o.works=[id];n++}}));persist();renderAll();route(true);box();toast(`已收進 ${n} 項內容`)});
+ $$('[data-wdel]').forEach(b=>b.onclick=()=>armed(b,()=>{const id=b.dataset.wdel;ST.works=ST.works.filter(w=>w.id!=id);[ST.chars,ST.cps,ST.maps,ST.scenes,ST.events,ST.outline].forEach(l=>l.forEach(o=>{if(o.works)o.works=o.works.filter(x=>x!=id)}));if(ST.curWork==id)ST.curWork='';persist();renderAll();route(true);box()}))};
  box();$('#modal').classList.add('open')}
 
 /* ===== 故事年份 ===== */
@@ -571,12 +643,13 @@ function checkBackup(){const b=$('#bkBanner');const has=ST.chars.length+ST.cps.l
 /* ===== 一鍵匯出設定集 ===== */
 const noFoot=t=>t.replace(/\n*（現代背景 OC／CP 設定手帳）\s*$/,'');
 function exportBook(){const sy=getSY();const L=[];L.push(`《${workTitle()}》設定集`);if(sy!=null)L.push(`故事正文年份：${sy} 年${syAges()?`（${syAges()}）`:''}`);
- const cs=VC(),ps=VP(),ms=VM(),es=tlSorted(VE()),ss=VS();
+ const cs=VC(),ps=VP(),ms=VM(),es=tlSorted(VE()),ss=VS(),os=VO();
  if(cs.length){L.push('\n==============================\n人物\n==============================');cs.forEach(c=>L.push(noFoot(charText(c))+'\n'))}
  if(ps.length){L.push('\n==============================\nCP\n==============================');ps.forEach(p=>L.push(noFoot(cpText(p))+'\n'))}
  if(ms.length){L.push('\n==============================\n人物關係表\n==============================');ms.forEach(m=>{L.push(`【${m.name}】`);m.edges.forEach(e=>{const a=m.nodes.find(n=>n.id==e.a),b=m.nodes.find(n=>n.id==e.b);if(a&&b)L.push(`・${nName(a)} ${['—','→','↔'][e.dir]} ${nName(b)}${e.label?'：'+e.label:''}`)});const lone=m.nodes.filter(n=>!m.edges.some(e=>e.a==n.id||e.b==n.id));if(lone.length)L.push('・其他人物：'+lone.map(nName).join('、'));L.push('')})}
  if(es.length){L.push('\n==============================\n時間軸\n==============================');es.forEach(e=>{const[a,b]=tlLine(e);L.push(`${a}｜${b}`)})}
- if(ss.length){L.push('\n==============================\n劇情大綱\n==============================');ss.forEach((x,i)=>L.push(outlineItem(x,i)))}
+ if(os.length){L.push('\n==============================\n劇情大綱\n==============================');L.push(outlinePlain())}
+ if(ss.length){L.push('\n==============================\n情境卡\n==============================');ss.forEach((x,i)=>L.push(outlineItem(x,i)))}
  if(L.length<3)return toast('這個作品還沒有內容');showText(L.join('\n')+`\n\n（${TOOL}）`,workTitle()+'_設定集','整份設定集（人物、CP、關係表、時間軸、劇情大綱）。可以下載成 .txt，或複製貼到雲端文件。')}
 
 /* ===== 人物設定 ===== */
@@ -805,12 +878,12 @@ function saveSceneCard(){if(!SC.v.set)return toast('請先重骰');ST.scenes.pus
 const scById=id=>ST.scenes.find(s=>s.id==id);
 const scSum=s=>sceneRows(s.v).filter(r=>['場域','人','事','時','地'].includes(r[0])).map(r=>r[1]).join('／');
 function outlineItem(s,i){return `第 ${i+1} 段｜${s.name}`+(s.theme?`\n　寫作主題：${s.theme}`:'')+`\n　場景：${scSum(s)}`+(s.v.trope?`\n　梗：${s.v.trope}`:'')+(s.note?`\n　筆記：${s.note.replace(/\n/g,'\n　　　')}`:'')+'\n'}
-function renderSceneCards(){const l=VS();$('#sceneCards').innerHTML=l.length?`<p class="note">情境卡會依下面的順序排成劇情大綱。用 ↑↓ 調整順序，電腦也可以直接拖曳卡片。</p><p><button onclick="outlineTxt()">📄 匯出大綱（文字）</button> <button onclick="outlineImg()">🖼️ 大綱存成圖片</button></p>`+l.map((s,i)=>`<div class="lst oc" draggable="true" data-id="${s.id}"><div class="row"><b class="ono">第 ${i+1} 段</b><input value="${esc(s.name)}" oninput="scById('${s.id}').name=this.value;persist()" placeholder="段落標題"><button class="sm" onclick="scMove('${s.id}',-1)" ${i?'':'disabled'}>↑</button><button class="sm" onclick="scMove('${s.id}',1)" ${i<l.length-1?'':'disabled'}>↓</button></div><p class="note" style="margin:4px 0">${esc(scSum(s))}${s.theme?`<br>主題：${esc(s.theme)}`:''}</p><textarea rows="2" placeholder="這一段的劇情筆記" oninput="scById('${s.id}').note=this.value;persist()">${esc(s.note||'')}</textarea><button class="sm" onclick="loadScene('${s.id}')">載入到產生器</button> <button class="sm" onclick="const s=scById('${s.id}');sceneImgOf(s.v,s.theme,s.note,s.name)">圖片</button> <button class="sm" onclick="const s=scById('${s.id}');showText(sceneText(s.v,s.theme,s.note,s.name),s.name)">文字</button> <button class="sm warn" onclick="armed(this,()=>{ST.scenes=ST.scenes.filter(x=>x.id!='${s.id}');persist();renderSceneCards()})">刪除</button></div>`).join(''):'<p class="note">還沒有情境卡。抽到喜歡的情境按「💾 存成情境卡」，就會依序排成劇情大綱。</p>';
+function renderSceneCards(){const l=VS();$('#sceneCards').innerHTML=l.length?`<p class="note">用 ↑↓ 或拖曳調整順序。按「📌 加入大綱」，可以把情境卡送進「劇情大綱」頁繼續寫。</p><p><button onclick="VS().forEach(x=>sceneToOutline(x.id));toast('已全部加入劇情大綱')">📌 全部加入劇情大綱</button> <button onclick="go('outline')">前往劇情大綱 →</button></p>`+l.map((s,i)=>`<div class="lst oc" draggable="true" data-id="${s.id}"><div class="row"><b class="ono">第 ${i+1} 段</b><input value="${esc(s.name)}" oninput="scById('${s.id}').name=this.value;persist()" placeholder="段落標題"><button class="sm" onclick="scMove('${s.id}',-1)" ${i?'':'disabled'}>↑</button><button class="sm" onclick="scMove('${s.id}',1)" ${i<l.length-1?'':'disabled'}>↓</button></div><p class="note" style="margin:4px 0">${esc(scSum(s))}${s.theme?`<br>主題：${esc(s.theme)}`:''}</p><textarea rows="2" placeholder="這一段的劇情筆記" oninput="scById('${s.id}').note=this.value;persist()">${esc(s.note||'')}</textarea><button class="sm" onclick="loadScene('${s.id}')">載入到產生器</button> <button class="sm" onclick="sceneToOutline('${s.id}')">📌 加入大綱</button> <button class="sm" onclick="const s=scById('${s.id}');sceneImgOf(s.v,s.theme,s.note,s.name)">圖片</button> <button class="sm" onclick="const s=scById('${s.id}');showText(sceneText(s.v,s.theme,s.note,s.name),s.name)">文字</button> <button class="sm warn" onclick="armed(this,()=>{ST.scenes=ST.scenes.filter(x=>x.id!='${s.id}');persist();renderSceneCards()})">刪除</button></div>`).join(''):'<p class="note">還沒有情境卡。抽到喜歡的情境按「💾 存成情境卡」，就會依序排成劇情大綱。</p>';
  $$('#sceneCards .oc').forEach(el=>{el.ondragstart=e=>{if(/INPUT|TEXTAREA/.test(document.activeElement.tagName)&&el.contains(document.activeElement)){e.preventDefault();return}e.dataTransfer.setData('text/plain',el.dataset.id);el.classList.add('dragging')};el.ondragend=()=>el.classList.remove('dragging');el.ondragover=e=>{e.preventDefault();el.classList.add('dragover')};el.ondragleave=()=>el.classList.remove('dragover');el.ondrop=e=>{e.preventDefault();el.classList.remove('dragover');const from=e.dataTransfer.getData('text/plain');if(!from||from==el.dataset.id)return;const it=scById(from);ST.scenes=ST.scenes.filter(x=>x.id!=from);ST.scenes.splice(ST.scenes.findIndex(x=>x.id==el.dataset.id),0,it);persist();renderSceneCards()}})}
 function scMove(id,d){const l=VS(),i=l.findIndex(x=>x.id==id),j=i+d;if(j<0||j>=l.length)return;const a=ST.scenes.indexOf(l[i]),b=ST.scenes.indexOf(l[j]);[ST.scenes[a],ST.scenes[b]]=[ST.scenes[b],ST.scenes[a]];persist();renderSceneCards()}
 function loadScene(id){const s=scById(id);SC.v=JSON.parse(JSON.stringify(s.v));SC.theme=s.theme||'';SC.note=s.note||'';$('#scTheme').value=SC.theme;$('#scNote').value=SC.note;saveScene();renderScene();scrollTo({top:0,behavior:'smooth'});toast('已載入')}
-function outlineTxt(){const l=VS();showText(`《${workTitle()}》劇情大綱\n\n`+l.map(outlineItem).join('\n')+`\n（${TOOL}）`,workTitle()+'_大綱')}
-function outlineImg(){const l=VS();showCard({title:'劇情大綱',sub:ST.curWork?workTitle():'',sections:[{rows:l.map((s,i)=>[`第 ${i+1} 段`,s.name+(s.theme?'\n主題：'+s.theme:'')+'\n'+scSum(s)+(s.note?'\n'+s.note:'')])}]},workTitle()+'_大綱')}
+function sceneOutlineTxt_old(){const l=VS();showText(`《${workTitle()}》劇情大綱\n\n`+l.map(outlineItem).join('\n')+`\n（${TOOL}）`,workTitle()+'_大綱')}
+function sceneOutlineImg_old(){const l=VS();showCard({title:'劇情大綱',sub:ST.curWork?workTitle():'',sections:[{rows:l.map((s,i)=>[`第 ${i+1} 段`,s.name+(s.theme?'\n主題：'+s.theme:'')+'\n'+scSum(s)+(s.note?'\n'+s.note:'')])}]},workTitle()+'_大綱')}
 
 /* ===== 時間軸 ===== */
 let TLE=null;
@@ -840,18 +913,20 @@ function tlImg(){const l=tlFiltered();if(!l.length)return toast('還沒有事件
 
 /* ===== 備份 ===== */
 function backupDL(){ST.lastBackup=Date.now();persist();checkBackup();const t=JSON.stringify({tool:'oc-cp-notebook',v:1,date:new Date().toISOString(),data:ST});const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([t],{type:'application/json'}));a.download='OC設定手帳備份_'+new Date().toISOString().slice(0,10)+'.json';document.body.appendChild(a);a.click();a.remove();toast('開始下載備份檔')}
-function backupLoad(inp){const f=inp.files[0];inp.value='';if(!f)return;const fr=new FileReader();fr.onload=()=>{try{const j=JSON.parse(fr.result),d=j.data||j;if(!Array.isArray(d.chars))throw 0;const mode=$('input[name=bkm]:checked').value;if(mode=='replace')ST=Object.assign(ST,d);else{['works','chars','cps','maps','scenes','events'].forEach(k=>{ST[k]=ST[k]||[];const have=new Set(ST[k].map(x=>x.id));(d[k]||[]).forEach(x=>{if(!have.has(x.id))ST[k].push(x)})});['myQ','myP'].forEach(k=>{ST[k]=[...new Set((ST[k]||[]).concat(d[k]||[]))]})}persist();renderAll();$('#bkmsg').textContent=`還原完成：人物 ${ST.chars.length}、CP ${ST.cps.length}、關係表 ${ST.maps.length}、時間軸事件 ${ST.events.length}、情境卡 ${ST.scenes.length}`}catch(e){$('#bkmsg').textContent='這個檔案看起來不是本工具的備份檔。'}};fr.readAsText(f)}
-function wipeAll(){ST={works:[],curWork:'',chars:[],cps:[],maps:[],scenes:[],events:[],myQ:[],myP:[],curChar:null,curCP:null,curMap:null};DEEP={cid:'',slots:[],cats:[]};DR={slots:[],cats:[]};SC={v:{},lock:{},sets:[],chars:[],tropes:[],theme:'',note:''};persist();renderAll();rollDeep();rollDrill();toast('已清除全部資料')}
+function backupLoad(inp){const f=inp.files[0];inp.value='';if(!f)return;const fr=new FileReader();fr.onload=()=>{try{const j=JSON.parse(fr.result),d=j.data||j;if(!Array.isArray(d.chars))throw 0;const mode=$('input[name=bkm]:checked').value;if(mode=='replace')ST=Object.assign(ST,d);else{['works','chars','cps','maps','scenes','events','outline'].forEach(k=>{ST[k]=ST[k]||[];const have=new Set(ST[k].map(x=>x.id));(d[k]||[]).forEach(x=>{if(!have.has(x.id))ST[k].push(x)})});['myQ','myP'].forEach(k=>{ST[k]=[...new Set((ST[k]||[]).concat(d[k]||[]))]})}persist();renderAll();$('#bkmsg').textContent=`還原完成：人物 ${ST.chars.length}、CP ${ST.cps.length}、關係表 ${ST.maps.length}、時間軸事件 ${ST.events.length}、情境卡 ${ST.scenes.length}`}catch(e){$('#bkmsg').textContent='這個檔案看起來不是本工具的備份檔。'}};fr.readAsText(f)}
+function wipeAll(){ST={works:[],curWork:'',chars:[],cps:[],maps:[],scenes:[],events:[],outline:[],oset:null,myQ:[],myP:[],curChar:null,curCP:null,curMap:null};DEEP={cid:'',slots:[],cats:[]};DR={slots:[],cats:[]};SC={v:{},lock:{},sets:[],chars:[],tropes:[],theme:'',note:''};persist();renderAll();rollDeep();rollDrill();toast('已清除全部資料')}
 async function showUsage(){try{const e=await navigator.storage.estimate();$('#usage').textContent=(ST.lastBackup?`上次下載備份：${new Date(ST.lastBackup).toLocaleDateString('zh-TW')}。`:'還沒有下載過備份。')+`目前約使用 ${(e.usage/1048576).toFixed(1)} MB${e.quota?`（瀏覽器可用上限約 ${(e.quota/1048576/1024).toFixed(1)} GB）`:''}`}catch(e){}}
 
 /* ===== 出處 ===== */
 function renderSrc(){$('#srcP').innerHTML=PSRC.map(([n,u])=>`<li><a href="${u}" target="_blank" rel="noopener">${esc(n)}</a></li>`).join('');$('#srcT').innerHTML=SRC.map(([g,n,u])=>`<li><a href="${u}" target="_blank" rel="noopener">${esc(n)}</a></li>`).join('')}
 
 /* ===== 頁面切換與初始化 ===== */
-const PAGES=['welcome','chars','deep','cp','map','timeline','drill','scene','backup','src'];
+function setHH(){const h=document.querySelector('header');if(h)document.documentElement.style.setProperty('--hh',h.offsetHeight+'px')}
+window.addEventListener('resize',setHH);
+const PAGES=['welcome','chars','deep','cp','map','timeline','drill','scene','outline','backup','src'];
 function route(keep){let h=location.hash.slice(1);if(!PAGES.includes(h))h='welcome';$$('main>section').forEach(s=>s.classList.toggle('on',s.id==h));$$('#nav a').forEach(a=>a.classList.toggle('on',a.getAttribute('href')=='#'+h));$('#morebtn').classList.toggle('on',['backup','src'].includes(h));$('#moremenu').classList.remove('open');
- if(h=='chars')renderChars();if(h=='deep'){renderDeepWho();renderDeepNotes()}if(h=='cp')renderCP();if(h=='map')renderMap();if(h=='timeline')renderTL();if(h=='scene'){renderSceneChars();renderSceneCards()}if(h=='backup')showUsage();checkBackup();if(!keep)window.scrollTo(0,0)}
-function renderAll(){renderWorkSel();renderChars();renderDeepWho();renderDeepCats();renderDeepSlots();renderDeepNotes();renderCP();renderMap();renderTL();renderDrillCats();renderDrill();renderSceneSets();renderSceneChars();renderScene();renderSceneCards()}
+ if(h=='chars')renderChars();if(h=='deep'){renderDeepWho();renderDeepNotes()}if(h=='cp')renderCP();if(h=='map')renderMap();if(h=='timeline')renderTL();if(h=='scene'){renderSceneChars();renderSceneCards()}if(h=='outline')renderOutline();if(h=='backup')showUsage();setHH();checkBackup();if(!keep)window.scrollTo(0,0)}
+function renderAll(){renderWorkSel();renderChars();renderDeepWho();renderDeepCats();renderDeepSlots();renderDeepNotes();renderCP();renderMap();renderTL();renderDrillCats();renderDrill();renderSceneSets();renderSceneChars();renderScene();renderSceneCards();renderOutline()}
 $('#morebtn').onclick=e=>{e.stopPropagation();$('#moremenu').classList.toggle('open')};
 document.addEventListener('click',e=>{if(!e.target.closest('.more'))$('#moremenu').classList.remove('open')});
 document.addEventListener('keydown',e=>{if(e.key=='Escape')closeModal()});
@@ -860,12 +935,131 @@ $('#cpEdit').addEventListener('input',onCPInput);$('#cpEdit').addEventListener('
 $('#scRegion').addEventListener('change',saveScene);
 window.addEventListener('hashchange',route);
 (async()=>{await STORE.init();const d=await STORE.get();if(d&&typeof d=='object')ST=Object.assign(ST,d);
- ['works','chars','cps','maps','scenes','events','myQ','myP'].forEach(k=>{if(!Array.isArray(ST[k]))ST[k]=[]});if(ST.curWork&&ST.curWork!='__none'&&!ST.works.some(w=>w.id==ST.curWork))ST.curWork='';
+ ['works','chars','cps','maps','scenes','events','outline','myQ','myP'].forEach(k=>{if(!Array.isArray(ST[k]))ST[k]=[]});if(ST.curWork&&ST.curWork!='__none'&&!ST.works.some(w=>w.id==ST.curWork))ST.curWork='';
  if(ST.deep)DEEP=Object.assign(DEEP,ST.deep);if(ST.drill){DR.cats=ST.drill.cats||[];DR.slots=ST.drill.slots||[];$('#dAdult').checked=!!ST.drill.adult;$('#dDark').checked=!!ST.drill.dark}
  if(ST.scene){Object.assign(SC,{sets:ST.scene.sets||[],chars:ST.scene.chars||[],tropes:ST.scene.tropes||[],v:ST.scene.v||{},lock:ST.scene.lock||{},theme:ST.scene.theme||'',note:ST.scene.note||''});$('#scRegion').value=ST.scene.region||'';$('#scTone').value=ST.scene.tone||''}
  $('#scTheme').value=SC.theme;$('#scNote').value=SC.note;
  if(DEEP.slots.length<5)rollDeep();if(DR.slots.length<5)rollDrill();
  renderSrc();renderAll();route()})();
+
+/* ===== 劇情大綱 ===== */
+const OST={todo:['未寫','#b9ad98'],doing:['寫作中','#d39b4a'],done:['完成','#6f9a6a']};
+const OSIZE=[['小','.85em'],['標準',''],['大','1.25em'],['特大','1.6em']];
+let OED=null,OMODE='edit';
+const VO=()=>ST.outline.filter(inW);
+const oById=id=>ST.outline.find(o=>o.id==id);
+function oSet(){ST.oset=ST.oset||{fs:17,auto:true};return ST.oset}
+/* 文字顏色：太淺的代表色加深，白底才讀得清楚 */
+function txtColor(hex){const m=/^#?([0-9a-f]{6})$/i.exec(hex||'');if(!m)return hex;let n=parseInt(m[1],16),r=n>>16,g=n>>8&255,b=n&255;const L=(0.299*r+0.587*g+0.114*b)/255;if(L<=.55)return '#'+m[1];const k=.55/L*.92;r=Math.round(r*k);g=Math.round(g*k);b=Math.round(b*k);return '#'+[r,g,b].map(v=>v.toString(16).padStart(2,'0')).join('')}
+/* 只保留安全的格式：粗體、斜體、底線、文字顏色、字級、換行 */
+function oClean(html){const box=document.createElement('div');box.innerHTML=html||'';const out=document.createElement('div');
+ const walk=(src,dst)=>{src.childNodes.forEach(n=>{if(n.nodeType==3){dst.appendChild(document.createTextNode(n.nodeValue));return}if(n.nodeType!=1)return;const t=n.tagName;
+  if(t=='BR'){dst.appendChild(document.createElement('br'));return}
+  if(t=='SCRIPT'||t=='STYLE')return;
+  let el=null;if(/^(B|STRONG|I|EM|U)$/.test(t))el=document.createElement({STRONG:'b',EM:'i'}[t]||t.toLowerCase());
+  const col=n.style&&n.style.color||(t=='FONT'&&n.getAttribute('color'))||'',fs=n.style&&n.style.fontSize||'',fw=n.style&&n.style.fontWeight||'';
+  if(col||fs||/bold|[6-9]00/.test(fw)){const sp=document.createElement('span');if(col)sp.style.color=col;if(fs&&/^[\d.]+(em|px|%)$/.test(fs))sp.style.fontSize=fs;if(/bold|[6-9]00/.test(fw))sp.style.fontWeight='bold';if(el){el.appendChild(sp);dst.appendChild(el);walk(n,sp)}else{dst.appendChild(sp);walk(n,sp)}}
+  else{const tgt=el?dst.appendChild(el):dst;walk(n,tgt)}
+  if(/^(DIV|P|LI|H[1-6])$/.test(t)&&n.nextSibling)dst.appendChild(document.createElement('br'))})};
+ walk(box,out);return out.innerHTML}
+const plain=h=>{const d=document.createElement('div');d.innerHTML=oClean(h).replace(/<br>/g,'\n');return d.textContent};
+/* 人物名字自動上色（只在閱讀模式與輸出時套用，不改動原文） */
+function nameRx(){const ns=[];VC().forEach(c=>{[c.name,c.nick].forEach(n=>{n=(n||'').trim();if(n.length>=1)ns.push([n,c.color||'#8a6a3f'])})});ns.sort((a,b)=>b[0].length-a[0].length);if(!ns.length)return null;const map={};ns.forEach(([n,c])=>{if(!map[n])map[n]=c});return{rx:new RegExp(Object.keys(map).map(n=>n.replace(/[.*+?^${}()|[\]\\]/g,'\\$&')).join('|'),'g'),map}}
+function autoColorHTML(html){const N=oSet().auto&&nameRx();const d=document.createElement('div');d.innerHTML=oClean(html);if(!N)return d.innerHTML;
+ const tw=document.createTreeWalker(d,NodeFilter.SHOW_TEXT),ts=[];while(tw.nextNode())ts.push(tw.currentNode);
+ ts.forEach(t=>{let p=t.parentNode,colored=false;while(p&&p!==d){if(p.style&&p.style.color){colored=true;break}p=p.parentNode}if(colored)return;const s=t.nodeValue;N.rx.lastIndex=0;if(!N.rx.test(s))return;N.rx.lastIndex=0;const f=document.createDocumentFragment();let last=0,m;while((m=N.rx.exec(s))){f.appendChild(document.createTextNode(s.slice(last,m.index)));const b=document.createElement('span');b.style.color=txtColor(N.map[m[0]]);b.style.fontWeight='bold';b.textContent=m[0];f.appendChild(b);last=m.index+m[0].length}f.appendChild(document.createTextNode(s.slice(last)));t.parentNode.replaceChild(f,t)});return d.innerHTML}
+function newOutline(type,o){const it=Object.assign({id:uid(),type,title:'',time:'',who:[],html:'',note:'',status:'todo',works:newWorks()},o||{});return it}
+function oAdd(type,afterId){const it=newOutline(type);if(afterId){ST.outline.splice(ST.outline.indexOf(oById(afterId))+1,0,it)}else ST.outline.push(it);persist();renderOutline();setTimeout(()=>{const i=$(`[data-ot="${it.id}"]`);i&&i.focus()},30)}
+function oMove(id,d){const l=VO(),i=l.findIndex(x=>x.id==id),j=i+d;if(j<0||j>=l.length)return;const a=ST.outline.indexOf(l[i]),b=ST.outline.indexOf(l[j]);[ST.outline[a],ST.outline[b]]=[ST.outline[b],ST.outline[a]];persist();renderOutline()}
+function oDel(id){ST.outline=ST.outline.filter(x=>x.id!=id);persist();renderOutline()}
+function oNums(l){let n=0;const m={};l.forEach(o=>{if(o.type=='seg')m[o.id]=++n});return m}
+function swatches(){return VC().filter(c=>c.name).map(c=>`<button class="sw" title="套用「${esc(c.name)}」的代表色" style="--c:${c.color||'#8a6a3f'}" onmousedown="event.preventDefault();oFmt('color','${txtColor(c.color||'#8a6a3f')}')">${esc(c.name.slice(0,1))}</button>`).join('')}
+function oToolbar(){return `<div class="otb" id="otb"><span class="otl">字色</span>${swatches()}<label class="swc" title="自訂顏色" onmousedown="oKeep()"><input type="color" value="#8a6a3f" onchange="oFmt('color',this.value)">🎨</label><span class="otsep"></span><span class="otl">字級</span>${OSIZE.map(([l,v])=>`<button class="sm" onmousedown="event.preventDefault();oFmt('size','${v}')">${l}</button>`).join('')}<span class="otsep"></span><button class="sm" onmousedown="event.preventDefault();oFmt('bold')"><b>B</b></button><button class="sm" onmousedown="event.preventDefault();oFmt('clear')" title="清除選取文字的格式">清除格式</button></div>`}
+let oSel=null;function oKeep(){const s=getSelection();if(s.rangeCount)oSel=s.getRangeAt(0).cloneRange()}
+function oFmt(kind,val){const ed=OED&&$(`.oed[data-id="${OED}"]`);if(!ed){toast('請先在劇情內容裡選取文字');return}ed.focus();if(oSel&&kind=='color'){const s=getSelection();s.removeAllRanges();s.addRange(oSel);oSel=null}
+ const sel=getSelection();if(!sel.rangeCount||sel.isCollapsed||!ed.contains(sel.anchorNode)){toast('請先選取要調整的文字');return}
+ try{document.execCommand('styleWithCSS',false,true)}catch(e){}
+ if(kind=='color')document.execCommand('foreColor',false,val);
+ else if(kind=='bold')document.execCommand('bold');
+ else if(kind=='clear')document.execCommand('removeFormat');
+ else if(kind=='size'){document.execCommand('styleWithCSS',false,false);document.execCommand('fontSize',false,'7');ed.querySelectorAll('font[size="7"]').forEach(f=>{const sp=document.createElement('span');if(val)sp.style.fontSize=val;while(f.firstChild)sp.appendChild(f.firstChild);f.replaceWith(sp)});ed.querySelectorAll('span[style*="xxx-large"],span[style*="-webkit-xxx-large"]').forEach(s=>{s.style.fontSize=val||''})}
+ oById(OED).html=ed.innerHTML;persist()}
+function renderOutline(){if(!$('#oList'))return;const l=VO(),nums=oNums(l),S=oSet();$('#oFs').value=S.fs;$('#oAuto').checked=S.auto;$('#oList').style.setProperty('--ofs',S.fs+'px');
+ const segs=l.filter(o=>o.type=='seg'),done=segs.filter(o=>o.status=='done').length,doing=segs.filter(o=>o.status=='doing').length;
+ $('#oProg').innerHTML=segs.length?`<div class="obar"><span style="width:${done/segs.length*100}%;background:${OST.done[1]}"></span><span style="width:${doing/segs.length*100}%;background:${OST.doing[1]}"></span></div><span class="note">共 ${segs.length} 段・完成 ${done}・寫作中 ${doing}</span>`:'';
+ $$('#oModeBtns button').forEach(b=>b.classList.toggle('on',b.dataset.m==OMODE));$('#otbWrap').innerHTML=OMODE=='edit'&&l.length?oToolbar():'';
+ if(!l.length){$('#oList').innerHTML='<div class="oempty"><b>還沒有大綱</b><p>可以按「＋ 段落」一段一段寫，或按「📋 貼上整份大綱」把寫好的大綱一次放進來。<br>人事時地物的情境卡，也可以按「📌 加入大綱」送過來。</p></div>';return}
+ if(OMODE=='read'){$('#oList').innerHTML=`<article class="odoc"><h1>${esc(ST.curWork&&ST.curWork!='__none'?workTitle():'劇情大綱')}</h1>${ST.curWork&&ST.curWork!='__none'?'<p class="osubt">劇情大綱</p>':''}${l.map(o=>o.type=='ch'?`<h2 class="och">${esc(o.title||'（未命名章節）')}</h2>`:`<div class="oseg"><div class="ohd"><span class="ono">${nums[o.id]}</span><b>${esc(o.title||'第 '+nums[o.id]+' 段')}</b><span class="ost" style="--c:${OST[o.status||'todo'][1]}">${OST[o.status||'todo'][0]}</span></div>${o.time||o.who.length?`<p class="ometa">${o.time?'🕰 '+esc(o.time):''}${o.time&&o.who.length?'　':''}${o.who.length?'👥 '+o.who.map(id=>{const c=charById(id);return c?`<span style="color:${txtColor(c.color)};font-weight:bold">${esc(c.name)}</span>`:''}).filter(Boolean).join('、'):''}</p>`:''}<div class="obody">${autoColorHTML(o.html)}</div>${o.note?`<p class="onote">✎ ${esc(o.note).replace(/\n/g,'<br>')}</p>`:''}</div>`).join('')}</article>`;return}
+ const chars=VC();
+ $('#oList').innerHTML=l.map((o,i)=>{const mv=`<button class="sm ghost" onclick="oMove('${o.id}',-1)" ${i?'':'disabled'} title="上移">↑</button><button class="sm ghost" onclick="oMove('${o.id}',1)" ${i<l.length-1?'':'disabled'} title="下移">↓</button><button class="sm ghost" onclick="armed(this,()=>oDel('${o.id}'))" title="刪除">✕</button>`;
+  if(o.type=='ch')return `<div class="och-e" draggable="true" data-id="${o.id}"><span class="grip" title="拖曳排序">⠿</span><input class="oti ch" data-ot="${o.id}" value="${esc(o.title)}" placeholder="章節標題，例：第一章　雨季" oninput="oById('${o.id}').title=this.value;persist()"><span class="obtns">${mv}</span></div>`;
+  const st=OST[o.status||'todo'];
+  return `<div class="ocard" draggable="true" data-id="${o.id}" style="--sc:${st[1]}"><div class="ohd"><span class="grip" title="拖曳排序">⠿</span><span class="ono">${nums[o.id]}</span><input class="oti" data-ot="${o.id}" value="${esc(o.title)}" placeholder="段落標題（選填）" oninput="oById('${o.id}').title=this.value;persist()"><select class="ostsel" onchange="oById('${o.id}').status=this.value;persist();renderOutline()">${Object.entries(OST).map(([k,[n]])=>`<option value="${k}" ${k==(o.status||'todo')?'selected':''}>${n}</option>`).join('')}</select><span class="obtns">${mv}</span></div>
+  <div class="ometa-e"><input value="${esc(o.time)}" placeholder="🕰 時間點（選填）" oninput="oById('${o.id}').time=this.value;persist()">${chars.length?`<span class="owho">${chars.map(c=>`<button class="pchip sm2 ${o.who.includes(c.id)?'on':''}" onclick="oWho('${o.id}','${c.id}')" style="--c:${c.color||'#8a6a3f'}">${esc(c.name||'？')}</button>`).join('')}</span>`:''}</div>
+  <div class="oed" contenteditable="true" data-id="${o.id}" data-ph="劇情內容……選取文字後，可以用上方工具列改顏色、字級">${oClean(o.html)}</div>
+  <details class="onotes" ${o.note?'open':''}><summary>伏筆／備註</summary><textarea rows="2" oninput="oById('${o.id}').note=this.value;persist()">${esc(o.note)}</textarea></details>
+  <div class="oins"><button class="sm ghost" onclick="oAdd('seg','${o.id}')">＋ 在下面加段落</button><button class="sm ghost" onclick="oAdd('ch','${o.id}')">＋ 章節標題</button></div></div>`}).join('');
+ $$('#oList .oed').forEach(ed=>{ed.onfocus=()=>{OED=ed.dataset.id};ed.oninput=()=>{oById(ed.dataset.id).html=ed.innerHTML;persist()};ed.onpaste=e=>{e.preventDefault();const t=(e.clipboardData||window.clipboardData).getData('text/plain');document.execCommand('insertText',false,t)}});
+ $$('#oList [draggable]').forEach(el=>{el.ondragstart=e=>{if(!e.target.classList||!(e.target===el)){}const a=document.activeElement;if(a&&el.contains(a)&&a!==document.body&&/INPUT|TEXTAREA|SELECT/.test(a.tagName)||(a&&a.isContentEditable&&el.contains(a))){e.preventDefault();return}e.dataTransfer.setData('text/plain',el.dataset.id);el.classList.add('dragging')};el.ondragend=()=>el.classList.remove('dragging');el.ondragover=e=>{e.preventDefault();el.classList.add('dragover')};el.ondragleave=()=>el.classList.remove('dragover');el.ondrop=e=>{e.preventDefault();el.classList.remove('dragover');const from=e.dataTransfer.getData('text/plain');if(!from||from==el.dataset.id)return;const it=oById(from);if(!it)return;ST.outline=ST.outline.filter(x=>x.id!=from);ST.outline.splice(ST.outline.findIndex(x=>x.id==el.dataset.id),0,it);persist();renderOutline()}})}
+function oWho(id,cid){const o=oById(id);o.who=o.who.includes(cid)?o.who.filter(x=>x!=cid):o.who.concat(cid);persist();renderOutline()}
+function oMode(m){OMODE=m;renderOutline()}
+/* 貼上整份大綱 */
+const RX_CH=/^\s*(#{1,3}\s*\S|第\s*[一二三四五六七八九十百零〇兩\d]+\s*[章卷部幕篇]|Chapter\s*\d+|Part\s*\d+|序章|楔子|終章|尾聲|番外)/i;
+const RX_SEG=/^\s*(\d+\s*[\.、．)）]|[一二三四五六七八九十]+\s*[、．.]|[（(]\s*\d+\s*[)）]|第\s*[一二三四五六七八九十\d]+\s*[段節場幕]|[-•・*＊●○◆]\s+)/;
+function splitTitle(t){const m=/^(.{1,16}?)[：:]\s*(.+)$/.exec(t);if(m)return{type:'seg',title:m[1].trim(),body:m[2].trim()};return t.length<=16?{type:'seg',title:t,body:''}:{type:'seg',title:'',body:t}}
+function oParse(text,mode){const lines=text.replace(/\r/g,'').split('\n'),out=[];let cur=null;const flush=()=>{if(cur){cur.body=cur.body.replace(/\n+$/,'');if(cur.title||cur.body)out.push(cur)}cur=null};
+ const strip=s=>s.replace(/^\s*#{1,3}\s*/,'').trim(),stripSeg=s=>s.replace(RX_SEG,'').trim();
+ if(mode=='line'){lines.map(s=>s.trim()).filter(Boolean).forEach(s=>out.push(RX_CH.test(s)?{type:'ch',title:strip(s)}:{type:'seg',title:'',body:stripSeg(s)}));return out}
+ for(const raw of lines){const s=raw.trim();
+  if(!s){if(mode=='blank'||mode=='auto'){flush()}continue}
+  if(RX_CH.test(s)){flush();out.push({type:'ch',title:strip(s)});continue}
+  if(mode=='auto'&&RX_SEG.test(s)){flush();cur=splitTitle(stripSeg(s));continue}
+  if(!cur){cur={type:'seg',title:'',body:''};if(s.length<=24&&mode=='blank'){cur.title=s;continue}}
+  cur.body+=(cur.body?'\n':'')+s}
+ flush();return out}
+function oPasteOpen(){$('#mTitle').textContent='貼上整份大綱';$('#mBody').innerHTML=`<p class="note">把寫好的大綱貼在下面，工具會自動切成段落，先預覽，確認後才會加入。「第一章」「# 標題」這類開頭會變成章節標題；「1.」「一、」「・」開頭，或用空白行隔開的，會變成一段一段。</p>
+ <textarea id="opIn" rows="9" placeholder="例：&#10;第一章　雨季&#10;1. 初次見面：在律師事務所的電梯裡……&#10;2. 她的偏頭痛發作，他默默遞了止痛藥……&#10;&#10;第二章　靠近&#10;3. ……"></textarea>
+ <div class="row" style="margin:8px 0"><label><span class="lab">切段方式</span><select id="opMode"><option value="auto">自動判斷（推薦）</option><option value="blank">用空白行分段</option><option value="line">每一行就是一段</option></select></label><label><input type="checkbox" id="opRep"> 取代目前的大綱（不勾＝加在最後面）</label></div>
+ <div id="opPrev" class="oprev"></div><p><button class="big" id="opOk" disabled>加入大綱</button></p>`;$('#modal').classList.add('open');
+ const upd=()=>{const r=oParse($('#opIn').value,$('#opMode').value);const ns=r.filter(x=>x.type=='seg').length;$('#opPrev').innerHTML=r.length?`<p class="lab">預覽：${r.filter(x=>x.type=='ch').length} 個章節、${ns} 段</p>`+r.map(x=>x.type=='ch'?`<div class="opch">${esc(x.title)}</div>`:`<div class="opseg">${x.title?`<b>${esc(x.title)}</b>`:''}${x.title&&x.body?'<br>':''}${esc(x.body).replace(/\n/g,'<br>')}</div>`).join(''):'';$('#opOk').disabled=!r.length;$('#opOk').textContent=r.length?`加入大綱（${r.length} 項）`:'加入大綱'};
+ $('#opIn').oninput=upd;$('#opMode').onchange=upd;
+ $('#opOk').onclick=()=>{const r=oParse($('#opIn').value,$('#opMode').value);if($('#opRep').checked){const vis=new Set(VO().map(o=>o.id));ST.outline=ST.outline.filter(o=>!vis.has(o.id))}r.forEach(x=>ST.outline.push(newOutline(x.type,{title:x.title||'',html:esc(x.body||'').replace(/\n/g,'<br>')})));persist();closeModal();OMODE='edit';renderOutline();toast(`已加入 ${r.length} 項`)}}
+function sceneToOutline(id){const s=scById(id);const body=[s.theme?'寫作主題：'+s.theme:'',scSum(s),s.v.trope?'梗：'+s.v.trope:'',s.note||''].filter(Boolean).join('\n');ST.outline.push(newOutline('seg',{title:s.name,html:esc(body).replace(/\n/g,'<br>'),who:(s.v.pplIds||[]).filter(x=>charById(x))}));persist();toast('已加入劇情大綱')}
+/* 文字檔 */
+function outlinePlain(){const l=VO(),nums=oNums(l);const L=[];l.forEach(o=>{if(o.type=='ch'){L.push('',`━━━━ ${o.title||'（未命名章節）'} ━━━━`,'');return}L.push(`【第 ${nums[o.id]} 段】${o.title||''}${o.status&&o.status!='todo'?`（${OST[o.status][0]}）`:''}`);const meta=[o.time&&'時間：'+o.time,o.who.length&&'出場：'+o.who.map(id=>(charById(id)||{}).name).filter(Boolean).join('、')].filter(Boolean).join('｜');if(meta)L.push(meta);const b=plain(o.html).trim();if(b)L.push(b);if(o.note)L.push('伏筆／備註：'+o.note);L.push('')});return L.join('\n').replace(/^\n+/,'')}
+function outlineTxt(){if(!VO().length)return toast('還沒有大綱');showText(`《${workTitle()}》劇情大綱\n\n`+outlinePlain()+`\n（${TOOL}）`,workTitle()+'_劇情大綱')}
+/* PDF：在瀏覽器裡把每一頁排版成圖片，再組成 A4 PDF */
+function runsOf(html,base){const d=document.createElement('div');d.innerHTML=autoColorHTML(html);const R=[];const walk=(n,st)=>{n.childNodes.forEach(c=>{if(c.nodeType==3){R.push({t:c.nodeValue,...st});return}if(c.nodeType!=1)return;if(c.tagName=='BR'){R.push({t:'\n',...st});return}const s={...st};if(c.tagName=='B')s.b=1;if(c.tagName=='I')s.i=1;if(c.style.color)s.c=c.style.color;if(c.style.fontWeight=='bold')s.b=1;if(c.style.fontSize){const v=c.style.fontSize;s.z=v.endsWith('em')?st.z*parseFloat(v):v.endsWith('px')?parseFloat(v)*(base/16):st.z}walk(c,s)})};walk(d,{z:base,c:'#2e261c',b:0,i:0});return R}
+function layoutRuns(x,R,w,lh){const lines=[];let line=[],lw=0,lmax=0;const push=()=>{lines.push({parts:line,h:Math.max(lmax,R.length?R[0].z:16)*lh});line=[];lw=0;lmax=0};
+ for(const r of R){if(r.t=='\n'){if(!lmax)lmax=r.z;push();continue}x.font=`${r.i?'italic ':''}${r.b?'bold ':''}${r.z}px ${FONT}`;for(const tk of tokens(r.t)){const tw=x.measureText(tk).width;if(lw+tw>w&&lw>0){if(/^\s+$/.test(tk))continue;push()}if(!lw&&/^\s+$/.test(tk))continue;if(tw>w){for(const ch of tk){const cw=x.measureText(ch).width;if(lw+cw>w&&lw>0)push();line.push({...r,t:ch,w:cw});lw+=cw;lmax=Math.max(lmax,r.z)}continue}line.push({...r,t:tk,w:tw});lw+=tw;lmax=Math.max(lmax,r.z)}}
+ if(line.length)push();return lines}
+async function outlinePages(){const l=VO(),nums=oNums(l),fs=oSet().fs,W=1240,H=1754,M=110,CW=W-2*M,base=fs*1.6;
+ const pages=[];let c,x,y;const np=()=>{c=document.createElement('canvas');c.width=W;c.height=H;x=c.getContext('2d');x.fillStyle='#fffdf9';x.fillRect(0,0,W,H);x.fillStyle='#E0D3BC';x.fillRect(0,0,W,14);pages.push(c);y=M};
+ const need=h=>{if(y+h>H-M-20)np()};np();
+ const title=ST.curWork&&ST.curWork!='__none'?workTitle():'劇情大綱';x.fillStyle='#3d3226';x.font=`bold ${base*2}px ${FONT}`;wrap(x,title,CW).forEach(t=>{x.fillText(t,M,y+base*1.9);y+=base*2.5});if(title!='劇情大綱'){x.fillStyle='#8a6a3f';x.font=`${base}px ${FONT}`;x.fillText('劇 情 大 綱',M,y+base*1.0);y+=base*1.7}x.fillStyle='#E0D3BC';x.fillRect(M,y+8,CW,3);y+=base*1.4;
+ for(const o of l){if(o.type=='ch'){need(base*3.4);y+=base*.9;x.font=`bold ${base*1.35}px ${FONT}`;x.fillStyle='#8a6a3f';wrap(x,o.title||'（未命名章節）',CW).forEach(t=>{x.fillText(t,M,y+base*1.3);y+=base*1.8});x.fillStyle='#e3d6bf';x.fillRect(M,y+2,CW,2);y+=base*.9;continue}
+  const st=OST[o.status||'todo'];need(base*3.2);
+  x.font=`bold ${base*.75}px ${FONT}`;const n=String(nums[o.id]);x.fillStyle='#8a6a3f';x.beginPath();x.arc(M+base*.6,y+base*.62,base*.6,0,7);x.fill();x.fillStyle='#fff';x.textAlign='center';x.fillText(n,M+base*.6,y+base*.88);x.textAlign='left';
+  x.font=`bold ${base*1.05}px ${FONT}`;x.fillStyle='#2e261c';const tl=wrap(x,o.title||('第 '+n+' 段'),CW-base*1.6-base*4);tl.forEach((t,i)=>x.fillText(t,M+base*1.6,y+base*1.0+i*base*1.4));
+  x.font=`bold ${base*.62}px ${FONT}`;const sw=x.measureText(st[0]).width+base*.9;x.fillStyle=st[1];x.beginPath();x.roundRect?x.roundRect(W-M-sw,y+base*.15,sw,base*.95,base*.47):x.rect(W-M-sw,y+base*.15,sw,base*.95);x.fill();x.fillStyle='#fff';x.fillText(st[0],W-M-sw+base*.45,y+base*.82);
+  y+=tl.length*base*1.4+base*.35;
+  if(o.time||o.who.length){x.font=`${base*.72}px ${FONT}`;let xx=M+base*1.6;const put=(t,col,b)=>{x.font=`${b?'bold ':''}${base*.72}px ${FONT}`;x.fillStyle=col;x.fillText(t,xx,y+base*.75);xx+=x.measureText(t).width};if(o.time)put('時間：'+o.time+(o.who.length?'　':''),'#8a7a62');if(o.who.length){put('出場：','#8a7a62');o.who.map(id=>charById(id)).filter(Boolean).forEach((ch,i)=>{if(i)put('、','#8a7a62');put(ch.name,txtColor(ch.color),1)})}y+=base*1.15}
+  const ls=layoutRuns(x,runsOf(o.html,base*.82),CW-base*1.6,1.7);
+  for(const ln of ls){need(ln.h);let xx=M+base*1.6;for(const p of ln.parts){x.font=`${p.i?'italic ':''}${p.b?'bold ':''}${p.z}px ${FONT}`;x.fillStyle=p.c;x.fillText(p.t,xx,y+ln.h*.75);xx+=p.w}y+=ln.h}
+  if(o.note){x.font=`${base*.7}px ${FONT}`;const nl=wrap(x,'✎ '+o.note,CW-base*1.6-24);need(nl.length*base*1.15+20);x.fillStyle='#f3ece0';x.fillRect(M+base*1.6,y+6,CW-base*1.6,nl.length*base*1.15+16);x.fillStyle='#6b5a43';nl.forEach((t,i)=>x.fillText(t,M+base*1.6+12,y+6+base*.95+i*base*1.15));y+=nl.length*base*1.15+30}
+  y+=base*1.1}
+ pages.forEach((p,i)=>{const g=p.getContext('2d');g.fillStyle='#b3a385';g.font=`22px ${FONT}`;g.textAlign='center';g.fillText(`${title}・劇情大綱　${i+1} / ${pages.length}`,W/2,H-50);g.textAlign='left'});return pages}
+function pdfFromCanvases(cs){const enc=new TextEncoder(),parts=[],offs=[];let len=0;const add=b=>{if(typeof b=='string')b=enc.encode(b);parts.push(b);len+=b.length};const obj=(n,body)=>{offs[n]=len;add(`${n} 0 obj\n`);body.forEach(add);add('\nendobj\n')};
+ add('%PDF-1.4\n%\xE2\xE3\xCF\xD3\n');const N=cs.length,pw=595.28,ph=841.89;const kids=[];for(let i=0;i<N;i++)kids.push(`${3+i*3} 0 R`);
+ obj(1,['<< /Type /Catalog /Pages 2 0 R >>']);obj(2,[`<< /Type /Pages /Count ${N} /Kids [${kids.join(' ')}] >>`]);
+ cs.forEach((cv,i)=>{const b64=cv.toDataURL('image/jpeg',.9).split(',')[1],bin=atob(b64),img=new Uint8Array(bin.length);for(let k=0;k<bin.length;k++)img[k]=bin.charCodeAt(k);const p=3+i*3,ct=p+1,im=p+2,cmd=`q ${pw} 0 0 ${ph} 0 0 cm /Im0 Do Q`;
+  obj(p,[`<< /Type /Page /Parent 2 0 R /MediaBox [0 0 ${pw} ${ph}] /Resources << /XObject << /Im0 ${im} 0 R >> >> /Contents ${ct} 0 R >>`]);
+  obj(ct,[`<< /Length ${cmd.length} >>\nstream\n${cmd}\nendstream`]);
+  obj(im,[`<< /Type /XObject /Subtype /Image /Width ${cv.width} /Height ${cv.height} /ColorSpace /DeviceRGB /BitsPerComponent 8 /Filter /DCTDecode /Length ${img.length} >>\nstream\n`,img,'\nendstream'])});
+ const n=3+N*3,xo=len;let xr=`xref\n0 ${n}\n0000000000 65535 f \n`;for(let i=1;i<n;i++)xr+=String(offs[i]).padStart(10,'0')+' 00000 n \n';add(xr+`trailer\n<< /Size ${n} /Root 1 0 R >>\nstartxref\n${xo}\n%%EOF`);return new Blob(parts,{type:'application/pdf'})}
+async function outlinePDF(){if(!VO().length)return toast('還沒有大綱');toast('PDF 產生中…');const pages=await outlinePages();const blob=pdfFromCanvases(pages);const url=URL.createObjectURL(blob),name=fileName(workTitle()+'_劇情大綱')+'.pdf';
+ $('#mTitle').textContent='下載 PDF';$('#mBody').innerHTML=`<p class="note">共 ${pages.length} 頁（A4）。若按了沒有反應（例如在某些預覽環境中），請改用「🖨️ 列印／另存 PDF」，或下載文字檔。</p><p><button class="big" id="mDl">⬇️ 下載 PDF</button></p><div class="opdfprev">${pages.slice(0,3).map(p=>`<img src="${p.toDataURL('image/jpeg',.7)}" alt="">`).join('')}</div>${pages.length>3?`<p class="note">（預覽前 3 頁）</p>`:''}`;$('#mDl').onclick=()=>{const a=document.createElement('a');a.href=url;a.download=name;document.body.appendChild(a);a.click();a.remove()};$('#modal').classList.add('open')}
+function outlinePrint(){if(!VO().length)return toast('還沒有大綱');const m=OMODE;OMODE='read';renderOutline();const pa=$('#printArea');pa.innerHTML=$('#oList').innerHTML;pa.style.setProperty('--ofs',oSet().fs+'px');OMODE=m;renderOutline();try{window.print()}catch(e){toast('這個環境無法列印，請改用下載 PDF')}}
 
 </script>
 </body>
