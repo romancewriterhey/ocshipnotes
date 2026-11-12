@@ -163,6 +163,19 @@ button.ghost{background:transparent;border-color:transparent;color:var(--sub)}bu
 .opdfprev{display:flex;gap:8px;overflow-x:auto}.opdfprev img{width:200px;flex-shrink:0;border:1px solid var(--line)}
 #printArea{display:none}
 @media print{body::before{display:none!important}body>*{display:none!important}#printArea{display:block!important;font-size:var(--ofs)}#printArea .odoc{box-shadow:none;border:0;padding:0;margin:0}*{-webkit-print-color-adjust:exact;print-color-adjust:exact}.oseg{break-inside:avoid}}
+
+.okind{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:6px 0 4px}
+.okind button{display:flex;flex-direction:column;align-items:flex-start;text-align:left;background:var(--card);border:1.5px solid var(--line);border-radius:14px;padding:10px 14px;margin:0}
+.okind button b{font-size:1rem}.okind button span{font-size:.8rem;color:var(--sub)}
+.okind button.on{border-color:#8a6a3f;background:var(--soft);color:var(--ink);box-shadow:inset 0 0 0 1px #8a6a3f}.okind button.on b{color:var(--deep)}
+.bblock{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:12px 14px;margin:12px 0}
+.bhd{display:flex;align-items:center;gap:8px;font-size:1.08rem}
+.bno{min-width:28px;height:28px;border-radius:99px;background:var(--main);color:#3d3226;display:inline-flex;align-items:center;justify-content:center;font-size:.85rem;font-weight:700}
+.bblock .oed{margin-left:36px}.bblock .oed.big{margin-left:0;min-height:14em}
+@media(max-width:560px){.bblock .oed{margin-left:0}}
+.bcorebox{margin-top:12px}
+.bcore{margin:.3em 0}.bcore .bl{display:block;font-size:.75em;color:#8a7a62;font-weight:700;letter-spacing:.05em}
+.obody.nb{margin-left:0}
 .conf{display:flex;align-items:center;gap:8px}
 .conf b{min-width:2.5em}
 </style>
@@ -201,7 +214,7 @@ button.ghost{background:transparent;border-color:transparent;color:var(--sub)}bu
 <p><b>④ 畫關係表。</b>「人物關係表」可以一鍵帶入人物或 CP，拖曳位置、換代表色、新增旁支人物，再下載成圖片。</p>
 <p><b>⑤ 排時間軸。</b>「時間軸」可以從人物的出生年、CP 的認識／交往／結婚年份一鍵帶入，也能自己加事件；有填出生年的人物，會自動算出當時幾歲。</p>
 <p><b>⑥ 動手寫。</b>「短文練習題」抽題目；按題目旁的「🎬」可以把題目帶到「人事時地物」，搭配已存好的人物抽出完整場景；如果人物有深化筆記，「人物提示」會隨機帶出一則，讓角色的個性直接進到場景裡。</p>
-<p><b>⑦ 整理大綱。</b>「劇情大綱」可以一段一段新增，也可以按「📋 貼上整份大綱」把寫好的大綱一次放進來，工具會自動切段並先讓你預覽。選取文字後可以套用人物代表色、調整字級；勾選「人物名字自動套上代表色」，閱讀模式和輸出時名字會自動上色。可以輸出成文字檔或 PDF。</p>
+<p><b>⑦ 整理大綱。</b>最上方可以切換「🧭 簡要大綱」和「📑 章節細綱」：簡要大綱只整理大方向，可以自由書寫，或用起承轉合、三幕劇、感情線五階段當引導；想法成熟後按「轉成章節細綱」接著細寫。「劇情大綱」可以一段一段新增，也可以按「📋 貼上整份大綱」把寫好的大綱一次放進來，工具會自動切段並先讓你預覽。選取文字後可以套用人物代表色、調整字級；勾選「人物名字自動套上代表色」，閱讀模式和輸出時名字會自動上色。可以輸出成文字檔或 PDF。</p>
 <p><b>作品分組：</b>最上方的「📁 作品」可以切換作品，各頁只會顯示那部作品的人物、CP、關係表、時間軸和情境卡；在「管理作品」新增、改名，或把未分類的內容一次收進某部作品。人物和 CP 的編輯區上方可以勾選所屬作品，同一位人物可以屬於好幾部作品。「📚 匯出設定集」會把目前作品的全部內容整理成一份文字檔。</p>
 <p><b>故事年份與大綱：</b>在「時間軸」設定正文年份，有填出生年的人物年齡會自動換算。存下來的情境卡會依序排成劇情大綱，可以調整順序並匯出。</p>
 <p><b>備份提醒：</b>超過兩週沒有下載備份時，頁面上方會出現提醒。</p>
@@ -296,15 +309,16 @@ button.ghost{background:transparent;border-color:transparent;color:var(--sub)}bu
 
 <section id="outline">
 <h2>劇情大綱</h2>
-<p class="note">手動一段一段整理，或把寫好的大綱整份貼進來。選取文字可以改顏色和字級；切到「📖 閱讀」可以看整理好的樣子。</p>
+<div class="okind" id="oKindBtns"><button data-k="brief" onclick="oSet().kind='brief';persist();renderOutline()"><b>🧭 簡要大綱</b><span>大方向、初步想法</span></button><button data-k="detail" onclick="oSet().kind='detail';persist();renderOutline()"><b>📑 章節細綱</b><span>一章一段的細節</span></button></div>
+<p class="note" id="oKindNote"></p>
 <div class="card otop">
-<div class="row"><button class="big" onclick="oAdd('seg')">＋ 段落</button><button onclick="oAdd('ch')">＋ 章節標題</button><button onclick="oPasteOpen()">📋 貼上整份大綱</button><span style="flex:1"></span><span id="oModeBtns" class="seg2"><button data-m="edit" onclick="oMode('edit')">✏️ 編輯</button><button data-m="read" onclick="oMode('read')">📖 閱讀</button></span></div>
+<div class="row"><span id="oDetailBtns" class="row"><button class="big" onclick="oAdd('seg')">＋ 段落</button><button onclick="oAdd('ch')">＋ 章節標題</button><button onclick="oPasteOpen()">📋 貼上整份大綱</button></span><span id="oBriefBtns" class="row hide"><label class="row" style="gap:6px"><span class="lab" style="margin:0">架構</span><select id="bTpl" onchange="briefTpl(this.value)" style="width:auto"><option value="free">自由書寫</option><option value="kst">起承轉合</option><option value="act">三幕劇</option><option value="love">感情線五階段</option></select></label><button onclick="armed(this,briefToDetail)">📑 轉成章節細綱</button></span><span style="flex:1"></span><span id="oModeBtns" class="seg2"><button data-m="edit" onclick="oMode('edit')">✏️ 編輯</button><button data-m="read" onclick="oMode('read')">📖 閱讀</button></span></div>
 <div class="row" style="margin-top:10px"><label class="conf" style="flex:1;min-width:220px"><span style="white-space:nowrap">內文字級</span><input type="range" id="oFs" min="13" max="24" step="1" oninput="oSet().fs=+this.value;persist();renderOutline()"></label><label style="font-size:.9rem"><input type="checkbox" id="oAuto" onchange="oSet().auto=this.checked;persist();renderOutline()"> 人物名字自動套上代表色<span class="note">（閱讀模式與輸出時）</span></label></div>
 <div id="oProg" style="margin-top:8px"></div>
 </div>
 <div id="otbWrap" class="otbwrap"></div>
 <div id="oList"></div>
-<div class="actbar" style="position:static"><button onclick="outlineTxt()">📄 文字檔</button> <button onclick="outlinePDF()">📕 下載 PDF</button> <button onclick="outlinePrint()">🖨️ 列印／另存 PDF</button> <button onclick="if(VO().length)copyText(outlinePlain());else toast('還沒有大綱')">📋 複製文字</button></div>
+<div class="actbar" style="position:static"><button onclick="outlineTxt()">📄 文字檔</button> <button onclick="outlinePDF()">📕 下載 PDF</button> <button onclick="outlinePrint()">🖨️ 列印／另存 PDF</button> <button onclick="if(oSet().kind=='brief'){if(briefHas())copyText(briefPlain());else toast('還沒有內容')}else if(VO().length)copyText(outlinePlain());else toast('還沒有大綱')">📋 複製文字</button></div>
 <p class="note">「📕 下載 PDF」會照畫面上的顏色與字級排成 A4 頁面；「🖨️ 列印／另存 PDF」用瀏覽器的列印功能，存出來的文字可以選取、複製。</p>
 </section>
 
@@ -648,6 +662,7 @@ function exportBook(){const sy=getSY();const L=[];L.push(`《${workTitle()}》�
  if(ps.length){L.push('\n==============================\nCP\n==============================');ps.forEach(p=>L.push(noFoot(cpText(p))+'\n'))}
  if(ms.length){L.push('\n==============================\n人物關係表\n==============================');ms.forEach(m=>{L.push(`【${m.name}】`);m.edges.forEach(e=>{const a=m.nodes.find(n=>n.id==e.a),b=m.nodes.find(n=>n.id==e.b);if(a&&b)L.push(`・${nName(a)} ${['—','→','↔'][e.dir]} ${nName(b)}${e.label?'：'+e.label:''}`)});const lone=m.nodes.filter(n=>!m.edges.some(e=>e.a==n.id||e.b==n.id));if(lone.length)L.push('・其他人物：'+lone.map(nName).join('、'));L.push('')})}
  if(es.length){L.push('\n==============================\n時間軸\n==============================');es.forEach(e=>{const[a,b]=tlLine(e);L.push(`${a}｜${b}`)})}
+ if(briefHas()){L.push('\n==============================\n故事大綱\n==============================');L.push(briefPlain())}
  if(os.length){L.push('\n==============================\n劇情大綱\n==============================');L.push(outlinePlain())}
  if(ss.length){L.push('\n==============================\n情境卡\n==============================');ss.forEach((x,i)=>L.push(outlineItem(x,i)))}
  if(L.length<3)return toast('這個作品還沒有內容');showText(L.join('\n')+`\n\n（${TOOL}）`,workTitle()+'_設定集','整份設定集（人物、CP、關係表、時間軸、劇情大綱）。可以下載成 .txt，或複製貼到雲端文件。')}
@@ -913,7 +928,7 @@ function tlImg(){const l=tlFiltered();if(!l.length)return toast('還沒有事件
 
 /* ===== 備份 ===== */
 function backupDL(){ST.lastBackup=Date.now();persist();checkBackup();const t=JSON.stringify({tool:'oc-cp-notebook',v:1,date:new Date().toISOString(),data:ST});const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([t],{type:'application/json'}));a.download='OC設定手帳備份_'+new Date().toISOString().slice(0,10)+'.json';document.body.appendChild(a);a.click();a.remove();toast('開始下載備份檔')}
-function backupLoad(inp){const f=inp.files[0];inp.value='';if(!f)return;const fr=new FileReader();fr.onload=()=>{try{const j=JSON.parse(fr.result),d=j.data||j;if(!Array.isArray(d.chars))throw 0;const mode=$('input[name=bkm]:checked').value;if(mode=='replace')ST=Object.assign(ST,d);else{['works','chars','cps','maps','scenes','events','outline'].forEach(k=>{ST[k]=ST[k]||[];const have=new Set(ST[k].map(x=>x.id));(d[k]||[]).forEach(x=>{if(!have.has(x.id))ST[k].push(x)})});['myQ','myP'].forEach(k=>{ST[k]=[...new Set((ST[k]||[]).concat(d[k]||[]))]})}persist();renderAll();$('#bkmsg').textContent=`還原完成：人物 ${ST.chars.length}、CP ${ST.cps.length}、關係表 ${ST.maps.length}、時間軸事件 ${ST.events.length}、情境卡 ${ST.scenes.length}`}catch(e){$('#bkmsg').textContent='這個檔案看起來不是本工具的備份檔。'}};fr.readAsText(f)}
+function backupLoad(inp){const f=inp.files[0];inp.value='';if(!f)return;const fr=new FileReader();fr.onload=()=>{try{const j=JSON.parse(fr.result),d=j.data||j;if(!Array.isArray(d.chars))throw 0;const mode=$('input[name=bkm]:checked').value;if(mode=='replace')ST=Object.assign(ST,d);else{['works','chars','cps','maps','scenes','events','outline'].forEach(k=>{ST[k]=ST[k]||[];const have=new Set(ST[k].map(x=>x.id));(d[k]||[]).forEach(x=>{if(!have.has(x.id))ST[k].push(x)})});['myQ','myP'].forEach(k=>{ST[k]=[...new Set((ST[k]||[]).concat(d[k]||[]))]});if(d.briefs&&typeof d.briefs=='object'){ST.briefs=ST.briefs||{};Object.entries(d.briefs).forEach(([k,v])=>{if(!ST.briefs[k]||!briefHas(ST.briefs[k]))ST.briefs[k]=v})}}persist();renderAll();$('#bkmsg').textContent=`還原完成：人物 ${ST.chars.length}、CP ${ST.cps.length}、關係表 ${ST.maps.length}、時間軸事件 ${ST.events.length}、情境卡 ${ST.scenes.length}`}catch(e){$('#bkmsg').textContent='這個檔案看起來不是本工具的備份檔。'}};fr.readAsText(f)}
 function wipeAll(){ST={works:[],curWork:'',chars:[],cps:[],maps:[],scenes:[],events:[],outline:[],oset:null,myQ:[],myP:[],curChar:null,curCP:null,curMap:null};DEEP={cid:'',slots:[],cats:[]};DR={slots:[],cats:[]};SC={v:{},lock:{},sets:[],chars:[],tropes:[],theme:'',note:''};persist();renderAll();rollDeep();rollDrill();toast('已清除全部資料')}
 async function showUsage(){try{const e=await navigator.storage.estimate();$('#usage').textContent=(ST.lastBackup?`上次下載備份：${new Date(ST.lastBackup).toLocaleDateString('zh-TW')}。`:'還沒有下載過備份。')+`目前約使用 ${(e.usage/1048576).toFixed(1)} MB${e.quota?`（瀏覽器可用上限約 ${(e.quota/1048576/1024).toFixed(1)} GB）`:''}`}catch(e){}}
 
@@ -976,15 +991,18 @@ function oNums(l){let n=0;const m={};l.forEach(o=>{if(o.type=='seg')m[o.id]=++n}
 function swatches(){return VC().filter(c=>c.name).map(c=>`<button class="sw" title="套用「${esc(c.name)}」的代表色" style="--c:${c.color||'#8a6a3f'}" onmousedown="event.preventDefault();oFmt('color','${txtColor(c.color||'#8a6a3f')}')">${esc(c.name.slice(0,1))}</button>`).join('')}
 function oToolbar(){return `<div class="otb" id="otb"><span class="otl">字色</span>${swatches()}<label class="swc" title="自訂顏色" onmousedown="oKeep()"><input type="color" value="#8a6a3f" onchange="oFmt('color',this.value)">🎨</label><span class="otsep"></span><span class="otl">字級</span>${OSIZE.map(([l,v])=>`<button class="sm" onmousedown="event.preventDefault();oFmt('size','${v}')">${l}</button>`).join('')}<span class="otsep"></span><button class="sm" onmousedown="event.preventDefault();oFmt('bold')"><b>B</b></button><button class="sm" onmousedown="event.preventDefault();oFmt('clear')" title="清除選取文字的格式">清除格式</button></div>`}
 let oSel=null;function oKeep(){const s=getSelection();if(s.rangeCount)oSel=s.getRangeAt(0).cloneRange()}
-function oFmt(kind,val){const ed=OED&&$(`.oed[data-id="${OED}"]`);if(!ed){toast('請先在劇情內容裡選取文字');return}ed.focus();if(oSel&&kind=='color'){const s=getSelection();s.removeAllRanges();s.addRange(oSel);oSel=null}
+function edSave(ed){if(ed.dataset.id){const o=oById(ed.dataset.id);if(o)o.html=ed.innerHTML}else if(ed.dataset.bk){curBrief().blocks[ed.dataset.bk]=ed.innerHTML}persist()}
+function oFmt(kind,val){const ed=OED&&document.body.contains(OED)?OED:null;if(!ed){toast('請先在劇情內容裡選取文字');return}ed.focus();if(oSel&&kind=='color'){const s=getSelection();s.removeAllRanges();s.addRange(oSel);oSel=null}
  const sel=getSelection();if(!sel.rangeCount||sel.isCollapsed||!ed.contains(sel.anchorNode)){toast('請先選取要調整的文字');return}
  try{document.execCommand('styleWithCSS',false,true)}catch(e){}
  if(kind=='color')document.execCommand('foreColor',false,val);
  else if(kind=='bold')document.execCommand('bold');
  else if(kind=='clear')document.execCommand('removeFormat');
  else if(kind=='size'){document.execCommand('styleWithCSS',false,false);document.execCommand('fontSize',false,'7');ed.querySelectorAll('font[size="7"]').forEach(f=>{const sp=document.createElement('span');if(val)sp.style.fontSize=val;while(f.firstChild)sp.appendChild(f.firstChild);f.replaceWith(sp)});ed.querySelectorAll('span[style*="xxx-large"],span[style*="-webkit-xxx-large"]').forEach(s=>{s.style.fontSize=val||''})}
- oById(OED).html=ed.innerHTML;persist()}
+ edSave(ed)}
 function renderOutline(){if(!$('#oList'))return;const l=VO(),nums=oNums(l),S=oSet();$('#oFs').value=S.fs;$('#oAuto').checked=S.auto;$('#oList').style.setProperty('--ofs',S.fs+'px');
+ const kind=S.kind||'detail';$$('#oKindBtns button').forEach(b=>b.classList.toggle('on',b.dataset.k==kind));$('#oDetailBtns').classList.toggle('hide',kind!='detail');$('#oBriefBtns').classList.toggle('hide',kind!='brief');$('#oKindNote').textContent=kind=='brief'?'只整理大方向：不用分章、不用分段，想到什麼先寫下來。想法成熟後，可以一鍵轉成章節細綱。':'一章一段整理細節：段落可以排序、標出場人物與寫作狀態。';
+ if(kind=='brief'){$('#oProg').innerHTML='';$$('#oModeBtns button').forEach(b=>b.classList.toggle('on',b.dataset.m==OMODE));renderBrief();return}
  const segs=l.filter(o=>o.type=='seg'),done=segs.filter(o=>o.status=='done').length,doing=segs.filter(o=>o.status=='doing').length;
  $('#oProg').innerHTML=segs.length?`<div class="obar"><span style="width:${done/segs.length*100}%;background:${OST.done[1]}"></span><span style="width:${doing/segs.length*100}%;background:${OST.doing[1]}"></span></div><span class="note">共 ${segs.length} 段・完成 ${done}・寫作中 ${doing}</span>`:'';
  $$('#oModeBtns button').forEach(b=>b.classList.toggle('on',b.dataset.m==OMODE));$('#otbWrap').innerHTML=OMODE=='edit'&&l.length?oToolbar():'';
@@ -999,7 +1017,8 @@ function renderOutline(){if(!$('#oList'))return;const l=VO(),nums=oNums(l),S=oSe
   <div class="oed" contenteditable="true" data-id="${o.id}" data-ph="劇情內容……選取文字後，可以用上方工具列改顏色、字級">${oClean(o.html)}</div>
   <details class="onotes" ${o.note?'open':''}><summary>伏筆／備註</summary><textarea rows="2" oninput="oById('${o.id}').note=this.value;persist()">${esc(o.note)}</textarea></details>
   <div class="oins"><button class="sm ghost" onclick="oAdd('seg','${o.id}')">＋ 在下面加段落</button><button class="sm ghost" onclick="oAdd('ch','${o.id}')">＋ 章節標題</button></div></div>`}).join('');
- $$('#oList .oed').forEach(ed=>{ed.onfocus=()=>{OED=ed.dataset.id};ed.oninput=()=>{oById(ed.dataset.id).html=ed.innerHTML;persist()};ed.onpaste=e=>{e.preventDefault();const t=(e.clipboardData||window.clipboardData).getData('text/plain');document.execCommand('insertText',false,t)}});
+ bindEds();
+ $$('#oList [draggable]').length;
  $$('#oList [draggable]').forEach(el=>{el.ondragstart=e=>{if(!e.target.classList||!(e.target===el)){}const a=document.activeElement;if(a&&el.contains(a)&&a!==document.body&&/INPUT|TEXTAREA|SELECT/.test(a.tagName)||(a&&a.isContentEditable&&el.contains(a))){e.preventDefault();return}e.dataTransfer.setData('text/plain',el.dataset.id);el.classList.add('dragging')};el.ondragend=()=>el.classList.remove('dragging');el.ondragover=e=>{e.preventDefault();el.classList.add('dragover')};el.ondragleave=()=>el.classList.remove('dragover');el.ondrop=e=>{e.preventDefault();el.classList.remove('dragover');const from=e.dataTransfer.getData('text/plain');if(!from||from==el.dataset.id)return;const it=oById(from);if(!it)return;ST.outline=ST.outline.filter(x=>x.id!=from);ST.outline.splice(ST.outline.findIndex(x=>x.id==el.dataset.id),0,it);persist();renderOutline()}})}
 function oWho(id,cid){const o=oById(id);o.who=o.who.includes(cid)?o.who.filter(x=>x!=cid):o.who.concat(cid);persist();renderOutline()}
 function oMode(m){OMODE=m;renderOutline()}
@@ -1025,14 +1044,50 @@ function oPasteOpen(){$('#mTitle').textContent='貼上整份大綱';$('#mBody').
  $('#opIn').oninput=upd;$('#opMode').onchange=upd;
  $('#opOk').onclick=()=>{const r=oParse($('#opIn').value,$('#opMode').value);if($('#opRep').checked){const vis=new Set(VO().map(o=>o.id));ST.outline=ST.outline.filter(o=>!vis.has(o.id))}r.forEach(x=>ST.outline.push(newOutline(x.type,{title:x.title||'',html:esc(x.body||'').replace(/\n/g,'<br>')})));persist();closeModal();OMODE='edit';renderOutline();toast(`已加入 ${r.length} 項`)}}
 function sceneToOutline(id){const s=scById(id);const body=[s.theme?'寫作主題：'+s.theme:'',scSum(s),s.v.trope?'梗：'+s.v.trope:'',s.note||''].filter(Boolean).join('\n');ST.outline.push(newOutline('seg',{title:s.name,html:esc(body).replace(/\n/g,'<br>'),who:(s.v.pplIds||[]).filter(x=>charById(x))}));persist();toast('已加入劇情大綱')}
+
+/* ===== 簡要大綱 ===== */
+const BTPL={free:['自由書寫',[['f','大綱','想到什麼就寫什麼，不用分段也沒關係……']]],
+ kst:['起承轉合',[['k1','起','故事怎麼開始？誰遇見了誰？'],['k2','承','關係怎麼發展、怎麼靠近？'],['k3','轉','最大的轉折或危機是什麼？'],['k4','合','最後怎麼收尾？']]],
+ act:['三幕劇',[['a1','第一幕：開端','認識角色，發生改變一切的事件'],['a2','第二幕：衝突','阻礙一個接一個，關係受到考驗'],['a3','第三幕：結局','高潮與解決，角色最後變成什麼樣子']]],
+ love:['感情線五階段',[['r1','相遇','兩人怎麼認識？第一印象？'],['r2','靠近','什麼讓他們越走越近？'],['r3','衝突','誤會、阻礙或價值觀的碰撞'],['r4','低谷','最痛的時候'],['r5','和解','怎麼重新走向彼此，或決定分開']]]};
+const BCORE=[['logline','一句話故事','例：怕被丟下的插畫家，和不擅長表達的律師，在雨季裡慢慢學會留下來。'],['feel','想寫的感覺／主題','例：慢熱、療癒、雨天的潮濕感'],['ending','結局方向','例：HE、BE、OE，或還沒決定']];
+function briefKey(){return ST.curWork||'__all'}
+function curBrief(){ST.briefs=ST.briefs&&typeof ST.briefs=='object'&&!Array.isArray(ST.briefs)?ST.briefs:{};const k=briefKey();return ST.briefs[k]||(ST.briefs[k]={tpl:'free',logline:'',feel:'',ending:'',blocks:{}})}
+function briefHas(b){b=b||curBrief();return BCORE.some(([k])=>(b[k]||'').trim())||BTPL[b.tpl][1].some(([k])=>plain(b.blocks[k]||'').trim())}
+function bindEds(){$$('#oList .oed').forEach(ed=>{ed.onfocus=()=>{OED=ed};ed.oninput=()=>edSave(ed);ed.onpaste=e=>{e.preventDefault();const t=(e.clipboardData||window.clipboardData).getData('text/plain');document.execCommand('insertText',false,t)}})}
+function renderBrief(){const b=curBrief(),[tn,blocks]=BTPL[b.tpl]||BTPL.free;$('#bTpl').value=b.tpl;
+ const other=Object.entries(BTPL).filter(([k])=>k!=b.tpl).some(([k,[,bl]])=>bl.some(([bk])=>plain(b.blocks[bk]||'').trim()));
+ if(OMODE=='read'){$('#otbWrap').innerHTML='';if(!briefHas(b)){$('#oList').innerHTML='<div class="oempty"><b>還沒有內容</b><p>切回「✏️ 編輯」開始寫吧。</p></div>';return}
+  $('#oList').innerHTML=`<article class="odoc"><h1>${esc(ST.curWork&&ST.curWork!='__none'?workTitle():'故事大綱')}</h1><p class="osubt">簡要大綱${b.tpl!='free'?'・'+tn:''}</p>${BCORE.filter(([k])=>(b[k]||'').trim()).map(([k,l])=>`<p class="bcore"><span class="bl">${l}</span>${autoColorHTML(esc(b[k]))}</p>`).join('')}${blocks.filter(([k])=>plain(b.blocks[k]||'').trim()).map(([k,l])=>`${b.tpl=='free'?'':`<h2 class="och">${esc(l)}</h2>`}<div class="obody nb">${autoColorHTML(b.blocks[k])}</div>`).join('')}</article>`;return}
+ $('#otbWrap').innerHTML=oToolbar();
+ $('#oList').innerHTML=`<details class="fold bcorebox" ${BCORE.some(([k])=>(b[k]||'').trim())?'open':''}><summary>故事核心（選填）</summary><div class="inner">${BCORE.map(([k,l,ph])=>`<label style="display:block;margin:6px 0"><span class="lab">${l}</span><input value="${esc(b[k]||'')}" placeholder="${esc(ph)}" oninput="curBrief()['${k}']=this.value;persist()"></label>`).join('')}</div></details>`
+ +blocks.map(([k,l,ph],i)=>`<div class="bblock">${b.tpl=='free'?'':`<div class="bhd"><span class="bno">${i+1}</span><b>${esc(l)}</b></div>`}<div class="oed${b.tpl=='free'?' big':''}" contenteditable="true" data-bk="${k}" data-ph="${esc(ph)}">${oClean(b.blocks[k]||'')}</div></div>`).join('')
+ +(other?`<p class="note">切換架構不會刪掉內容：其他架構裡寫過的文字都還保留著，切回去就看得到。</p>`:'');
+ bindEds()}
+function briefTpl(v){curBrief().tpl=v;persist();renderOutline()}
+function briefToDetail(){const b=curBrief(),[,blocks]=BTPL[b.tpl];let n=0;const add=(t,o)=>{ST.outline.push(newOutline(t,o));n++};
+ if(b.tpl=='free'){const items=oParse(plain(b.blocks.f||''),'auto');items.forEach(x=>add(x.type,{title:x.title||'',html:esc(x.body||'').replace(/\n/g,'<br>')}))}
+ else blocks.forEach(([k,l])=>{const h=b.blocks[k]||'';if(!plain(h).trim())return;add('ch',{title:l});add('seg',{title:'',html:oClean(h)})});
+ if(!n)return toast('簡要大綱還沒有內容');oSet().kind='detail';persist();renderOutline();toast(`已轉成章節細綱（${n} 項），簡要大綱也還保留著`)}
+function briefPlain(){const b=curBrief(),[tn,blocks]=BTPL[b.tpl];const L=[`簡要大綱${b.tpl!='free'?'（'+tn+'）':''}`,''];BCORE.forEach(([k,l])=>{if((b[k]||'').trim())L.push(`${l}：${b[k]}`)});if(L.length>2)L.push('');blocks.forEach(([k,l])=>{const t=plain(b.blocks[k]||'').trim();if(!t)return;if(b.tpl!='free')L.push(`【${l}】`);L.push(t,'')});return L.join('\n')}
+
 /* 文字檔 */
 function outlinePlain(){const l=VO(),nums=oNums(l);const L=[];l.forEach(o=>{if(o.type=='ch'){L.push('',`━━━━ ${o.title||'（未命名章節）'} ━━━━`,'');return}L.push(`【第 ${nums[o.id]} 段】${o.title||''}${o.status&&o.status!='todo'?`（${OST[o.status][0]}）`:''}`);const meta=[o.time&&'時間：'+o.time,o.who.length&&'出場：'+o.who.map(id=>(charById(id)||{}).name).filter(Boolean).join('、')].filter(Boolean).join('｜');if(meta)L.push(meta);const b=plain(o.html).trim();if(b)L.push(b);if(o.note)L.push('伏筆／備註：'+o.note);L.push('')});return L.join('\n').replace(/^\n+/,'')}
-function outlineTxt(){if(!VO().length)return toast('還沒有大綱');showText(`《${workTitle()}》劇情大綱\n\n`+outlinePlain()+`\n（${TOOL}）`,workTitle()+'_劇情大綱')}
+function outlineTxt(){if(oSet().kind=='brief'){if(!briefHas())return toast('簡要大綱還沒有內容');return showText(`《${workTitle()}》`+briefPlain()+`\n（${TOOL}）`,workTitle()+'_簡要大綱')}if(!VO().length)return toast('還沒有大綱');showText(`《${workTitle()}》劇情大綱\n\n`+outlinePlain()+`\n（${TOOL}）`,workTitle()+'_劇情大綱')}
 /* PDF：在瀏覽器裡把每一頁排版成圖片，再組成 A4 PDF */
 function runsOf(html,base){const d=document.createElement('div');d.innerHTML=autoColorHTML(html);const R=[];const walk=(n,st)=>{n.childNodes.forEach(c=>{if(c.nodeType==3){R.push({t:c.nodeValue,...st});return}if(c.nodeType!=1)return;if(c.tagName=='BR'){R.push({t:'\n',...st});return}const s={...st};if(c.tagName=='B')s.b=1;if(c.tagName=='I')s.i=1;if(c.style.color)s.c=c.style.color;if(c.style.fontWeight=='bold')s.b=1;if(c.style.fontSize){const v=c.style.fontSize;s.z=v.endsWith('em')?st.z*parseFloat(v):v.endsWith('px')?parseFloat(v)*(base/16):st.z}walk(c,s)})};walk(d,{z:base,c:'#2e261c',b:0,i:0});return R}
 function layoutRuns(x,R,w,lh){const lines=[];let line=[],lw=0,lmax=0;const push=()=>{lines.push({parts:line,h:Math.max(lmax,R.length?R[0].z:16)*lh});line=[];lw=0;lmax=0};
  for(const r of R){if(r.t=='\n'){if(!lmax)lmax=r.z;push();continue}x.font=`${r.i?'italic ':''}${r.b?'bold ':''}${r.z}px ${FONT}`;for(const tk of tokens(r.t)){const tw=x.measureText(tk).width;if(lw+tw>w&&lw>0){if(/^\s+$/.test(tk))continue;push()}if(!lw&&/^\s+$/.test(tk))continue;if(tw>w){for(const ch of tk){const cw=x.measureText(ch).width;if(lw+cw>w&&lw>0)push();line.push({...r,t:ch,w:cw});lw+=cw;lmax=Math.max(lmax,r.z)}continue}line.push({...r,t:tk,w:tw});lw+=tw;lmax=Math.max(lmax,r.z)}}
  if(line.length)push();return lines}
+
+async function briefPages(){const b=curBrief(),[tn,blocks]=BTPL[b.tpl],fs=oSet().fs,W=1240,H=1754,M=110,CW=W-2*M,base=fs*1.6;const pages=[];let c,x,y;
+ const np=()=>{c=document.createElement('canvas');c.width=W;c.height=H;x=c.getContext('2d');x.fillStyle='#fffdf9';x.fillRect(0,0,W,H);x.fillStyle='#E0D3BC';x.fillRect(0,0,W,14);pages.push(c);y=M};const need=h=>{if(y+h>H-M-20)np()};np();
+ const title=ST.curWork&&ST.curWork!='__none'?workTitle():'故事大綱';x.fillStyle='#3d3226';x.font=`bold ${base*2}px ${FONT}`;wrap(x,title,CW).forEach(t=>{x.fillText(t,M,y+base*1.9);y+=base*2.5});
+ x.fillStyle='#8a6a3f';x.font=`${base}px ${FONT}`;x.fillText('簡 要 大 綱'+(b.tpl!='free'?'　・　'+tn:''),M,y+base*1.0);y+=base*1.7;x.fillStyle='#E0D3BC';x.fillRect(M,y+8,CW,3);y+=base*1.4;
+ const rich=(html,ind)=>{for(const ln of layoutRuns(x,runsOf(html,base*.82),CW-ind,1.7)){need(ln.h);let xx=M+ind;for(const p of ln.parts){x.font=`${p.i?'italic ':''}${p.b?'bold ':''}${p.z}px ${FONT}`;x.fillStyle=p.c;x.fillText(p.t,xx,y+ln.h*.75);xx+=p.w}y+=ln.h}};
+ const core=BCORE.filter(([k])=>(b[k]||'').trim());if(core.length){for(const [k,l] of core){need(base*2.2);x.font=`bold ${base*.68}px ${FONT}`;x.fillStyle='#8a7a62';x.fillText(l,M,y+base*.75);y+=base*1.0;rich(esc(b[k]),0);y+=base*.5}y+=base*.5}
+ for(const [k,l] of blocks){const h=b.blocks[k]||'';if(!plain(h).trim())continue;if(b.tpl!='free'){need(base*3.4);y+=base*.6;x.font=`bold ${base*1.3}px ${FONT}`;x.fillStyle='#8a6a3f';x.fillText(l,M,y+base*1.3);y+=base*1.8;x.fillStyle='#e3d6bf';x.fillRect(M,y+2,CW,2);y+=base*.8}rich(h,0);y+=base*.9}
+ pages.forEach((p,i)=>{const g=p.getContext('2d');g.fillStyle='#b3a385';g.font=`22px ${FONT}`;g.textAlign='center';g.fillText(`${title}・簡要大綱　${i+1} / ${pages.length}`,W/2,H-50);g.textAlign='left'});return pages}
 async function outlinePages(){const l=VO(),nums=oNums(l),fs=oSet().fs,W=1240,H=1754,M=110,CW=W-2*M,base=fs*1.6;
  const pages=[];let c,x,y;const np=()=>{c=document.createElement('canvas');c.width=W;c.height=H;x=c.getContext('2d');x.fillStyle='#fffdf9';x.fillRect(0,0,W,H);x.fillStyle='#E0D3BC';x.fillRect(0,0,W,14);pages.push(c);y=M};
  const need=h=>{if(y+h>H-M-20)np()};np();
@@ -1057,9 +1112,9 @@ function pdfFromCanvases(cs){const enc=new TextEncoder(),parts=[],offs=[];let le
   obj(ct,[`<< /Length ${cmd.length} >>\nstream\n${cmd}\nendstream`]);
   obj(im,[`<< /Type /XObject /Subtype /Image /Width ${cv.width} /Height ${cv.height} /ColorSpace /DeviceRGB /BitsPerComponent 8 /Filter /DCTDecode /Length ${img.length} >>\nstream\n`,img,'\nendstream'])});
  const n=3+N*3,xo=len;let xr=`xref\n0 ${n}\n0000000000 65535 f \n`;for(let i=1;i<n;i++)xr+=String(offs[i]).padStart(10,'0')+' 00000 n \n';add(xr+`trailer\n<< /Size ${n} /Root 1 0 R >>\nstartxref\n${xo}\n%%EOF`);return new Blob(parts,{type:'application/pdf'})}
-async function outlinePDF(){if(!VO().length)return toast('還沒有大綱');toast('PDF 產生中…');const pages=await outlinePages();const blob=pdfFromCanvases(pages);const url=URL.createObjectURL(blob),name=fileName(workTitle()+'_劇情大綱')+'.pdf';
+async function outlinePDF(){const br=oSet().kind=='brief';if(br?!briefHas():!VO().length)return toast('還沒有內容');toast('PDF 產生中…');const pages=br?await briefPages():await outlinePages();const blob=pdfFromCanvases(pages);const url=URL.createObjectURL(blob),name=fileName(workTitle()+'_劇情大綱')+'.pdf';
  $('#mTitle').textContent='下載 PDF';$('#mBody').innerHTML=`<p class="note">共 ${pages.length} 頁（A4）。若按了沒有反應（例如在某些預覽環境中），請改用「🖨️ 列印／另存 PDF」，或下載文字檔。</p><p><button class="big" id="mDl">⬇️ 下載 PDF</button></p><div class="opdfprev">${pages.slice(0,3).map(p=>`<img src="${p.toDataURL('image/jpeg',.7)}" alt="">`).join('')}</div>${pages.length>3?`<p class="note">（預覽前 3 頁）</p>`:''}`;$('#mDl').onclick=()=>{const a=document.createElement('a');a.href=url;a.download=name;document.body.appendChild(a);a.click();a.remove()};$('#modal').classList.add('open')}
-function outlinePrint(){if(!VO().length)return toast('還沒有大綱');const m=OMODE;OMODE='read';renderOutline();const pa=$('#printArea');pa.innerHTML=$('#oList').innerHTML;pa.style.setProperty('--ofs',oSet().fs+'px');OMODE=m;renderOutline();try{window.print()}catch(e){toast('這個環境無法列印，請改用下載 PDF')}}
+function outlinePrint(){if(oSet().kind=='brief'?!briefHas():!VO().length)return toast('還沒有內容');const m=OMODE;OMODE='read';renderOutline();const pa=$('#printArea');pa.innerHTML=$('#oList').innerHTML;pa.style.setProperty('--ofs',oSet().fs+'px');OMODE=m;renderOutline();try{window.print()}catch(e){toast('這個環境無法列印，請改用下載 PDF')}}
 
 </script>
 </body>
