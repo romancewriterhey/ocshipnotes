@@ -193,7 +193,7 @@ button.ghost{background:transparent;border-color:transparent;color:var(--sub)}bu
 <h2>歡迎使用</h2>
 <div class="card">
 <p>這是由一位小說創作者個人製作的免費工具，無任何營利。</p>
-<p>如果你已經有自己的角色，想把設定整理清楚、慢慢深化人物、整理 CP 的互動與彼此的關係，再用練習題與情境產生器動手寫寫看，這本手帳就是為你準備的。內容聚焦在現代背景，日常向和暗黑向都能用。</p>
+<p>如果你已經有自己的角色，想把設定整理清楚、慢慢深化人物、整理 CP 的互動與彼此的關係，排好時間軸與劇情大綱，再用練習題與情境產生器動手寫寫看，這本手帳就是為你準備的。內容聚焦在現代背景，日常向和暗黑向都能用。</p>
 <p class="note">你填寫的人物、CP、關係表和上傳的圖片，都只存在你自己的瀏覽器，本工具不會蒐集或上傳任何資料。換裝置或清除瀏覽器資料就會消失，建議定期到「更多 → 資料備份」下載備份檔。</p>
 </div>
 <div class="portals">
@@ -203,8 +203,8 @@ button.ghost{background:transparent;border-color:transparent;color:var(--sub)}bu
 <button class="portal" onclick="go('map')"><b>🕸️ 人物關係表</b><span>帶入人物與 CP，拖曳排版、換代表色，下載成圖片。</span></button>
 <button class="portal" onclick="go('timeline')"><b>📅 時間軸</b><span>把人物和 CP 的重要事件按年份排好，可一鍵帶入出生年與認識、交往、結婚年份。</span></button>
 <button class="portal" onclick="go('drill')"><b>✍️ 短文練習題</b><span>從三十題／五十題題庫隨機抽五題，自由挑選來寫。</span></button>
-<button class="portal" onclick="go('outline')"><b>📝 劇情大綱</b><span>一段一段寫，或把寫好的大綱整份貼進來；可改字色、字級，輸出成文字檔或 PDF。</span></button>
 <button class="portal" onclick="go('scene')"><b>🎬 人事時地物</b><span>依地區與場域，抽出人、事、時、地、物、氣氛和梗，幫練習題延伸成場景。</span></button>
+<button class="portal" onclick="go('outline')"><b>📝 劇情大綱</b><span>可切換「簡要大綱」整理大方向，或「章節細綱」一段一段寫；能整份貼上已寫好的大綱，改字色、字級，輸出成文字檔或 PDF。</span></button>
 </div>
 <details class="fold"><summary>使用教學</summary><div class="inner">
 <p><b>① 先建立人物。</b>到「人物設定」按「＋ 新增人物」，填好的內容會自動存在瀏覽器裡。<b>不知道、還沒想法的欄位都可以留空</b>，之後想到再補就好。性傾向、性別、血型、MBTI、依附類型、身心狀態等欄位，除了從清單選，也可以自己輸入清單上沒有的選項（例如性傾向填「性單戀」「半性戀」）。</p>
@@ -214,11 +214,12 @@ button.ghost{background:transparent;border-color:transparent;color:var(--sub)}bu
 <p><b>④ 畫關係表。</b>「人物關係表」可以一鍵帶入人物或 CP，拖曳位置、換代表色、新增旁支人物，再下載成圖片。</p>
 <p><b>⑤ 排時間軸。</b>「時間軸」可以從人物的出生年、CP 的認識／交往／結婚年份一鍵帶入，也能自己加事件；有填出生年的人物，會自動算出當時幾歲。</p>
 <p><b>⑥ 動手寫。</b>「短文練習題」抽題目；按題目旁的「🎬」可以把題目帶到「人事時地物」，搭配已存好的人物抽出完整場景；如果人物有深化筆記，「人物提示」會隨機帶出一則，讓角色的個性直接進到場景裡。</p>
-<p><b>⑦ 整理大綱。</b>最上方可以切換「🧭 簡要大綱」和「📑 章節細綱」：簡要大綱只整理大方向，可以自由書寫，或用起承轉合、三幕劇、感情線五階段當引導；想法成熟後按「轉成章節細綱」接著細寫。「劇情大綱」可以一段一段新增，也可以按「📋 貼上整份大綱」把寫好的大綱一次放進來，工具會自動切段並先讓你預覽。選取文字後可以套用人物代表色、調整字級；勾選「人物名字自動套上代表色」，閱讀模式和輸出時名字會自動上色。可以輸出成文字檔或 PDF。</p>
-<p><b>作品分組：</b>最上方的「📁 作品」可以切換作品，各頁只會顯示那部作品的人物、CP、關係表、時間軸和情境卡；在「管理作品」新增、改名，或把未分類的內容一次收進某部作品。人物和 CP 的編輯區上方可以勾選所屬作品，同一位人物可以屬於好幾部作品。「📚 匯出設定集」會把目前作品的全部內容整理成一份文字檔。</p>
-<p><b>故事年份與大綱：</b>在「時間軸」設定正文年份，有填出生年的人物年齡會自動換算。存下來的情境卡會依序排成劇情大綱，可以調整順序並匯出。</p>
+<p><b>⑦ 整理大綱。</b>「劇情大綱」最上方可以切換兩種模式：<b>🧭 簡要大綱</b>只整理大方向，可以自由書寫，或用起承轉合、三幕劇、感情線五階段當引導；<b>📑 章節細綱</b>則是一章一段整理細節，可以手動新增，也可以按「📋 貼上整份大綱」把寫好的大綱一次放進來，工具會自動切段並先讓你預覽。簡要大綱寫好後，按「轉成章節細綱」就能接著細寫。人事時地物的情境卡也可以按「📌 加入大綱」送過來。</p>
+<p><b>大綱的字色與輸出：</b>選取文字後，可以套用人物代表色或自訂顏色、調整字級；勾選「人物名字自動套上代表色」，閱讀模式和輸出時名字會自動上色。可以輸出成文字檔、PDF，或用「列印／另存 PDF」存成文字可選取的 PDF。</p>
+<p><b>作品分組：</b>最上方的「📁 作品」可以切換作品，各頁只會顯示那部作品的人物、CP、關係表、時間軸、情境卡和劇情大綱；在「管理作品」新增、改名，或把未分類的內容一次收進某部作品。人物和 CP 的編輯區上方可以勾選所屬作品，同一位人物可以屬於好幾部作品。「📚 匯出設定集」會把目前作品的全部內容整理成一份文字檔。</p>
+<p><b>故事年份：</b>在「時間軸」設定正文年份，有填出生年的人物年齡會自動換算。</p>
 <p><b>備份提醒：</b>超過兩週沒有下載備份時，頁面上方會出現提醒。</p>
-<p><b>存圖與存文字：</b>每一頁都有「存成圖片」「文字檔」「複製文字」。存成圖片時可以選版面：長版（完整內容）、直式手機桌布（9:16）或方形社群貼文（1:1），後兩種會自動精簡內容。若按下載沒有反應（例如在某些預覽環境中），請在跳出的視窗裡長按或右鍵另存圖片，或使用「複製文字」。</p>
+<p><b>存圖與存文字：</b>人物、CP、關係表、時間軸等頁面都有「存成圖片」「文字檔」「複製文字」（劇情大綱則是輸出文字檔或 PDF）。存成圖片時可以選版面：長版（完整內容）、直式手機桌布（9:16）或方形社群貼文（1:1），後兩種會自動精簡內容。若按下載沒有反應（例如在某些預覽環境中），請在跳出的視窗裡長按或右鍵另存圖片，或使用「複製文字」。</p>
 </div></details>
 </section>
 
@@ -304,7 +305,7 @@ button.ghost{background:transparent;border-color:transparent;color:var(--sub)}bu
 <div id="sceneSlots"></div>
 <div class="actbar"><button class="big" onclick="rollScene()">🎲 重骰（鎖住的保留）</button> <button onclick="saveSceneCard()">💾 存成情境卡</button> <button onclick="sceneCopy()">📋 複製</button> <button onclick="sceneTxt()">📄 文字檔</button> <button onclick="sceneImg()">🖼️ 存成圖片</button></div>
 <div class="card"><label><span class="lab">寫作筆記（會和情境卡一起存）</span><textarea id="scNote" rows="4" oninput="SC.note=this.value;saveScene()" placeholder="想到的開場、對白或畫面……"></textarea></label></div>
-<div class="card"><h3>我的情境卡／劇情大綱</h3><div id="sceneCards"></div></div>
+<div class="card"><h3>我的情境卡</h3><div id="sceneCards"></div></div>
 </section>
 
 <section id="outline">
@@ -893,7 +894,7 @@ function saveSceneCard(){if(!SC.v.set)return toast('請先重骰');ST.scenes.pus
 const scById=id=>ST.scenes.find(s=>s.id==id);
 const scSum=s=>sceneRows(s.v).filter(r=>['場域','人','事','時','地'].includes(r[0])).map(r=>r[1]).join('／');
 function outlineItem(s,i){return `第 ${i+1} 段｜${s.name}`+(s.theme?`\n　寫作主題：${s.theme}`:'')+`\n　場景：${scSum(s)}`+(s.v.trope?`\n　梗：${s.v.trope}`:'')+(s.note?`\n　筆記：${s.note.replace(/\n/g,'\n　　　')}`:'')+'\n'}
-function renderSceneCards(){const l=VS();$('#sceneCards').innerHTML=l.length?`<p class="note">用 ↑↓ 或拖曳調整順序。按「📌 加入大綱」，可以把情境卡送進「劇情大綱」頁繼續寫。</p><p><button onclick="VS().forEach(x=>sceneToOutline(x.id));toast('已全部加入劇情大綱')">📌 全部加入劇情大綱</button> <button onclick="go('outline')">前往劇情大綱 →</button></p>`+l.map((s,i)=>`<div class="lst oc" draggable="true" data-id="${s.id}"><div class="row"><b class="ono">第 ${i+1} 段</b><input value="${esc(s.name)}" oninput="scById('${s.id}').name=this.value;persist()" placeholder="段落標題"><button class="sm" onclick="scMove('${s.id}',-1)" ${i?'':'disabled'}>↑</button><button class="sm" onclick="scMove('${s.id}',1)" ${i<l.length-1?'':'disabled'}>↓</button></div><p class="note" style="margin:4px 0">${esc(scSum(s))}${s.theme?`<br>主題：${esc(s.theme)}`:''}</p><textarea rows="2" placeholder="這一段的劇情筆記" oninput="scById('${s.id}').note=this.value;persist()">${esc(s.note||'')}</textarea><button class="sm" onclick="loadScene('${s.id}')">載入到產生器</button> <button class="sm" onclick="sceneToOutline('${s.id}')">📌 加入大綱</button> <button class="sm" onclick="const s=scById('${s.id}');sceneImgOf(s.v,s.theme,s.note,s.name)">圖片</button> <button class="sm" onclick="const s=scById('${s.id}');showText(sceneText(s.v,s.theme,s.note,s.name),s.name)">文字</button> <button class="sm warn" onclick="armed(this,()=>{ST.scenes=ST.scenes.filter(x=>x.id!='${s.id}');persist();renderSceneCards()})">刪除</button></div>`).join(''):'<p class="note">還沒有情境卡。抽到喜歡的情境按「💾 存成情境卡」，就會依序排成劇情大綱。</p>';
+function renderSceneCards(){const l=VS();$('#sceneCards').innerHTML=l.length?`<p class="note">用 ↑↓ 或拖曳調整順序。按「📌 加入大綱」，可以把情境卡送進「劇情大綱」頁繼續寫。</p><p><button onclick="VS().forEach(x=>sceneToOutline(x.id));toast('已全部加入劇情大綱')">📌 全部加入劇情大綱</button> <button onclick="go('outline')">前往劇情大綱 →</button></p>`+l.map((s,i)=>`<div class="lst oc" draggable="true" data-id="${s.id}"><div class="row"><b class="ono">第 ${i+1} 段</b><input value="${esc(s.name)}" oninput="scById('${s.id}').name=this.value;persist()" placeholder="段落標題"><button class="sm" onclick="scMove('${s.id}',-1)" ${i?'':'disabled'}>↑</button><button class="sm" onclick="scMove('${s.id}',1)" ${i<l.length-1?'':'disabled'}>↓</button></div><p class="note" style="margin:4px 0">${esc(scSum(s))}${s.theme?`<br>主題：${esc(s.theme)}`:''}</p><textarea rows="2" placeholder="這一段的劇情筆記" oninput="scById('${s.id}').note=this.value;persist()">${esc(s.note||'')}</textarea><button class="sm" onclick="loadScene('${s.id}')">載入到產生器</button> <button class="sm" onclick="sceneToOutline('${s.id}')">📌 加入大綱</button> <button class="sm" onclick="const s=scById('${s.id}');sceneImgOf(s.v,s.theme,s.note,s.name)">圖片</button> <button class="sm" onclick="const s=scById('${s.id}');showText(sceneText(s.v,s.theme,s.note,s.name),s.name)">文字</button> <button class="sm warn" onclick="armed(this,()=>{ST.scenes=ST.scenes.filter(x=>x.id!='${s.id}');persist();renderSceneCards()})">刪除</button></div>`).join(''):'<p class="note">還沒有情境卡。抽到喜歡的情境按「💾 存成情境卡」就會收在這裡，也可以再按「📌 加入大綱」送進劇情大綱。</p>';
  $$('#sceneCards .oc').forEach(el=>{el.ondragstart=e=>{if(/INPUT|TEXTAREA/.test(document.activeElement.tagName)&&el.contains(document.activeElement)){e.preventDefault();return}e.dataTransfer.setData('text/plain',el.dataset.id);el.classList.add('dragging')};el.ondragend=()=>el.classList.remove('dragging');el.ondragover=e=>{e.preventDefault();el.classList.add('dragover')};el.ondragleave=()=>el.classList.remove('dragover');el.ondrop=e=>{e.preventDefault();el.classList.remove('dragover');const from=e.dataTransfer.getData('text/plain');if(!from||from==el.dataset.id)return;const it=scById(from);ST.scenes=ST.scenes.filter(x=>x.id!=from);ST.scenes.splice(ST.scenes.findIndex(x=>x.id==el.dataset.id),0,it);persist();renderSceneCards()}})}
 function scMove(id,d){const l=VS(),i=l.findIndex(x=>x.id==id),j=i+d;if(j<0||j>=l.length)return;const a=ST.scenes.indexOf(l[i]),b=ST.scenes.indexOf(l[j]);[ST.scenes[a],ST.scenes[b]]=[ST.scenes[b],ST.scenes[a]];persist();renderSceneCards()}
 function loadScene(id){const s=scById(id);SC.v=JSON.parse(JSON.stringify(s.v));SC.theme=s.theme||'';SC.note=s.note||'';$('#scTheme').value=SC.theme;$('#scNote').value=SC.note;saveScene();renderScene();scrollTo({top:0,behavior:'smooth'});toast('已載入')}
